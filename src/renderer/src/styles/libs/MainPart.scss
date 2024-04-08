@@ -1,0 +1,13 @@
+@import '../vars.scss';
+
+.is-sidebar-min {
+  height: 100%;
+  padding-top: $headerHeight;
+  padding-left: $sidebarWidthMin;
+}
+
+.is-sidebar-max {
+  height: 100%;
+  padding-top: $headerHeight;
+  padding-left: $sidebarWidthMax;
+}

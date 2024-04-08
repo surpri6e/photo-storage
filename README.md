@@ -40,3 +40,7 @@ https://www.figma.com/file/NO45v2N1xyTIn2fi4HzHM4/liiiz?type=design&node-id=0%3A
 liiiz
 
 изменить фон
+
+страница просмотра фотографии + комментарии к ней
+
+страница настроек ии профиля

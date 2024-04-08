@@ -1,13 +1,11 @@
-import Sidebar from './components/Sidebar/Sidebar'
+import { HashRouter } from 'react-router-dom'
+import MainPart from './components/MainPart'
 
 function App(): JSX.Element {
-  //const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
-
   return (
-    <>
-      <Sidebar />
-      <div style={{ marginLeft: 100 }}>asdasd</div>
-    </>
+    <HashRouter>
+      <MainPart />
+    </HashRouter>
   )
 }
 

@@ -1,25 +1,14 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import './Sidebar.scss'
+import { SidebarContext } from '@renderer/context/SidebarContext'
+import SidebarList from './SidebarList/SidebarList'
 
 const Sidebar = (): JSX.Element => {
-  const [isMinWidth, setIsMinWidth] = useState(true)
-
+  const { isMinWidth } = useContext(SidebarContext)
   return (
-    <div className="sidebar">
-      <ul>
-        <li>
-          <a href="">123</a>
-        </li>
-        <li>
-          <a href="">123</a>
-        </li>
-        <li>
-          <a href="">123</a>
-        </li>
-        <li>
-          <a href="">123</a>
-        </li>
-      </ul>
+    <div className={`sidebar ${isMinWidth ? 'sidebar--min' : 'sidebar--max'}`}>
+      <SidebarList isMinWidth={isMinWidth} />
+      <div>asdasd</div>
     </div>
   )
 }
