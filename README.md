@@ -32,3 +32,11 @@ $ npm run build:mac
 # For Linux
 $ npm run build:linux
 ```
+
+contributin by -
+
+https://www.figma.com/file/NO45v2N1xyTIn2fi4HzHM4/liiiz?type=design&node-id=0%3A1&mode=design&t=vDIIG0Lnig2X00Xe-1
+
+liiiz
+
+изменить фон
