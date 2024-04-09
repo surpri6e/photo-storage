@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './Header.scss'
-import HeaderInput from '../Input/Input'
+import Input from '../Input'
 import HeaderLogo from './HeaderLogo/HeaderLogo'
 import HeaderRight from './HeaderRight/HeaderRight'
 
@@ -9,7 +9,12 @@ const Header = (): JSX.Element => {
   return (
     <div className="header">
       <HeaderLogo />
-      <HeaderInput value={search} setValue={setSearch} placeholder="Что найдем?" />
+      <Input
+        value={search}
+        setValue={setSearch}
+        placeholder="Что найдем?"
+        className="input header_input"
+      />
       <HeaderRight />
     </div>
   )

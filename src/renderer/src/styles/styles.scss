@@ -16,7 +16,7 @@ html {
 }
 
 body {
-  background-color: $white;
+  background-color: lighten($grey, 5);
 
   width: 100%;
   height: 100%;

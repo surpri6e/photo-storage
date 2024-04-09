@@ -1,0 +1,17 @@
+.registration_inputs {
+  display: flex;
+  flex-direction: column;
+
+  & > *:not(:last-child) {
+    margin-bottom: 15px;
+  }
+}
+
+.registration_forgotten {
+  cursor: pointer;
+  text-align: end;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

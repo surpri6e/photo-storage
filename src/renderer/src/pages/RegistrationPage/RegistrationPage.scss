@@ -5,3 +5,12 @@
 
   height: 100%;
 }
+
+.registration_body {
+  display: flex;
+  flex-direction: column;
+
+  & > *:not(:last-child) {
+    margin-bottom: 25px;
+  }
+}

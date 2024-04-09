@@ -1,0 +1,70 @@
+@import '../../../styles/vars.scss';
+
+.registration_buttons {
+  & > *:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.registration_button {
+  width: 300px;
+  height: 40px;
+
+  border-radius: 5px;
+
+  font-size: 18px;
+  color: $white;
+  background-color: $green;
+
+  transition: all 200ms ease-in;
+
+  &:hover {
+    background-color: lighten($green, 10);
+  }
+}
+
+// мб использовать миксины, потому что много повторающего кода с хеадером сайдбаром и интпутами
+
+.registration_google {
+  display: flex;
+  justify-content: center;
+
+  div {
+    cursor: pointer;
+
+    height: 50px;
+    width: 50px;
+
+    border-radius: 50%;
+
+    background-color: $doubleGrey;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 200ms ease-in;
+
+    &:hover {
+      background-color: darken($doubleGrey, 20);
+    }
+  }
+
+  img {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+.registration_accout {
+  text-align: center;
+
+  span {
+    cursor: pointer;
+
+    // к примеру это в миксин можно вынести
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

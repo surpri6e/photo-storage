@@ -1,14 +1,16 @@
-//import Input from '@renderer/components/Input/Input'
 import './RegistrationPage.scss'
+import RegistrationPageButtons from './RegistrationPageButtons/RegistrationPageButtons'
 import RegistrationPageHeader from './RegistrationPageHeader/RegistrationPageHeader'
+import RegistrationPageInputs from './RegistrationPageInputs/RegistrationPageInputs'
 
 const RegistrationPage = (): JSX.Element => {
   return (
     <div className="registration">
-      <RegistrationPageHeader />
-      {/* <Input value="" />
-      <Input />
-      <Input /> */}
+      <div className="registration_body">
+        <RegistrationPageHeader />
+        <RegistrationPageInputs />
+        <RegistrationPageButtons />
+      </div>
     </div>
   )
 }
