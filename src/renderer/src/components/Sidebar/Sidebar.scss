@@ -16,7 +16,7 @@
   padding-top: $headerHeight;
   padding-bottom: 15px;
 
-  transition: all 200ms ease-in;
+  transition: all $sidebarDelay ease-in;
 }
 
 .sidebar--min {

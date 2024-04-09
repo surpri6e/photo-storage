@@ -1,13 +1,15 @@
 @import '../vars.scss';
 
-.is-sidebar-min {
+.is-sidebar {
   height: 100%;
   padding-top: $headerHeight;
+  transition: all $sidebarDelay ease-in;
+}
+
+.is-sidebar-min {
   padding-left: $sidebarWidthMin;
 }
 
 .is-sidebar-max {
-  height: 100%;
-  padding-top: $headerHeight;
   padding-left: $sidebarWidthMax;
 }

@@ -8,5 +8,6 @@
   top: 0;
   left: 0;
 
-  background-color: grey;
+  background-color: darken($grey, 10);
+  border-bottom: 1px solid darken($grey, 30);
 }

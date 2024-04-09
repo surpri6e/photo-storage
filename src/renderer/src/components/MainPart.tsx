@@ -12,7 +12,7 @@ const MainPart = (): JSX.Element => {
     <SidebarContext.Provider value={{ isMinWidth, setIsMinWidth }}>
       <Sidebar />
       <Header />
-      <div className={isMinWidth ? 'is-sidebar-min' : 'is-sidebar-max'}>
+      <div className={isMinWidth ? 'is-sidebar is-sidebar-min' : 'is-sidebar is-sidebar-max'}>
         <ApplicationRoutes />
       </div>
     </SidebarContext.Provider>

@@ -21,6 +21,7 @@ function createWindow(): void {
     mainWindow.show()
   })
 
+  // LINKS!
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url)
     return { action: 'deny' }

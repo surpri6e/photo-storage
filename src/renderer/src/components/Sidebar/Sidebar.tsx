@@ -8,8 +8,7 @@ const Sidebar = (): JSX.Element => {
   const { isMinWidth, setIsMinWidth } = useContext(SidebarContext)
   return (
     <div className={`sidebar ${isMinWidth ? 'sidebar--min' : 'sidebar--max'}`}>
-      <SidebarList isMinWidth={isMinWidth} />
-      <button onClick={() => setIsMinWidth((prev) => !prev)}>asdasd</button>
+      <SidebarList isMinWidth={isMinWidth} setIsMinWidth={setIsMinWidth} />
       <SidebarVersion />
     </div>
   )
