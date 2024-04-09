@@ -7,14 +7,16 @@
   left: 0;
   top: 0;
 
-  background-color: darken($white, 20);
+  background-color: $grey;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   padding-top: $headerHeight;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
+
+  transition: all 200ms ease-in;
 }
 
 .sidebar--min {

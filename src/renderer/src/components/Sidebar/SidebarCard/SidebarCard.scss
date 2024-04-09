@@ -1,0 +1,32 @@
+@import '../../../styles/vars.scss';
+
+.sidebar_card {
+  width: 100%;
+  margin-bottom: 20px;
+
+  a {
+    display: inline-block;
+
+    padding: 5px 15px;
+
+    color: inherit;
+
+    font-size: 14px;
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    transition: all 200ms ease-in;
+
+    &:hover {
+      background-color: $doubleGrey;
+    }
+  }
+
+  img {
+    height: 30px;
+    width: 30px;
+  }
+}

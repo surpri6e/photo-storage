@@ -21,6 +21,11 @@ function createWindow(): void {
     mainWindow.show()
   })
 
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url)
+    return { action: 'deny' }
+  })
+
   mainWindow.webContents.openDevTools()
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -36,6 +41,8 @@ function createWindow(): void {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
+
+// app.getFileIcon().then(() => {})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
