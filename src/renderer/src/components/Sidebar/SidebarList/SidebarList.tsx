@@ -24,8 +24,8 @@ const SidebarList: FC<ISidebarList> = ({ isMinWidth, setIsMinWidth }) => {
         />
       ))}
 
-      <li className="sidebar_card sidebar_button">
-        <div onClick={() => setIsMinWidth((prev) => !prev)}>{isMinWidthDebounced ? '>' : '<'}</div>
+      <li className="sidebar_card sidebar_button" onClick={() => setIsMinWidth((prev) => !prev)}>
+        {isMinWidthDebounced ? '>' : '<'}
       </li>
     </ul>
   )

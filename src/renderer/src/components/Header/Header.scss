@@ -10,4 +10,10 @@
 
   background-color: darken($grey, 10);
   border-bottom: 1px solid darken($grey, 30);
+
+  padding: 0 15px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
