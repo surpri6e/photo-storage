@@ -43,7 +43,6 @@ function createWindow(): void {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
-
 // How i understood it is icon of file
 // app.getFileIcon().then(() => {})
 

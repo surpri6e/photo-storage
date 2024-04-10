@@ -18,9 +18,7 @@
 
   @include defaultTransition;
 
-  &:hover {
-    background-color: lighten($green, 10);
-  }
+  @include hoverGreen;
 }
 
 .registration_google {

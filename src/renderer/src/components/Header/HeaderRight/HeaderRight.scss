@@ -10,8 +10,6 @@
   cursor: pointer;
 
   @include iconSize;
-
-  margin-right: 15px;
 }
 
 .header_profile {
@@ -21,9 +19,9 @@
   border-radius: 50%;
   background-color: $green;
 
+  margin-right: 10px;
+
   @include defaultTransition;
 
-  &:hover {
-    background-color: lighten($green, 10);
-  }
+  @include hoverGreen;
 }
