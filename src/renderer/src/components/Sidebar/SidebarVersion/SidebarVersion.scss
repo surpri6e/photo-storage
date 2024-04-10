@@ -1,10 +1,8 @@
+@import '../../../styles/mixins.scss';
+
 .sidebar_version {
   text-align: center;
-
-  font-size: 14px;
   color: inherit;
 
-  &:hover {
-    text-decoration: underline;
-  }
+  @include defaultHover;
 }

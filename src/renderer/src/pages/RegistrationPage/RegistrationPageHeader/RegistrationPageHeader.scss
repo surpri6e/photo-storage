@@ -1,8 +1,9 @@
 @import '../../../styles/vars.scss';
+@import '../../../styles/mixins.scss';
 
 .registration_title {
   font-size: 24px;
-  font-family: 'Days One', sans-serif;
+  @include otherFamilyText;
   font-weight: 900;
 
   margin-bottom: 5px;

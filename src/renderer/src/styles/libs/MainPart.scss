@@ -1,9 +1,11 @@
 @import '../vars.scss';
+@import '../mixins.scss';
 
 .is-sidebar {
   height: 100%;
   padding-top: $headerHeight;
-  transition: all $sidebarDelay ease-in;
+
+  @include defaultTransition;
 }
 
 .is-sidebar-min {

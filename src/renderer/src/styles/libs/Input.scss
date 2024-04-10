@@ -1,3 +1,5 @@
+@import '../mixins.scss';
+
 .input {
   border-radius: 5px;
   padding: 0 10px;
@@ -10,8 +12,7 @@
 }
 
 .registration_input {
-  width: 300px;
-  height: 40px;
+  @include registrationSizes;
 }
 
 .registration_input--password {

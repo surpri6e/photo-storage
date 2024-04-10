@@ -12,7 +12,7 @@ const SidebarCard: FC<ISidebarCard & ISidebarCardSize> = ({ image, name, path, i
   const isMinWidthDebounced = useIsMinWidthDebounced(isMinWidth)
 
   return (
-    <li className="sidebar_card">
+    <li className={isMinWidth ? 'sidebar_card' : 'sidebar_card sidebar_card--debounced'}>
       <Link to={path}>
         <img src={image} alt={name} />
         {isMinWidthDebounced ? '' : name}

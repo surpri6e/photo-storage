@@ -1,4 +1,5 @@
 @import '../../../styles/vars.scss';
+@import '../../../styles/mixins.scss';
 
 .header_right {
   display: flex;
@@ -7,22 +8,20 @@
 
 .header_settings {
   cursor: pointer;
-  img {
-    width: 25px;
-    height: 25px;
-  }
+
+  @include iconSize;
 
   margin-right: 15px;
 }
 
 .header_profile {
   cursor: pointer;
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background-color: $green;
 
-  transition: all 200ms ease-in;
+  @include defaultTransition;
 
   &:hover {
     background-color: lighten($green, 10);

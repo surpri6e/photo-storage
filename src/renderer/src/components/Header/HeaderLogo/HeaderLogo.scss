@@ -1,8 +1,10 @@
 @import '../../../styles/vars.scss';
+@import '../../../styles/mixins.scss';
 
 .header_logo {
-  font-size: 32px;
+  font-size: 30px;
   color: $green;
-  font-family: 'Days One', sans-serif;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
+
+  @include otherFamilyText;
 }

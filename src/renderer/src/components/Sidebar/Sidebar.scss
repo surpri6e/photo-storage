@@ -1,4 +1,5 @@
 @import '../../styles/vars.scss';
+@import '../../styles/mixins.scss';
 
 .sidebar {
   height: 100%;
@@ -7,7 +8,7 @@
   left: 0;
   top: 0;
 
-  background-color: darken($grey, 10);
+  background-color: $grey;
 
   display: flex;
   flex-direction: column;
@@ -16,7 +17,7 @@
   padding-top: $headerHeight;
   padding-bottom: 15px;
 
-  transition: all $sidebarDelay ease-in;
+  @include defaultTransition;
 }
 
 .sidebar--min {

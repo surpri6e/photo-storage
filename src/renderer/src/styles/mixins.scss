@@ -1,0 +1,31 @@
+@mixin defaultTransition {
+  transition: all 200ms ease-in;
+}
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin defaultHover {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@mixin iconSize {
+  img {
+    height: 26px;
+    width: 26px;
+  }
+}
+
+@mixin otherFamilyText {
+  font-family: 'Days One', sans-serif;
+}
+
+@mixin registrationSizes {
+  width: 300px;
+  height: 40px;
+}

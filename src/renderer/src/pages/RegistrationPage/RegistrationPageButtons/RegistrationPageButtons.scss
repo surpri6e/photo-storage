@@ -1,4 +1,5 @@
 @import '../../../styles/vars.scss';
+@import '../../../styles/mixins.scss';
 
 .registration_buttons {
   & > *:not(:last-child) {
@@ -7,8 +8,7 @@
 }
 
 .registration_button {
-  width: 300px;
-  height: 40px;
+  @include registrationSizes;
 
   border-radius: 5px;
 
@@ -16,14 +16,12 @@
   color: $white;
   background-color: $green;
 
-  transition: all 200ms ease-in;
+  @include defaultTransition;
 
   &:hover {
     background-color: lighten($green, 10);
   }
 }
-
-// мб использовать миксины, потому что много повторающего кода с хеадером сайдбаром и интпутами
 
 .registration_google {
   display: flex;
@@ -39,21 +37,16 @@
 
     background-color: $doubleGrey;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flexCenter;
 
-    transition: all 200ms ease-in;
+    @include defaultTransition;
 
     &:hover {
       background-color: darken($doubleGrey, 20);
     }
   }
 
-  img {
-    height: 30px;
-    width: 30px;
-  }
+  @include iconSize;
 }
 
 .registration_accout {
@@ -62,9 +55,6 @@
   span {
     cursor: pointer;
 
-    // к примеру это в миксин можно вынести
-    &:hover {
-      text-decoration: underline;
-    }
+    @include defaultHover;
   }
 }

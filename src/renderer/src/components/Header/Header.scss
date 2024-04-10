@@ -8,10 +8,10 @@
   top: 0;
   left: 0;
 
-  background-color: darken($grey, 10);
-  border-bottom: 1px solid darken($grey, 30);
+  background-color: $grey;
+  border-bottom: 1px solid darken($grey, 20);
 
-  padding: 0 15px;
+  padding: 0 17px;
 
   display: flex;
   justify-content: space-between;
