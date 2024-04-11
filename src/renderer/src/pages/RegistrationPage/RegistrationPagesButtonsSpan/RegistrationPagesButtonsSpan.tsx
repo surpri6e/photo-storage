@@ -1,36 +1,24 @@
 import { FC, useContext } from 'react'
 import './RegistrationPagesButtonsSpan.scss'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
+import { clearContext } from '@renderer/api/registrationApi'
+import { TTypeOfRegistration } from '@renderer/types/TTypeOfRegistration'
 
 interface IRegistrationPagesButtonsSpan {
   children: React.ReactNode
-  setIsRegistration: React.Dispatch<React.SetStateAction<boolean>>
+  setRegistrationType: React.Dispatch<React.SetStateAction<TTypeOfRegistration>>
 }
 
 const RegistrationPagesButtonsSpan: FC<IRegistrationPagesButtonsSpan> = ({
   children,
-  setIsRegistration
+  setRegistrationType
 }) => {
-  const {
-    setEmail,
-    setPassword,
-    setDoublePassword,
-    setEmailError,
-    setPasswordError,
-    setPasswordsEqualsError
-  } = useContext(RegistrationContext)
+  const context = useContext(RegistrationContext)
   return (
     <span
       onClick={() => {
-        setEmail('')
-        setPassword('')
-        setDoublePassword('')
-
-        setEmailError(false)
-        setPasswordError(false)
-        setPasswordsEqualsError(false)
-
-        setIsRegistration((prev) => !prev)
+        clearContext(context)
+        setRegistrationType((prev) => (prev === 'registration' ? 'logIn' : 'registration'))
       }}
     >
       {children}

@@ -21,30 +21,11 @@
   @include hoverGreen;
 }
 
-.registration_google {
-  display: flex;
-  justify-content: center;
+.registration_forgotten {
+  cursor: pointer;
+  text-align: end;
 
-  div {
-    cursor: pointer;
-
-    height: 50px;
-    width: 50px;
-
-    border-radius: 50%;
-
-    background-color: $doubleGrey;
-
-    @include flexCenter;
-
-    @include defaultTransition;
-
-    &:hover {
-      background-color: darken($doubleGrey, 20);
-    }
-  }
-
-  @include iconSize;
+  @include defaultHover;
 }
 
 .registration_accout {

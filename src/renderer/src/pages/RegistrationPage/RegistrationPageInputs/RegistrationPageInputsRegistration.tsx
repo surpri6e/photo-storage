@@ -33,7 +33,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
           setValue={setEmail}
           placeholder="User@gmail.com"
           className={
-            !emailError || !isAccoutExist
+            !emailError && !isAccoutExist
               ? 'input registration_input'
               : 'input registration_input registration_input--danger'
           }
@@ -51,7 +51,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
           placeholder="●●●●●●●●●●●●●"
           type="password"
           className={
-            (!passwordError && !passwordsEqualsError) || !isAccoutExist
+            !passwordError && !passwordsEqualsError && !isAccoutExist
               ? 'input registration_input registration_input--password'
               : 'input registration_input registration_input--danger registration_input--password'
           }
