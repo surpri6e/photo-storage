@@ -1,4 +1,5 @@
 @import '../mixins.scss';
+@import '../vars.scss';
 
 .input {
   border-radius: 5px;
@@ -17,4 +18,12 @@
 
 .registration_input--password {
   font-size: 18px;
+}
+
+.registration_input--danger {
+  border: 1px solid $red;
+  color: $red;
+  &::placeholder {
+    color: $red;
+  }
 }

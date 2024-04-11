@@ -1,0 +1,11 @@
+@import '../../styles/vars.scss';
+
+.help-window {
+  position: absolute;
+  right: 0;
+  bottom: -12px;
+
+  color: lighten($red, 20);
+
+  font-size: 12px;
+}

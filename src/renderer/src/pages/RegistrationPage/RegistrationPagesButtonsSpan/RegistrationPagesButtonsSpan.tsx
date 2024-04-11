@@ -11,13 +11,25 @@ const RegistrationPagesButtonsSpan: FC<IRegistrationPagesButtonsSpan> = ({
   children,
   setIsRegistration
 }) => {
-  const { setEmail, setPassword, setDoublePassword } = useContext(RegistrationContext)
+  const {
+    setEmail,
+    setPassword,
+    setDoublePassword,
+    setEmailError,
+    setPasswordError,
+    setPasswordsEqualsError
+  } = useContext(RegistrationContext)
   return (
     <span
       onClick={() => {
         setEmail('')
         setPassword('')
         setDoublePassword('')
+
+        setEmailError(false)
+        setPasswordError(false)
+        setPasswordsEqualsError(false)
+
         setIsRegistration((prev) => !prev)
       }}
     >

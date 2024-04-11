@@ -16,12 +16,29 @@ const MainPart = (): JSX.Element => {
   const [password, setPassword] = useState('')
   const [doublePassword, setDoublePassword] = useState('')
 
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+  const [passwordsEqualsError, setPasswordsEqualsError] = useState(false)
+
   const [user, loading, error] = useAuthState(auth)
 
   return (
     <AuthContext.Provider value={{ user, loading, error }}>
       <RegistrationContext.Provider
-        value={{ email, password, doublePassword, setEmail, setPassword, setDoublePassword }}
+        value={{
+          email,
+          password,
+          doublePassword,
+          setEmail,
+          setPassword,
+          setDoublePassword,
+          emailError,
+          setEmailError,
+          passwordError,
+          setPasswordError,
+          passwordsEqualsError,
+          setPasswordsEqualsError
+        }}
       >
         <SidebarContext.Provider value={{ isMinWidth, setIsMinWidth }}>
           <Sidebar />

@@ -5,7 +5,7 @@
   flex-direction: column;
 
   & > *:not(:last-child) {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
 }
 
@@ -14,4 +14,8 @@
   text-align: end;
 
   @include defaultHover;
+}
+
+.registration_block {
+  position: relative;
 }
