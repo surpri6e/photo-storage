@@ -1,0 +1,6 @@
+@import '../../styles/mixins.scss';
+
+.loading {
+  height: 100%;
+  @include flexCenter;
+}

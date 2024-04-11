@@ -1,0 +1,12 @@
+@import '../../styles/mixins.scss';
+
+.error {
+  height: 100%;
+  @include flexCenter;
+}
+
+.error_message {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}

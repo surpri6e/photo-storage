@@ -5,20 +5,17 @@ import RegistrationPageHeader from './RegistrationPageHeader/RegistrationPageHea
 import RegistrationPageInputs from './RegistrationPageInputs/RegistrationPageInputs'
 
 const RegistrationPage = (): JSX.Element => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [isRegistration, setIsRegistration] = useState(true)
 
   return (
     <div className="registration">
       <div className="registration_body">
-        <RegistrationPageHeader />
-        <RegistrationPageInputs
-          email={email}
-          password={password}
-          setEMail={setEmail}
-          setPassword={setPassword}
+        <RegistrationPageHeader isRegistration={isRegistration} />
+        <RegistrationPageInputs />
+        <RegistrationPageButtons
+          isRegistration={isRegistration}
+          setIsRegistration={setIsRegistration}
         />
-        <RegistrationPageButtons email={email} password={password} />
       </div>
     </div>
   )

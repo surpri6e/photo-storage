@@ -1,29 +1,17 @@
-import { FC } from 'react'
+import { useContext } from 'react'
 import './RegistrationPageInputs.scss'
 import Input from '@renderer/components/Input'
+import { RegistrationContext } from '@renderer/context/RegistrationContext'
 
-interface IRegistrationPageInputs {
-  email: string
-  setEMail: React.Dispatch<React.SetStateAction<string>>
-  password: string
-  setPassword: React.Dispatch<React.SetStateAction<string>>
-}
-
-const RegistrationPageInputs: FC<IRegistrationPageInputs> = ({
-  email,
-  password,
-  setEMail,
-  setPassword
-}) => {
-  //const [mail, setMail] = useState('')
-  //const [password, setPassword] = useState('')
-  //const [doublePassword, setDoublePassword] = useState('')
+const RegistrationPageInputs = (): JSX.Element => {
+  const { email, password, doublePassword, setEmail, setPassword, setDoublePassword } =
+    useContext(RegistrationContext)
 
   return (
     <div className="registration_inputs">
       <Input
         value={email}
-        setValue={setEMail}
+        setValue={setEmail}
         placeholder="user@gmail.com"
         className="input registration_input"
       />
@@ -34,13 +22,13 @@ const RegistrationPageInputs: FC<IRegistrationPageInputs> = ({
         type="password"
         className="input registration_input registration_input--password"
       />
-      {/* <Input
+      <Input
         value={doublePassword}
         setValue={setDoublePassword}
         placeholder="●●●●●●●●●●●●●"
         type="password"
         className="input registration_input registration_input--password"
-      /> */}
+      />
 
       <div className="registration_forgotten">Забыли пароль?</div>
     </div>

@@ -1,16 +1,25 @@
+import { useContext } from 'react'
 import settings from '../../../images/settings.png'
 import './HeaderRight.scss'
+import { AuthContext } from '@renderer/context/AuthContext'
+import { Link } from 'react-router-dom'
+import { profilePath, settingsPath } from '@renderer/utils/paths'
+import defaultAvatar from '../../../images/defaultAvatar.png'
 
 const HeaderRight = (): JSX.Element => {
+  const { user } = useContext(AuthContext)
   return (
     <div className="header_right">
-      <div className="header_profile">
-        {/* If image do image else green circle */}
-        {/* <img src="" alt="Профиль" /> */}
-      </div>
-      <div className="header_settings">
-        <img src={settings} alt="Настройки" />
-      </div>
+      {user && (
+        <>
+          <Link className="header_profile" to={profilePath}>
+            <img src={defaultAvatar} alt="Профиль" />
+          </Link>
+          <Link className="header_settings" to={settingsPath}>
+            <img src={settings} alt="Настройки" />
+          </Link>
+        </>
+      )}
     </div>
   )
 }

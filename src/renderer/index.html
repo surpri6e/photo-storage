@@ -4,11 +4,22 @@
     <meta charset="UTF-8" />
     <title>Surphoto</title>
 
-    <!-- Половину убрать -->
-    <!-- frame-src https://photo-storage-9e5ea.firebaseapp.com;  -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="connect-src https://firestore.googleapis.com https://identitytoolkit.googleapis.com; default-src 'self'; script-src 'self' https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:"
+      content="
+      connect-src
+       ws://localhost:5173
+       https://firestore.googleapis.com 
+       https://identitytoolkit.googleapis.com 
+       https://firebase.googleapis.com 
+       https://securetoken.googleapis.com 
+       https://firebaseinstallations.googleapis.com
+       https://www.google-analytics.com;
+      default-src 'self';
+      script-src 'self' https://apis.google.com https://www.googletagmanager.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      img-src 'self' data:"
     />
   </head>
   <body>

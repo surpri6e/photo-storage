@@ -1,7 +1,7 @@
 import './Loader.scss'
 
 const Loader = (): JSX.Element => {
-  return <div>Loader</div>
+  return <span className="loader"></span>
 }
 
 export default Loader
