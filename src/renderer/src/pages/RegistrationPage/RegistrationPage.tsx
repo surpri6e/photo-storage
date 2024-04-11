@@ -11,7 +11,7 @@ const RegistrationPage = (): JSX.Element => {
     <div className="registration">
       <div className="registration_body">
         <RegistrationPageHeader isRegistration={isRegistration} />
-        <RegistrationPageInputs />
+        <RegistrationPageInputs isRegistration={isRegistration} />
         <RegistrationPageButtons
           isRegistration={isRegistration}
           setIsRegistration={setIsRegistration}

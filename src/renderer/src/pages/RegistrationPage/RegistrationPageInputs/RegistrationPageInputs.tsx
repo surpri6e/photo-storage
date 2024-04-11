@@ -1,36 +1,27 @@
-import { useContext } from 'react'
+import { FC, useContext } from 'react'
 import './RegistrationPageInputs.scss'
-import Input from '@renderer/components/Input'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
+import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth'
+import { auth } from '@renderer/main'
+import RegistrationPageInputsRegistration from '../RegistrationPageInputsRegistration'
+import RegistrationPageInputsLogIn from '../RegistrationPageInputsLogIn'
 
-const RegistrationPageInputs = (): JSX.Element => {
-  const { email, password, doublePassword, setEmail, setPassword, setDoublePassword } =
-    useContext(RegistrationContext)
+interface IRegistrationPageInputs {
+  isRegistration: boolean
+}
+
+const RegistrationPageInputs: FC<IRegistrationPageInputs> = ({ isRegistration }) => {
+  const { email } = useContext(RegistrationContext)
+  const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth)
 
   return (
     <div className="registration_inputs">
-      <Input
-        value={email}
-        setValue={setEmail}
-        placeholder="user@gmail.com"
-        className="input registration_input"
-      />
-      <Input
-        value={password}
-        setValue={setPassword}
-        placeholder="●●●●●●●●●●●●●"
-        type="password"
-        className="input registration_input registration_input--password"
-      />
-      <Input
-        value={doublePassword}
-        setValue={setDoublePassword}
-        placeholder="●●●●●●●●●●●●●"
-        type="password"
-        className="input registration_input registration_input--password"
-      />
+      {isRegistration && <RegistrationPageInputsRegistration />}
+      {!isRegistration && <RegistrationPageInputsLogIn />}
 
-      <div className="registration_forgotten">Забыли пароль?</div>
+      <div className="registration_forgotten" onClick={() => sendPasswordResetEmail(email)}>
+        Забыли пароль?
+      </div>
     </div>
   )
 }
