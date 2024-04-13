@@ -27,3 +27,13 @@
 .sidebar--max {
   width: $sidebarWidthMax;
 }
+
+.sidebar--max--opened {
+  width: $sidebarWidthMax;
+  transition: all 0ms ease-in;
+}
+
+.sidebar--min--closed {
+  width: $sidebarWidthMin;
+  transition: all 0ms ease-in;
+}

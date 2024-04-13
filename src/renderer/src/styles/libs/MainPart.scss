@@ -15,3 +15,13 @@
 .is-sidebar-max {
   padding-left: $sidebarWidthMax;
 }
+
+.is-sidebar-min--closed {
+  transition: all 0ms ease-in;
+  padding-left: $sidebarWidthMin;
+}
+
+.is-sidebar-max--opened {
+  transition: all 0ms ease-in;
+  padding-left: $sidebarWidthMax;
+}

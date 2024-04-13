@@ -66,7 +66,19 @@ const MainPart = (): JSX.Element => {
           <SidebarContext.Provider value={{ isMinWidth, setIsMinWidth }}>
             <Sidebar />
             <Header />
-            <div className={isMinWidth ? 'is-sidebar is-sidebar-min' : 'is-sidebar is-sidebar-max'}>
+
+            {/* ${userSettings?.sidebar === 'open' ? 'sidebar--max--opened' : userSettings?.sidebar === 'close' ? 'sidebar--min--closed' : isMinWidth ? 'sidebar--min' : 'sidebar--max'} */}
+            <div
+              className={
+                userSettings?.sidebar === 'open'
+                  ? 'is-sidebar is-sidebar-max--opened'
+                  : userSettings?.sidebar === 'close'
+                    ? 'is-sidebar is-sidebar-min--closed'
+                    : isMinWidth
+                      ? 'is-sidebar is-sidebar-min'
+                      : 'is-sidebar is-sidebar-max'
+              }
+            >
               <ApplicationRoutes />
             </div>
           </SidebarContext.Provider>

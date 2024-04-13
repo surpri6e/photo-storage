@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import './SidebarList.scss'
 import { sidebarCards } from '@renderer/utils/sidebarCards'
 import SidebarCard from '../SidebarCard/SidebarCard'
 import { useIsMinWidthDebounced } from '@renderer/hooks/useIsMinWidthDebounced'
+import { UserContext } from '@renderer/context/UserContext'
 
 interface ISidebarList {
   isMinWidth: boolean
@@ -11,6 +12,7 @@ interface ISidebarList {
 
 const SidebarList: FC<ISidebarList> = ({ isMinWidth, setIsMinWidth }) => {
   const isMinWidthDebounced = useIsMinWidthDebounced(isMinWidth)
+  const { userSettings } = useContext(UserContext)
 
   return (
     <ul className="sidebar_list">
@@ -24,9 +26,11 @@ const SidebarList: FC<ISidebarList> = ({ isMinWidth, setIsMinWidth }) => {
         />
       ))}
 
-      <li className="sidebar_card sidebar_button" onClick={() => setIsMinWidth((prev) => !prev)}>
-        {isMinWidthDebounced ? '>' : '<'}
-      </li>
+      {(!userSettings || userSettings?.sidebar === 'all') && (
+        <li className="sidebar_card sidebar_button" onClick={() => setIsMinWidth((prev) => !prev)}>
+          {isMinWidthDebounced ? '>' : '<'}
+        </li>
+      )}
     </ul>
   )
 }

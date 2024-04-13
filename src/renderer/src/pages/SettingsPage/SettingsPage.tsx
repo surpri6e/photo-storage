@@ -1,13 +1,16 @@
-import { useContext } from 'react'
 import './SettingsPage.scss'
-import { UserContext } from '@renderer/context/UserContext'
+import '../../styles/libs/ProfileAndSettingsPage.scss'
+import SettingsPageImageSetting from './SettingsPageImageSetting/SettingsPageImageSetting'
+import SettingsPageSidebarSetting from './SettingsPageSidebarSetting/SettingsPageSidebarSetting'
 
 const SettingsPage = (): JSX.Element => {
-  const { userSettings } = useContext(UserContext)
   return (
-    <div>
-      SettingsPage
-      <div>показывать название фотографий: {userSettings?.showTitlesOfImages ? 'да' : 'нет'}</div>
+    <div className="pas">
+      <div className="pas_body">
+        <div className="pas_title">Настройки</div>
+        <SettingsPageImageSetting />
+        <SettingsPageSidebarSetting />
+      </div>
     </div>
   )
 }
