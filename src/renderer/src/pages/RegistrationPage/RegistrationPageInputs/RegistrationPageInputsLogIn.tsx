@@ -14,8 +14,6 @@ const RegistrationPageInputsLogIn: FC<IRegistrationPageInputsLogIn> = ({
   const { email, password, setEmail, setPassword, emailError, passwordError } =
     useContext(RegistrationContext)
 
-  console.log(isUncorrectEmailOrPassword)
-
   return (
     <>
       <div className="registration_block">

@@ -7,6 +7,7 @@ import { UserContext } from '@renderer/context/UserContext'
 
 const Sidebar = (): JSX.Element => {
   const { isMinWidth, setIsMinWidth } = useContext(SidebarContext)
+
   const { userSettings } = useContext(UserContext)
 
   useEffect(() => {

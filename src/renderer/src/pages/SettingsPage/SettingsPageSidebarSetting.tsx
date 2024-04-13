@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
-import './SettingsPageSidebarSetting.scss'
 import { UserContext } from '@renderer/context/UserContext'
-import SettingsPageSelect from '../SettingsPageSelect/SettingsPageSelect'
+import SettingsPageSelect from './SettingsPageSelect/SettingsPageSelect'
 import { TUserSettingsSidebar } from '@renderer/types/IUserSettings'
 import { updateSidebarSetting } from '@renderer/api/userSettingsApi'
 

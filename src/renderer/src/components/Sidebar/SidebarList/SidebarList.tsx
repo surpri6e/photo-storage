@@ -12,6 +12,7 @@ interface ISidebarList {
 
 const SidebarList: FC<ISidebarList> = ({ isMinWidth, setIsMinWidth }) => {
   const isMinWidthDebounced = useIsMinWidthDebounced(isMinWidth)
+
   const { userSettings } = useContext(UserContext)
 
   return (
