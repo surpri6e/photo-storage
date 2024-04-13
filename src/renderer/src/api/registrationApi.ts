@@ -1,6 +1,7 @@
 import { IRegistrationContext } from '@renderer/types/contexts/IRegistrationContext'
 import { validateEmail } from '@renderer/utils/validateEmail'
 import { ActionCodeSettings, UserCredential } from 'firebase/auth'
+import { createNewUser } from './userDataApi'
 
 export const clearContext = (context: IRegistrationContext): void => {
   context.setEmail('')
@@ -39,6 +40,7 @@ export const createNewAccount = async (
   ) {
     const result = await cbfunction(context.email, context.password)
     if (result) {
+      await createNewUser(context.email, result.user.uid)
       clearContext(context)
     }
   }

@@ -10,18 +10,32 @@
   cursor: pointer;
 
   @include iconSize;
+
+  img {
+    @include defaultTransition;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }
 
 .header_profile {
   cursor: pointer;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: $green;
+
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+
+    @include defaultTransition;
+
+    object-fit: cover;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
 
   margin-right: 10px;
-
-  @include defaultTransition;
-
-  @include hoverGreen;
 }

@@ -5,11 +5,12 @@ export interface IUserInfo {
   dateOfCreate: string
   images: IUserInfoImage[]
   albums: IUserInfoAlbums[]
+  uid: string
+  urlAvatar: string | undefined
 }
 
-// commets: string[]
 export interface IUserInfoImage {
-  url: string
+  urlImage: string
   title: string
   isLiked: boolean
   isInTrasher: boolean

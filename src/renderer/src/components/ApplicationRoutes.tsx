@@ -1,4 +1,5 @@
 import { AuthContext } from '@renderer/context/AuthContext'
+import { UserContext } from '@renderer/context/UserContext'
 import ErrorPage from '@renderer/pages/ErrorPage/ErrorPage'
 import LoadingPage from '@renderer/pages/LoadingPage/LoadingPage'
 import PhotosPage from '@renderer/pages/PhotosPage/PhotosPage'
@@ -10,10 +11,35 @@ import { Route, Routes } from 'react-router-dom'
 const ApplicationRoutes = (): JSX.Element => {
   const { user, loading, error } = useContext(AuthContext)
 
+  const { userInfoLoading, userInfoError, userSettingsLoading, userSettingsError } =
+    useContext(UserContext)
+
   return (
     <Routes>
-      {loading && <Route element={<LoadingPage />} path="*" />}
-      {error && !loading && <Route element={<ErrorPage errorMessage={error.message} />} path="*" />}
+      {(loading || userInfoLoading || userSettingsLoading) && (
+        <Route element={<LoadingPage />} path="*" />
+      )}
+      {(error || userInfoError || userSettingsError) &&
+        !loading &&
+        !userInfoLoading &&
+        !userSettingsLoading && (
+          <Route
+            element={
+              <ErrorPage
+                errorMessage={
+                  error
+                    ? error.message
+                    : userInfoError
+                      ? userInfoError.message
+                      : userSettingsError
+                        ? userSettingsError.message
+                        : 'проверьте подключение к интернету'
+                }
+              />
+            }
+            path="*"
+          />
+        )}
 
       {user && !error && !loading && (
         <>

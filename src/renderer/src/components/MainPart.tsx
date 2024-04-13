@@ -5,9 +5,14 @@ import Sidebar from './Sidebar/Sidebar'
 import Header from './Header/Header'
 import '../styles/libs/MainPart.scss'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
-import { auth } from '@renderer/main'
+import { auth, db } from '@renderer/main'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { AuthContext } from '@renderer/context/AuthContext'
+import { UserContext } from '@renderer/context/UserContext'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
+import { IUserInfo } from '@renderer/types/IUserInfo'
+import { DocumentReference, doc } from 'firebase/firestore'
+import { IUserSettings } from '@renderer/types/IUserSettings'
 
 const MainPart = (): JSX.Element => {
   const [isMinWidth, setIsMinWidth] = useState(true)
@@ -22,32 +27,51 @@ const MainPart = (): JSX.Element => {
 
   const [user, loading, error] = useAuthState(auth)
 
+  const [userInfo, userInfoLoading, userInfoError] = useDocumentData<IUserInfo>(
+    doc(db, 'users', user?.uid ? user.uid : ' ') as DocumentReference<IUserInfo>
+  )
+
+  const [userSettings, userSettingsLoading, userSettingsError] = useDocumentData<IUserSettings>(
+    doc(db, 'settings', user?.uid ? user.uid : ' ') as DocumentReference<IUserSettings>
+  )
+
   return (
     <AuthContext.Provider value={{ user, loading, error }}>
-      <RegistrationContext.Provider
+      <UserContext.Provider
         value={{
-          email,
-          password,
-          doublePassword,
-          setEmail,
-          setPassword,
-          setDoublePassword,
-          emailError,
-          setEmailError,
-          passwordError,
-          setPasswordError,
-          passwordsEqualsError,
-          setPasswordsEqualsError
+          userInfo,
+          userSettings,
+          userInfoLoading,
+          userInfoError,
+          userSettingsLoading,
+          userSettingsError
         }}
       >
-        <SidebarContext.Provider value={{ isMinWidth, setIsMinWidth }}>
-          <Sidebar />
-          <Header />
-          <div className={isMinWidth ? 'is-sidebar is-sidebar-min' : 'is-sidebar is-sidebar-max'}>
-            <ApplicationRoutes />
-          </div>
-        </SidebarContext.Provider>
-      </RegistrationContext.Provider>
+        <RegistrationContext.Provider
+          value={{
+            email,
+            password,
+            doublePassword,
+            setEmail,
+            setPassword,
+            setDoublePassword,
+            emailError,
+            setEmailError,
+            passwordError,
+            setPasswordError,
+            passwordsEqualsError,
+            setPasswordsEqualsError
+          }}
+        >
+          <SidebarContext.Provider value={{ isMinWidth, setIsMinWidth }}>
+            <Sidebar />
+            <Header />
+            <div className={isMinWidth ? 'is-sidebar is-sidebar-min' : 'is-sidebar is-sidebar-max'}>
+              <ApplicationRoutes />
+            </div>
+          </SidebarContext.Provider>
+        </RegistrationContext.Provider>
+      </UserContext.Provider>
     </AuthContext.Provider>
   )
 }
