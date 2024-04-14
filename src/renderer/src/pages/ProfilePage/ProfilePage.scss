@@ -1,7 +1,28 @@
 @import '../../styles/vars.scss';
 
+.profile_buttons {
+  display: flex;
+
+  & > *:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
 .profile_button {
   padding: 10px;
+  border-radius: 5px;
   background-color: $red;
   color: white;
+}
+
+.profile_block {
+  font-size: 16px;
+}
+
+.vip-status--yes {
+  color: $green;
+}
+
+.vip-status--no {
+  color: $red;
 }

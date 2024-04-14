@@ -4,6 +4,8 @@ import '../../styles/libs/ProfileAndSettingsPage.scss'
 import { auth } from '@renderer/main'
 import { useContext } from 'react'
 import { UserContext } from '@renderer/context/UserContext'
+import ProfilePageStaticInformation from './ProfilePageStaticInformation/ProfilePageStaticInformation'
+import ProfilePageAvatar from './ProfilePageAvatar/ProfilePageAvatar'
 
 const ProfilePage = (): JSX.Element => {
   const [signOut] = useSignOut(auth)
@@ -15,10 +17,21 @@ const ProfilePage = (): JSX.Element => {
     <div className="pas">
       <div className="pas_body">
         <div className="pas_title">Профиль</div>
-        <div onClick={() => signOut()}>leave from accout</div>
-        <div>vip status: {userInfo?.vipStatus ? 'yes' : 'no'}</div>
-        <button className="profile_button">Выйти из аккаунта</button>
-        <button className="profile_button">Удалить аккаунт</button>
+        <ProfilePageAvatar />
+
+        <ProfilePageStaticInformation />
+
+        <div className="profile_buttons">
+          <button className="profile_button">Изменить почту</button>
+          <button className="profile_button">Изменить пароль</button>
+        </div>
+
+        <div className="profile_buttons">
+          <button className="profile_button" onClick={() => signOut()}>
+            Выйти из аккаунта
+          </button>
+          <button className="profile_button">Удалить аккаунт</button>
+        </div>
       </div>
     </div>
   )

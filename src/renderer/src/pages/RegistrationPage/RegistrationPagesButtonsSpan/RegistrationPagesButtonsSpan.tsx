@@ -16,6 +16,7 @@ const RegistrationPagesButtonsSpan: FC<IRegistrationPagesButtonsSpan> = ({
   const context = useContext(RegistrationContext)
   return (
     <span
+      className="registration_span"
       onClick={() => {
         clearContext(context)
         setRegistrationType((prev) => (prev === 'registration' ? 'logIn' : 'registration'))

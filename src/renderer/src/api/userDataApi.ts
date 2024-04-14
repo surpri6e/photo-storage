@@ -8,17 +8,18 @@ import { getRandomKey } from 'rkey'
 export const createNewUser = async (email: string, uid: string): Promise<void> => {
   const newUser: IUserInfo = {
     vipStatus: false,
-    basicEmail: email,
+    firstEmail: email,
     id: getRandomKey(30, 'numbers'),
     images: [],
     albums: [],
     dateOfCreate: dateFormatter(new Date()),
-    urlAvatar: undefined,
+    urlAvatar: '',
     uid
   }
 
   const newSettings: IUserSettings = {
     maxStorageMemory: 0,
+    nowStorageMemory: 0,
     showTitlesOfImages: true,
     sidebar: 'all'
   }

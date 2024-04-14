@@ -1,12 +1,12 @@
 export interface IUserInfo {
-  basicEmail: string
+  firstEmail: string
   vipStatus: boolean
   id: string
   dateOfCreate: string
   images: IUserInfoImage[]
   albums: IUserInfoAlbums[]
   uid: string
-  urlAvatar: string | undefined
+  urlAvatar: string
 }
 
 export interface IUserInfoImage {
