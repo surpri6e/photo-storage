@@ -1,0 +1,9 @@
+@import '../../../styles/vars.scss';
+
+.vip-status--yes {
+  color: $green;
+}
+
+.vip-status--no {
+  color: $red;
+}

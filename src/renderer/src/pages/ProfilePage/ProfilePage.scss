@@ -1,7 +1,14 @@
 @import '../../styles/vars.scss';
+@import '../../styles/mixins.scss';
 
 .profile_buttons {
   display: flex;
+  align-items: center;
+
+  p {
+    font-size: 16px;
+    text-decoration: underline;
+  }
 
   & > *:not(:last-child) {
     margin-right: 15px;
@@ -11,18 +18,36 @@
 .profile_button {
   padding: 10px;
   border-radius: 5px;
-  background-color: $red;
+  background-color: black;
   color: white;
+
+  @include defaultTransition;
+}
+
+.profile_button--wrong {
+  background-color: $red;
+
+  &:hover {
+    background-color: darken($red, 5);
+  }
+}
+
+.profile_button--green {
+  background-color: $green;
+
+  &:hover {
+    background-color: darken($green, 5);
+  }
+}
+
+.profile_button--orange {
+  background-color: darken($orange, 20);
+
+  &:hover {
+    background-color: darken(darken($orange, 20), 5);
+  }
 }
 
 .profile_block {
   font-size: 16px;
-}
-
-.vip-status--yes {
-  color: $green;
-}
-
-.vip-status--no {
-  color: $red;
 }

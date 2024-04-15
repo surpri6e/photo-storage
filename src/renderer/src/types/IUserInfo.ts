@@ -12,7 +12,7 @@ export interface IUserInfo {
 export interface IUserInfoImage {
   urlImage: string
   title: string
-  isLiked: boolean
+  isStarred: boolean
   isInTrasher: boolean
   dateOfCreate: string
 }

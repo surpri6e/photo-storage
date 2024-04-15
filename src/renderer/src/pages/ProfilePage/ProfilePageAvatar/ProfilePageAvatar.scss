@@ -1,5 +1,9 @@
 @import '../../../styles/mixins.scss';
 
+.profile_header {
+  @include flexCenter;
+}
+
 .profile_avatar {
   width: 100px;
   height: 100px;

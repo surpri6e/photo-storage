@@ -13,7 +13,11 @@
 }
 
 .registration_input {
-  @include registrationSizes;
+  @include standartInputSizes;
+}
+
+.profile_input {
+  @include standartInputSizes;
 }
 
 .registration_input--password {

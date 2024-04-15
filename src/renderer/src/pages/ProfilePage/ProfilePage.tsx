@@ -1,18 +1,11 @@
-import { useSignOut } from 'react-firebase-hooks/auth'
 import './ProfilePage.scss'
 import '../../styles/libs/ProfileAndSettingsPage.scss'
-import { auth } from '@renderer/main'
-import { useContext } from 'react'
-import { UserContext } from '@renderer/context/UserContext'
 import ProfilePageStaticInformation from './ProfilePageStaticInformation/ProfilePageStaticInformation'
 import ProfilePageAvatar from './ProfilePageAvatar/ProfilePageAvatar'
+import ProfilePageWrongButtons from './ProfilePageWrongButtons'
+import ProfilePageChangeData from './ProfilePageChangeData/ProfilePageChangeData'
 
 const ProfilePage = (): JSX.Element => {
-  const [signOut] = useSignOut(auth)
-  const { userInfo } = useContext(UserContext)
-
-  console.log(userInfo)
-
   return (
     <div className="pas">
       <div className="pas_body">
@@ -21,17 +14,9 @@ const ProfilePage = (): JSX.Element => {
 
         <ProfilePageStaticInformation />
 
-        <div className="profile_buttons">
-          <button className="profile_button">Изменить почту</button>
-          <button className="profile_button">Изменить пароль</button>
-        </div>
+        <ProfilePageChangeData />
 
-        <div className="profile_buttons">
-          <button className="profile_button" onClick={() => signOut()}>
-            Выйти из аккаунта
-          </button>
-          <button className="profile_button">Удалить аккаунт</button>
-        </div>
+        <ProfilePageWrongButtons />
       </div>
     </div>
   )
