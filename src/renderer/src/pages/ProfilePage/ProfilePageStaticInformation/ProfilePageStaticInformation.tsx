@@ -15,6 +15,7 @@ const ProfilePageStaticInformation = (): JSX.Element => {
       </div>
       <div className="profile_block">Дата создания: {userInfo?.dateOfCreate}</div>
       <div className="profile_block">Ваш уникальный айди: {userInfo?.id}</div>
+      <div className="profile_block">Первая почта: {userInfo?.firstEmail}</div>
     </>
   )
 }

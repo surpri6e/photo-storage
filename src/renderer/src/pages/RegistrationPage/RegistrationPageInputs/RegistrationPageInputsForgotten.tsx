@@ -22,7 +22,7 @@ const RegistrationPageInputsForgotten: FC<IRegistrationPageInputsForgotten> = ({
         className={
           !emailError && !isEmailCanBeReset
             ? 'input registration_input'
-            : 'input registration_input registration_input--danger'
+            : 'input registration_input input--danger'
         }
       />
     </div>

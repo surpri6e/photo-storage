@@ -29,7 +29,7 @@ export const useRegistrationInfo = (
         setIsEmailCanBeReset(false)
       }, 1500)
     }
-  }, [errorCreate, errorSignIn])
+  }, [errorCreate, errorSignIn, errorReset])
 
   return [isAccoutExist, isUncorrectEmailOrPassword, isEmailCanBeReset]
 }

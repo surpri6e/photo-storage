@@ -35,7 +35,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
           className={
             !emailError && !isAccoutExist
               ? 'input registration_input'
-              : 'input registration_input registration_input--danger'
+              : 'input registration_input input--danger'
           }
         />
       </div>
@@ -53,7 +53,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
           className={
             !passwordError && !passwordsEqualsError && !isAccoutExist
               ? 'input registration_input registration_input--password'
-              : 'input registration_input registration_input--danger registration_input--password'
+              : 'input registration_input input--danger registration_input--password'
           }
         />
       </div>
@@ -69,7 +69,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
           className={
             !passwordsEqualsError
               ? 'input registration_input registration_input--password'
-              : 'input registration_input registration_input--danger registration_input--password'
+              : 'input registration_input input--danger registration_input--password'
           }
         />
       </div>

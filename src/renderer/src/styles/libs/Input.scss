@@ -7,6 +7,14 @@
   font-size: 14px;
 }
 
+.input--danger {
+  border: 1px solid $red;
+  color: $red;
+  &::placeholder {
+    color: $red;
+  }
+}
+
 .header_input {
   width: 500px;
   height: 30px;
@@ -22,12 +30,4 @@
 
 .registration_input--password {
   font-size: 18px;
-}
-
-.registration_input--danger {
-  border: 1px solid $red;
-  color: $red;
-  &::placeholder {
-    color: $red;
-  }
 }

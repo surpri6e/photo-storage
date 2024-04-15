@@ -3,6 +3,7 @@ export interface IUserSettings {
   sidebar: TUserSettingsSidebar
   showTitlesOfImages: boolean
   nowStorageMemory: number
+  verifyEmail: boolean
 }
 
 export type TUserSettingsSidebar = 'open' | 'close' | 'all'

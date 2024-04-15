@@ -22,7 +22,8 @@ export const createNewUser = async (email: string, uid: string): Promise<void> =
     maxStorageMemory: 0,
     nowStorageMemory: 0,
     showTitlesOfImages: true,
-    sidebar: 'all'
+    sidebar: 'all',
+    verifyEmail: false
   }
 
   await setDoc(doc(db, 'users', uid), newUser)
@@ -34,10 +35,10 @@ export const updateUserEmail = async (
   setEmail: React.Dispatch<React.SetStateAction<string>>,
   setEmailError: React.Dispatch<React.SetStateAction<boolean>>,
   cbfunction: (email: string) => Promise<boolean>
-): Promise<void> => {
+): Promise<boolean> => {
   if (email.length < 5 || !validateEmail(email)) {
     setEmailError(true)
-    setTimeout(() => setEmailError(false), 1500)
+    setTimeout(() => setEmailError(false), 1000)
   }
 
   if (!(email.length < 5 || !validateEmail(email))) {
@@ -45,8 +46,11 @@ export const updateUserEmail = async (
     if (result) {
       setEmail('')
       setEmailError(false)
+      return true
     }
   }
+
+  return false
 }
 
 export const updateUserPassword = async (
@@ -54,10 +58,10 @@ export const updateUserPassword = async (
   setPassword: React.Dispatch<React.SetStateAction<string>>,
   setPasswordError: React.Dispatch<React.SetStateAction<boolean>>,
   cbfunction: (password: string) => Promise<boolean>
-): Promise<void> => {
+): Promise<boolean> => {
   if (password.length < 6) {
     setPasswordError(true)
-    setTimeout(() => setPasswordError(false), 1500)
+    setTimeout(() => setPasswordError(false), 1000)
   }
 
   if (!(password.length < 6)) {
@@ -65,6 +69,9 @@ export const updateUserPassword = async (
     if (result) {
       setPassword('')
       setPasswordError(false)
+      return true
     }
   }
+
+  return false
 }

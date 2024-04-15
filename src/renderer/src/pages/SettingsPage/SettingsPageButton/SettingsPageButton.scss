@@ -1,0 +1,19 @@
+@import '../../../styles/vars.scss';
+
+.settings_button--orange {
+  background-color: $orange;
+
+  &:hover {
+    background-color: darken($orange, 15);
+  }
+}
+
+.settings_button--green {
+  background-color: $green;
+  cursor: auto;
+  &:hover {
+    background-color: $green;
+  }
+
+  color: $white;
+}
