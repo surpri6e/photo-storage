@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react'
 import './RegistrationPagesButtonsSpan.scss'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
-import { clearContext } from '@renderer/api/registrationApi'
+import { RegistartionApi } from '@renderer/api/registrationApi'
 import { TTypeOfRegistration } from '@renderer/types/TTypeOfRegistration'
 
 interface IRegistrationPagesButtonsSpan {
@@ -18,7 +18,7 @@ const RegistrationPagesButtonsSpan: FC<IRegistrationPagesButtonsSpan> = ({
     <span
       className="registration_span"
       onClick={() => {
-        clearContext(context)
+        RegistartionApi.clearContext(context)
         setRegistrationType((prev) => (prev === 'registration' ? 'logIn' : 'registration'))
       }}
     >

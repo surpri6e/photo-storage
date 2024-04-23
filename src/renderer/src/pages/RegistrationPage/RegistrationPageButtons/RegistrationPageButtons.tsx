@@ -1,7 +1,7 @@
 import './RegistrationPageButtons.scss'
 import { FC, useContext } from 'react'
 import RegistrationPagesButtonsSpan from '../RegistrationPagesButtonsSpan/RegistrationPagesButtonsSpan'
-import { createNewAccount, logInAccount, resetEmail } from '@renderer/api/registrationApi'
+import { RegistartionApi } from '@renderer/api/registrationApi'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
 import { ActionCodeSettings, UserCredential } from 'firebase/auth'
 import { TTypeOfRegistration } from '@renderer/types/TTypeOfRegistration'
@@ -45,7 +45,9 @@ const RegistrationPageButtons: FC<IRegistrationPageButtons> = ({
         <>
           <button
             className="registration_button"
-            onClick={() => createNewAccount(context, createUserWithEmailAndPassword)}
+            onClick={() =>
+              RegistartionApi.createNewAccount(context, createUserWithEmailAndPassword)
+            }
           >
             Зарегистрироваться
           </button>
@@ -61,7 +63,7 @@ const RegistrationPageButtons: FC<IRegistrationPageButtons> = ({
         <>
           <button
             className="registration_button"
-            onClick={() => logInAccount(context, signInWithEmailAndPassword)}
+            onClick={() => RegistartionApi.logInAccount(context, signInWithEmailAndPassword)}
           >
             Войти
           </button>
@@ -78,7 +80,7 @@ const RegistrationPageButtons: FC<IRegistrationPageButtons> = ({
           <button
             className="registration_button"
             onClick={async () => {
-              const result = await resetEmail(context, sendPasswordResetEmail)
+              const result = await RegistartionApi.resetEmail(context, sendPasswordResetEmail)
               if (result) {
                 setRegistrationType('registration')
               }

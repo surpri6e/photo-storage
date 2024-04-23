@@ -1,4 +1,4 @@
-import { updateImageSetting } from '@renderer/api/userSettingsApi'
+import { UserSettingsApi } from '@renderer/api/userSettingsApi'
 import { UserContext } from '@renderer/context/UserContext'
 import { useContext } from 'react'
 
@@ -11,7 +11,7 @@ const SettingsPageImageSetting = (): JSX.Element => {
         className="settings_button"
         onClick={() => {
           if (userSettings && userInfo) {
-            updateImageSetting(userInfo, userSettings)
+            UserSettingsApi.updateImageSetting(userInfo, userSettings)
           }
         }}
       >

@@ -13,9 +13,15 @@ const ProfilePageStaticInformation = (): JSX.Element => {
           {userInfo?.vipStatus ? 'есть' : 'нет'}
         </span>
       </div>
-      <div className="profile_block">Дата создания: {userInfo?.dateOfCreate}</div>
-      <div className="profile_block">Ваш уникальный айди: {userInfo?.id}</div>
-      <div className="profile_block">Первая почта: {userInfo?.firstEmail}</div>
+      <div className="profile_block">
+        Дата создания: <span>{userInfo?.dateOfCreate}</span>
+      </div>
+      <div className="profile_block">
+        Ваш уникальный айди: <span className="profile_id">{userInfo?.id}</span>
+      </div>
+      <div className="profile_block">
+        Первая почта: <span className="profile_email">{userInfo?.firstEmail}</span>
+      </div>
     </>
   )
 }

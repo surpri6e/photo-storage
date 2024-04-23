@@ -1,4 +1,4 @@
-import { updateUserEmail, updateUserPassword } from '@renderer/api/userDataApi'
+import { UserInfoApi } from '@renderer/api/userInfoApi'
 import Input from '@renderer/components/Input'
 import { auth } from '@renderer/main'
 import { TChangeData } from '@renderer/types/TChangeData'
@@ -69,7 +69,12 @@ const ProfilePageChangeDataInputs: FC<IProfilePageChangeDataInputs> = ({
           <button
             className="profile_button profile_button--green"
             onClick={async () => {
-              const result = await updateUserEmail(email, setEmail, setEmailError, updateEmail)
+              const result = await UserInfoApi.updateUserEmail(
+                email,
+                setEmail,
+                setEmailError,
+                updateEmail
+              )
               if (result) setVariable('closed')
             }}
           >
@@ -102,7 +107,7 @@ const ProfilePageChangeDataInputs: FC<IProfilePageChangeDataInputs> = ({
           <button
             className="profile_button profile_button--green"
             onClick={async () => {
-              const result = await updateUserPassword(
+              const result = await UserInfoApi.updateUserPassword(
                 password,
                 setPassword,
                 setPasswordError,

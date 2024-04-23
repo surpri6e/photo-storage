@@ -1,95 +1,101 @@
 import { IRegistrationContext } from '@renderer/types/contexts/IRegistrationContext'
 import { validateEmail } from '@renderer/utils/validateEmail'
 import { ActionCodeSettings, UserCredential } from 'firebase/auth'
-import { createNewUser } from './userDataApi'
+import { UserInfoApi } from './userInfoApi'
 
-export const clearContext = (context: IRegistrationContext): void => {
-  context.setEmail('')
-  context.setPassword('')
-  context.setDoublePassword('')
+export class RegistartionApi {
+  public static clearContext = (context: IRegistrationContext): void => {
+    context.setEmail('')
+    context.setPassword('')
+    context.setDoublePassword('')
 
-  context.setEmailError(false)
-  context.setPasswordError(false)
-  context.setPasswordsEqualsError(false)
-}
-
-export const createNewAccount = async (
-  context: IRegistrationContext,
-  cbfunction: (email: string, password: string) => Promise<UserCredential | undefined>
-): Promise<void> => {
-  if (context.email.length < 5 || !validateEmail(context.email)) {
-    context.setEmailError(true)
-    setTimeout(() => context.setEmailError(false), 1500)
+    context.setEmailError(false)
+    context.setPasswordError(false)
+    context.setPasswordsEqualsError(false)
   }
 
-  if (context.password.length < 6) {
-    context.setPasswordError(true)
-    setTimeout(() => context.setPasswordError(false), 1500)
-    return
-  }
+  public static createNewAccount = async (
+    context: IRegistrationContext,
+    cbfunction: (email: string, password: string) => Promise<UserCredential | undefined>
+  ): Promise<void> => {
+    this.checkOnEmailError(context)
 
-  if (context.password != context.doublePassword) {
-    context.setPasswordsEqualsError(true)
-    setTimeout(() => context.setPasswordsEqualsError(false), 1500)
-  }
-
-  if (
-    !(context.email.length < 5 || !validateEmail(context.email)) &&
-    !(context.password.length < 6) &&
-    !(context.password != context.doublePassword)
-  ) {
-    const result = await cbfunction(context.email, context.password)
-    if (result) {
-      await createNewUser(context.email, result.user.uid)
-      clearContext(context)
+    if (context.password.length < 6) {
+      context.setPasswordError(true)
+      setTimeout(() => context.setPasswordError(false), 1500)
+      return
     }
-  }
-}
 
-export const logInAccount = async (
-  context: IRegistrationContext,
-  cbfunction: (email: string, password: string) => Promise<UserCredential | undefined>
-): Promise<void> => {
-  if (context.email.length < 5 || !validateEmail(context.email)) {
-    context.setEmailError(true)
-    setTimeout(() => context.setEmailError(false), 1500)
-  }
-
-  if (context.password.length < 6) {
-    context.setPasswordError(true)
-    setTimeout(() => context.setPasswordError(false), 1500)
-  }
-
-  if (
-    !(context.email.length < 5 || !validateEmail(context.email)) &&
-    !(context.password.length < 6)
-  ) {
-    const result = await cbfunction(context.email, context.password)
-    if (result) {
-      clearContext(context)
+    if (context.password != context.doublePassword) {
+      context.setPasswordsEqualsError(true)
+      setTimeout(() => context.setPasswordsEqualsError(false), 1500)
     }
-  }
-}
 
-export const resetEmail = async (
-  context: IRegistrationContext,
-  cbfunction: (
-    email: string,
-    actionCodeSettings?: ActionCodeSettings | undefined
-  ) => Promise<boolean>
-): Promise<boolean> => {
-  if (context.email.length < 5 || !validateEmail(context.email)) {
-    context.setEmailError(true)
-    setTimeout(() => context.setEmailError(false), 1500)
-  }
+    if (
+      !(context.email.length < 5 || !validateEmail(context.email)) &&
+      !(context.password.length < 6) &&
+      !(context.password != context.doublePassword)
+    ) {
+      const result = await cbfunction(context.email, context.password)
 
-  if (!(context.email.length < 5 || !validateEmail(context.email))) {
-    const result = await cbfunction(context.email)
-    if (result) {
-      clearContext(context)
-      return true
+      if (result) {
+        await UserInfoApi.createNewUser(context.email, result.user.uid)
+        this.clearContext(context)
+      }
     }
   }
 
-  return false
+  public static logInAccount = async (
+    context: IRegistrationContext,
+    cbfunction: (email: string, password: string) => Promise<UserCredential | undefined>
+  ): Promise<void> => {
+    this.checkOnEmailError(context)
+    this.checkOnPasswordError(context)
+
+    if (
+      !(context.email.length < 5 || !validateEmail(context.email)) &&
+      !(context.password.length < 6)
+    ) {
+      const result = await cbfunction(context.email, context.password)
+
+      if (result) {
+        this.clearContext(context)
+      }
+    }
+  }
+
+  public static resetEmail = async (
+    context: IRegistrationContext,
+    cbfunction: (
+      email: string,
+      actionCodeSettings?: ActionCodeSettings | undefined
+    ) => Promise<boolean>
+  ): Promise<boolean> => {
+    this.checkOnEmailError(context)
+
+    if (!(context.email.length < 5 || !validateEmail(context.email))) {
+      const result = await cbfunction(context.email)
+
+      if (result) {
+        this.clearContext(context)
+        return true
+      }
+    }
+
+    return false
+  }
+
+  private static checkOnEmailError = (context: IRegistrationContext): void => {
+    if (context.email.length < 5 || !validateEmail(context.email)) {
+      context.setEmailError(true)
+      setTimeout(() => context.setEmailError(false), 1500)
+    }
+  }
+
+  private static checkOnPasswordError = (context: IRegistrationContext): void => {
+    if (context.password.length < 6) {
+      context.setPasswordError(true)
+      setTimeout(() => context.setPasswordError(false), 1500)
+    }
+  }
 }

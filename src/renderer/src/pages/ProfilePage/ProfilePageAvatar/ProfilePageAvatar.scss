@@ -1,7 +1,9 @@
 @import '../../../styles/mixins.scss';
+@import '../../../styles/vars.scss';
 
 .profile_header {
   @include flexCenter;
+  position: relative;
 }
 
 .profile_avatar {
@@ -17,4 +19,26 @@
   &:hover {
     filter: brightness(0.8);
   }
+}
+
+.custom-avatar-upload {
+  cursor: pointer;
+  background-color: $black;
+  color: $white;
+
+  width: 75px;
+  height: 20px;
+  border-radius: 5px;
+
+  @include flexCenter;
+
+  font-family: 'Raleway', sans-serif;
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+#avatar-upload {
+  display: none;
 }
