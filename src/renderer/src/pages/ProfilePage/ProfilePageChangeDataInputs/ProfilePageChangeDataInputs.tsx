@@ -6,6 +6,7 @@ import { FC, useEffect, useState } from 'react'
 import { useUpdateEmail, useUpdatePassword } from 'react-firebase-hooks/auth'
 import './ProfilePageChangeDataInputs.scss'
 import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
+import { emailErrorMessage, passwordErrorMessage } from '@renderer/utils/constants'
 
 interface IProfilePageChangeDataInputs {
   variable: TChangeData
@@ -48,7 +49,7 @@ const ProfilePageChangeDataInputs: FC<IProfilePageChangeDataInputs> = ({
       {variable === 'email' && (
         <>
           <div className="profile_inputs">
-            {emailError && <HelpWindow message="Неправильная почта" />}
+            {emailError && <HelpWindow message={emailErrorMessage} />}
             {isEmailCanBeChanged && !emailError && (
               <HelpWindow message="Нельзя сменить на данную почту" />
             )}
@@ -86,7 +87,7 @@ const ProfilePageChangeDataInputs: FC<IProfilePageChangeDataInputs> = ({
       {variable === 'password' && (
         <>
           <div className="profile_inputs">
-            {passwordError && <HelpWindow message="Слишком короткий пароль" />}
+            {passwordError && <HelpWindow message={passwordErrorMessage} />}
             {isPasswordCanBeChanged && !passwordError && (
               <HelpWindow message="Нельзя сменить на данный пароль" />
             )}

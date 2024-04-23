@@ -1,6 +1,7 @@
 import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
 import Input from '@renderer/components/Input'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
+import { emailErrorMessage } from '@renderer/utils/constants'
 import { FC, useContext } from 'react'
 
 interface IRegistrationPageInputsForgotten {
@@ -13,7 +14,7 @@ const RegistrationPageInputsForgotten: FC<IRegistrationPageInputsForgotten> = ({
   const { email, setEmail, emailError } = useContext(RegistrationContext)
   return (
     <div className="registration_block">
-      {emailError && <HelpWindow message="Неправильная почта" />}
+      {emailError && <HelpWindow message={emailErrorMessage} />}
       {isEmailCanBeReset && <HelpWindow message="Почты не существует" />}
       <Input
         value={email}

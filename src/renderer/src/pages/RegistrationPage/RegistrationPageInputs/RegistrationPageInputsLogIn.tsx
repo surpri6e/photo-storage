@@ -1,7 +1,11 @@
 import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
 import Input from '@renderer/components/Input'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
-import { logInErrorMessage } from '@renderer/utils/constants'
+import {
+  emailErrorMessage,
+  logInErrorMessage,
+  passwordErrorMessage
+} from '@renderer/utils/constants'
 import { FC, useContext } from 'react'
 
 interface IRegistrationPageInputsLogIn {
@@ -17,7 +21,7 @@ const RegistrationPageInputsLogIn: FC<IRegistrationPageInputsLogIn> = ({
   return (
     <>
       <div className="registration_block">
-        {emailError && <HelpWindow message="Неправильная почта" />}
+        {emailError && <HelpWindow message={emailErrorMessage} />}
         {isUncorrectEmailOrPassword && <HelpWindow message={logInErrorMessage} />}
         <Input
           value={email}
@@ -31,7 +35,7 @@ const RegistrationPageInputsLogIn: FC<IRegistrationPageInputsLogIn> = ({
         />
       </div>
       <div className="registration_block">
-        {passwordError && <HelpWindow message="Короткий пароль" />}
+        {passwordError && <HelpWindow message={passwordErrorMessage} />}
         {isUncorrectEmailOrPassword && <HelpWindow message={logInErrorMessage} />}
         <Input
           value={password}

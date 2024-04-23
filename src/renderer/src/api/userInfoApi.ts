@@ -78,4 +78,14 @@ export class UserInfoApi {
 
     return false
   }
+
+  public static changeUserAvatar = async (
+    userInfo: IUserInfo,
+    urlAvatar: string
+  ): Promise<void> => {
+    await setDoc(doc(db, 'users', userInfo.uid), {
+      ...userInfo,
+      urlAvatar
+    } as IUserInfo)
+  }
 }

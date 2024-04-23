@@ -2,7 +2,11 @@ import Input from '@renderer/components/Input'
 import { FC, useContext } from 'react'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
 import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
-import { registrationErrorMessage } from '@renderer/utils/constants'
+import {
+  emailErrorMessage,
+  passwordErrorMessage,
+  registrationErrorMessage
+} from '@renderer/utils/constants'
 
 interface IRegistrationPageInputsRegistration {
   isAccoutExist: boolean
@@ -26,7 +30,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
   return (
     <>
       <div className="registration_block">
-        {emailError && <HelpWindow message="Неправильная почта" />}
+        {emailError && <HelpWindow message={emailErrorMessage} />}
         {isAccoutExist && <HelpWindow message={registrationErrorMessage} />}
         <Input
           value={email}
@@ -40,7 +44,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
         />
       </div>
       <div className="registration_block">
-        {passwordError && <HelpWindow message="Короткий пароль" />}
+        {passwordError && <HelpWindow message={passwordErrorMessage} />}
         {passwordsEqualsError && !passwordError && (
           <HelpWindow message="Пароли должны быть одинаковыми" />
         )}
