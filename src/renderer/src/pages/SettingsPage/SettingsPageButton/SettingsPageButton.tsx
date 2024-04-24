@@ -13,7 +13,7 @@ const SettingsPageButton = (): JSX.Element => {
   const [sendEmailVerification] = useSendEmailVerification(auth)
 
   useEffect(() => {
-    if (user && userInfo && userSettings && user?.emailVerified && !userSettings.verifyEmail) {
+    if (user && userInfo && userSettings && user.emailVerified && !userSettings.verifyEmail) {
       UserSettingsApi.verifyUserEmail(userInfo, userSettings)
     }
   }, [user])
