@@ -1,6 +1,31 @@
+@import '../../styles/vars.scss';
+
 .photos-list {
   display: flex;
   flex-wrap: wrap;
 
   padding: 10px 0;
+}
+
+.photos-list_creator {
+  width: calc(33.33% - 20px);
+  height: 260px;
+
+  border-radius: 5px;
+
+  margin: 0 10px;
+  margin-bottom: 30px;
+
+  background-color: $white;
+
+  padding: 10px;
+  position: relative;
+
+  input {
+    display: none;
+  }
+
+  label {
+    font-size: 120px;
+  }
 }

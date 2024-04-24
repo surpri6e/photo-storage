@@ -1,0 +1,19 @@
+@import '../../../styles/vars.scss';
+
+.photo-card_submenu {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  font-size: 24px;
+  cursor: pointer;
+
+  span {
+    width: 2px;
+    height: 2px;
+    border-width: 50%;
+    background-color: $black;
+    margin: 1.5px 0;
+  }
+}

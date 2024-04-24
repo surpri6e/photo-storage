@@ -14,7 +14,7 @@ const ProfilePageAvatar = (): JSX.Element => {
 
   useEffect(() => {
     if (avatar && userInfo) {
-      StorageApi.uploadPhoto(userInfo, uploadFile, avatar)
+      StorageApi.uploadAvatar(userInfo, uploadFile, avatar)
     }
   }, [avatar])
 

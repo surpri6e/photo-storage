@@ -88,4 +88,20 @@ export class UserInfoApi {
       urlAvatar
     } as IUserInfo)
   }
+
+  public static addNewphoto = async (userInfo: IUserInfo, urlPhoto: string): Promise<void> => {
+    await setDoc(doc(db, 'users', userInfo.uid), {
+      ...userInfo,
+      images: [
+        ...userInfo.images,
+        {
+          dateOfCreate: dateFormatter(new Date()),
+          isInTrasher: false,
+          isStarred: false,
+          title: '',
+          urlImage: urlPhoto
+        }
+      ]
+    } as IUserInfo)
+  }
 }

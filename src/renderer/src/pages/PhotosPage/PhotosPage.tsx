@@ -10,9 +10,7 @@ const PhotosPage = (): JSX.Element => {
   return (
     <div className="pwp">
       <div className="pwp_title">Ваши фотографии:</div>
-
-      {/* {userInfo && userInfo.images.length > 0 && <PhotosList photos={userInfo.images} />} */}
-      <PhotosList photos={userInfo.images} />
+      {userInfo && <PhotosList photos={userInfo.images} />}
     </div>
   )
 }
