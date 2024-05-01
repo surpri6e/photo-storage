@@ -6,6 +6,8 @@ import { UserContext } from '@renderer/context/UserContext'
 import { useUploadFile } from 'react-firebase-hooks/storage'
 import { StorageApi } from '@renderer/api/storageApi'
 
+import plus from '../../images/plus.png'
+
 interface IPhotosList {
   photos: IUserInfoImage[]
 }
@@ -26,7 +28,7 @@ const PhotosList: FC<IPhotosList> = ({ photos }) => {
     <div className="photos-list">
       <div className="photos-list_creator">
         <label htmlFor="photo-upload" className="custom-photo-upload">
-          +
+          <img src={plus} alt="Добавить фотографию" />
         </label>
         <input
           id="photo-upload"
@@ -41,6 +43,7 @@ const PhotosList: FC<IPhotosList> = ({ photos }) => {
             title={image.title.length > 97 ? image.title.slice(0, 97) + '...' : image.title}
             date={image.dateOfCreate}
             isStarred={image.isStarred}
+            id={image.id}
             key={image.urlImage}
           />
         ))}

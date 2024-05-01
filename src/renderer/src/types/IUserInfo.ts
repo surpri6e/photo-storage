@@ -15,6 +15,7 @@ export interface IUserInfoImage {
   isStarred: boolean
   isInTrasher: boolean
   dateOfCreate: string
+  id: string
 }
 
 export interface IUserInfoAlbums {

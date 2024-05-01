@@ -11,7 +11,7 @@ export class UserInfoApi {
     const newUser: IUserInfo = {
       vipStatus: false,
       firstEmail: email,
-      id: getRandomKey(5, 'all'),
+      id: getRandomKey(10, 'all'),
       images: [],
       albums: [],
       dateOfCreate: dateFormatter(new Date()),
@@ -89,7 +89,11 @@ export class UserInfoApi {
     } as IUserInfo)
   }
 
-  public static addNewphoto = async (userInfo: IUserInfo, urlPhoto: string): Promise<void> => {
+  public static addNewphoto = async (
+    userInfo: IUserInfo,
+    id: string,
+    urlPhoto: string
+  ): Promise<void> => {
     await setDoc(doc(db, 'users', userInfo.uid), {
       ...userInfo,
       images: [
@@ -98,10 +102,32 @@ export class UserInfoApi {
           dateOfCreate: dateFormatter(new Date()),
           isInTrasher: false,
           isStarred: false,
-          title: '',
-          urlImage: urlPhoto
+          title: id,
+          urlImage: urlPhoto,
+          id: id
         }
       ]
     } as IUserInfo)
+  }
+
+  public static changeLikeForPhoto = async (userInfo: IUserInfo, id: string): Promise<void> => {
+    let index = 0
+    const image = userInfo.images.find((image, ind) => {
+      if (image.id === id) {
+        index = ind
+        return true
+      }
+
+      return false
+    })
+
+    if (image) {
+      userInfo.images[index].isStarred = !userInfo.images[index].isStarred
+
+      await setDoc(doc(db, 'users', userInfo.uid), {
+        ...userInfo,
+        images: userInfo.images
+      } as IUserInfo)
+    }
   }
 }

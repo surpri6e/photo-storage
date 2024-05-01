@@ -5,16 +5,18 @@ import PhotoCardSubmenu from './PhotoCardSubmenu/PhotoCardSubmenu'
 
 import starred from '../../images/starred.png'
 import notStarred from '../../images/notStarred.png'
+import { UserInfoApi } from '@renderer/api/userInfoApi'
 
 interface IPhotoCard {
   imageUrl: string
   title: string
   date: string
   isStarred: boolean
+  id: string
 }
 
-const PhotoCard: FC<IPhotoCard> = ({ imageUrl, title, date, isStarred }) => {
-  const { userSettings } = useContext(UserContext)
+const PhotoCard: FC<IPhotoCard> = ({ imageUrl, title, date, isStarred, id }) => {
+  const { userSettings, userInfo } = useContext(UserContext)
 
   return (
     <div className="photo-card">
@@ -39,7 +41,15 @@ const PhotoCard: FC<IPhotoCard> = ({ imageUrl, title, date, isStarred }) => {
         <div className="photo-card_date">{date}</div>
         <div className="photo-card_menu_right">
           <div className="photo-card_starred">
-            <img src={isStarred ? starred : notStarred} alt="Лайк" />
+            <img
+              src={isStarred ? starred : notStarred}
+              alt="Лайк"
+              onClick={() => {
+                if (userInfo) {
+                  UserInfoApi.changeLikeForPhoto(userInfo, id)
+                }
+              }}
+            />
           </div>
           <PhotoCardSubmenu />
         </div>

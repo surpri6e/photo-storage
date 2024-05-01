@@ -19,14 +19,14 @@ export class StorageApi {
     const isChecked = this.checkOnRules(photo)
 
     if (isChecked) {
-      const result = await uploadFile(ref(storage, `${userInfo.uid}.png`), photo, {
+      const result = await uploadFile(ref(storage, `${userInfo.id}.png`), photo, {
         contentType: 'image/png'
       })
 
       if (result) {
         await UserInfoApi.changeUserAvatar(
           userInfo,
-          `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${userInfo.uid}.png?alt=media`
+          `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${userInfo.id}.png?alt=media`
         )
       }
     }
@@ -42,17 +42,18 @@ export class StorageApi {
     photo: File
   ): Promise<void> => {
     const isChecked = this.checkOnRules(photo)
-    const randomId = getRandomKey(30, 'all')
+    const randomId = getRandomKey(10, 'all')
 
     if (isChecked) {
-      const result = await uploadFile(ref(storage, `${userInfo.uid}/${randomId}.png`), photo, {
+      const result = await uploadFile(ref(storage, `${userInfo.id}/${randomId}.png`), photo, {
         contentType: 'image/png'
       })
 
       if (result) {
         await UserInfoApi.addNewphoto(
           userInfo,
-          `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${userInfo.uid}%2F${randomId}.png?alt=media`
+          randomId,
+          `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${userInfo.id}%2F${randomId}.png?alt=media`
         )
       }
     }
