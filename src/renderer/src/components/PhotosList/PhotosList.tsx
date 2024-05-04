@@ -14,13 +14,13 @@ interface IPhotosList {
 
 const PhotosList: FC<IPhotosList> = ({ photos }) => {
   const [photo, setPhoto] = useState<File | undefined>()
-  const { userInfo } = useContext(UserContext)
+  const { userInfo, userSettings } = useContext(UserContext)
 
   const [uploadFile] = useUploadFile()
 
   useEffect(() => {
-    if (photo && userInfo) {
-      StorageApi.uploadPhoto(userInfo, uploadFile, photo)
+    if (photo && userInfo && userSettings) {
+      StorageApi.uploadPhoto(userInfo, userSettings, uploadFile, photo)
     }
   }, [photo])
 

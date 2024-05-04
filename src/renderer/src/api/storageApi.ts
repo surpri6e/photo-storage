@@ -1,10 +1,11 @@
-import { formatBytesToBytes } from 'bytes-transform'
+import { formatBytes, formatBytesToBytes } from 'bytes-transform'
 import { UserInfoApi } from './userInfoApi'
 import { StorageReference, UploadMetadata, UploadResult, ref } from 'firebase/storage'
 import { storage } from '@renderer/main'
 import { IUserInfo } from '@renderer/types/IUserInfo'
 import { firebaseConfig } from '@renderer/utils/firebaseConfig'
 import { getRandomKey } from 'rkey'
+import { IUserSettings } from '@renderer/types/IUserSettings'
 
 export class StorageApi {
   public static uploadAvatar = async (
@@ -34,6 +35,7 @@ export class StorageApi {
 
   public static uploadPhoto = async (
     userInfo: IUserInfo,
+    userSettings: IUserSettings,
     uploadFile: (
       storageRef: StorageReference,
       data: Blob | Uint8Array | ArrayBuffer,
@@ -43,8 +45,16 @@ export class StorageApi {
   ): Promise<void> => {
     const isChecked = this.checkOnRules(photo)
     const randomId = getRandomKey(10, 'all')
+    const formattedSize = formatBytes(photo.size, {
+      from: 'B',
+      to: 'MB',
+      fixTo: 1
+    }).amount
 
-    if (isChecked) {
+    if (
+      isChecked &&
+      userSettings.maxStorageMemory - userSettings.nowStorageMemory >= formattedSize
+    ) {
       const result = await uploadFile(ref(storage, `${userInfo.id}/${randomId}.png`), photo, {
         contentType: 'image/png'
       })
@@ -52,6 +62,8 @@ export class StorageApi {
       if (result) {
         await UserInfoApi.addNewphoto(
           userInfo,
+          userSettings,
+          formattedSize,
           randomId,
           `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${userInfo.id}%2F${randomId}.png?alt=media`
         )

@@ -91,6 +91,8 @@ export class UserInfoApi {
 
   public static addNewphoto = async (
     userInfo: IUserInfo,
+    userSettings: IUserSettings,
+    formattedSize: number,
     id: string,
     urlPhoto: string
   ): Promise<void> => {
@@ -108,6 +110,10 @@ export class UserInfoApi {
         }
       ]
     } as IUserInfo)
+    await setDoc(doc(db, 'settings', userInfo.uid), {
+      ...userSettings,
+      nowStorageMemory: userSettings.nowStorageMemory + formattedSize
+    } as IUserSettings)
   }
 
   public static changeLikeForPhoto = async (userInfo: IUserInfo, id: string): Promise<void> => {
