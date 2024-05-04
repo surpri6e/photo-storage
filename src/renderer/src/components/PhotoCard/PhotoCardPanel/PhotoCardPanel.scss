@@ -1,0 +1,44 @@
+@import '../../../styles/vars.scss';
+@import '../../../styles/mixins.scss';
+
+.photo-card_panel {
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  right: -70px;
+  bottom: 20px;
+
+  z-index: 100;
+
+  background-color: darken($white, 5);
+
+  padding: 4px;
+  border-radius: 2px;
+
+  & > *:not(:last-child) {
+    margin-bottom: 4px;
+  }
+
+  & > * {
+    @include defaultTransition;
+
+    padding: 5px;
+    border-radius: 2px;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($white, 10);
+    }
+  }
+}
+
+.photo-card_panel--delete {
+  background-color: $red;
+  color: $white;
+
+  &:hover {
+    background-color: darken($red, 5);
+  }
+}

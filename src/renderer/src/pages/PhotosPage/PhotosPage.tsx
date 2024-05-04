@@ -11,10 +11,10 @@ const PhotosPage = (): JSX.Element => {
     <div className="pwp">
       <div className="pwp_title">Ваши фотографии:</div>
       {userInfo && userSettings && userSettings.verifyEmail && (
-        <PhotosList photos={userInfo.images} />
+        <PhotosList photos={userInfo.images} withCreator={true} />
       )}
       {userInfo && userSettings && !userSettings.verifyEmail && (
-        <div className="photos_verify">
+        <div className="pwp_message">
           <span>Подвердите почту в настройках. После этого вы сможете загружать фотографии.</span>
         </div>
       )}

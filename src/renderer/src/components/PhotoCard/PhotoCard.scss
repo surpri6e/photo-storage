@@ -64,8 +64,8 @@
 }
 
 .photo-card_menu_right {
-  & > *:not(:last-child) {
-    margin-right: 10px;
+  & > *:not(:first-child) {
+    margin-left: 10px;
   }
 }
 

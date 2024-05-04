@@ -10,9 +10,10 @@ import plus from '../../images/plus.png'
 
 interface IPhotosList {
   photos: IUserInfoImage[]
+  withCreator: boolean
 }
 
-const PhotosList: FC<IPhotosList> = ({ photos }) => {
+const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
   const [photo, setPhoto] = useState<File | undefined>()
   const { userInfo, userSettings } = useContext(UserContext)
 
@@ -26,16 +27,18 @@ const PhotosList: FC<IPhotosList> = ({ photos }) => {
 
   return (
     <div className="photos-list">
-      <div className="photos-list_creator">
-        <label htmlFor="photo-upload" className="custom-photo-upload">
-          <img src={plus} alt="Добавить фотографию" />
-        </label>
-        <input
-          id="photo-upload"
-          type="file"
-          onChange={(e) => setPhoto(e.target.files ? e.target.files[0] : undefined)}
-        />
-      </div>
+      {withCreator && (
+        <div className="photos-list_creator">
+          <label htmlFor="photo-upload" className="custom-photo-upload">
+            <img src={plus} alt="Добавить фотографию" />
+          </label>
+          <input
+            id="photo-upload"
+            type="file"
+            onChange={(e) => setPhoto(e.target.files ? e.target.files[0] : undefined)}
+          />
+        </div>
+      )}
       {photos.length > 0 &&
         photos.map((image) => (
           <PhotoCard
