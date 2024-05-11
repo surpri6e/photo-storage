@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '@renderer/context/UserContext'
 import SettingsPageSelect from './SettingsPageSelect/SettingsPageSelect'
-import { TUserSettingsSidebar } from '@renderer/types/IUserSettings'
+import { TUserSettingsSidebar } from '@renderer/types/IUser'
 import { UserSettingsApi } from '@renderer/api/userSettingsApi'
 
 const SettingsPageSidebarSetting = (): JSX.Element => {
@@ -12,7 +12,7 @@ const SettingsPageSidebarSetting = (): JSX.Element => {
 
   useEffect(() => {
     if (userInfo && userSettings) {
-      UserSettingsApi.updateSidebarSetting(userInfo, userSettings, sidebarSetting)
+      UserSettingsApi.updateSidebarSetting({ userInfo, userSettings }, sidebarSetting)
     }
   }, [sidebarSetting])
 

@@ -13,11 +13,11 @@ const HeaderRight = (): JSX.Element => {
 
   return (
     <div className="header_right">
-      {user && (
+      {user && userInfo && (
         <>
           <Link className="header_profile" to={profilePath}>
             <img
-              src={userInfo?.urlAvatar.length === 0 ? defaultAvatar : userInfo?.urlAvatar}
+              src={userInfo.urlAvatar.length === 0 ? defaultAvatar : userInfo.urlAvatar}
               alt="Профиль"
             />
           </Link>

@@ -11,7 +11,7 @@ const SettingsPageImageSetting = (): JSX.Element => {
         className="settings_button"
         onClick={() => {
           if (userSettings && userInfo) {
-            UserSettingsApi.updateImageSetting(userInfo, userSettings)
+            UserSettingsApi.updateImageSetting({ userInfo, userSettings })
           }
         }}
       >

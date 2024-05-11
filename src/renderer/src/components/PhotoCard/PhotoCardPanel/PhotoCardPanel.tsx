@@ -6,7 +6,6 @@ interface IPhotoCardPanel {
 }
 
 const PhotoCardPanel: FC<IPhotoCardPanel> = ({ customRef }) => {
-  //nav???
   return (
     <div ref={customRef} className="photo-card_panel">
       <p>Скачать</p>

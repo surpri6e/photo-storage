@@ -1,68 +1,23 @@
 import { SidebarContext } from '@renderer/context/SidebarContext'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import ApplicationRoutes from './ApplicationRoutes'
 import Sidebar from './Sidebar/Sidebar'
 import Header from './Header/Header'
 import '../styles/libs/MainPart.scss'
-import { RegistrationContext } from '@renderer/context/RegistrationContext'
-import { auth, db } from '@renderer/main'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { AuthContext } from '@renderer/context/AuthContext'
 import { UserContext } from '@renderer/context/UserContext'
-import { useDocumentData } from 'react-firebase-hooks/firestore'
-import { IUserInfo } from '@renderer/types/IUserInfo'
-import { DocumentReference, doc } from 'firebase/firestore'
-import { IUserSettings } from '@renderer/types/IUserSettings'
+import AuthProvider from './Providers/AuthProvider'
+import UserProvider from './Providers/UserProvider'
+import RegistrationProvider from './Providers/RegistrationProvider'
 
 const MainPart = (): JSX.Element => {
   const [isMinWidth, setIsMinWidth] = useState(true)
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [doublePassword, setDoublePassword] = useState('')
-
-  const [emailError, setEmailError] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
-  const [passwordsEqualsError, setPasswordsEqualsError] = useState(false)
-
-  const [user, loading, error] = useAuthState(auth)
-
-  const [userInfo, userInfoLoading, userInfoError] = useDocumentData<IUserInfo>(
-    doc(db, 'users', user?.uid ? user.uid : ' ') as DocumentReference<IUserInfo>
-  )
-
-  const [userSettings, userSettingsLoading, userSettingsError] = useDocumentData<IUserSettings>(
-    doc(db, 'settings', user?.uid ? user.uid : ' ') as DocumentReference<IUserSettings>
-  )
+  const { userSettings } = useContext(UserContext)
 
   return (
-    <AuthContext.Provider value={{ user, loading, error }}>
-      <UserContext.Provider
-        value={{
-          userInfo,
-          userSettings,
-          userInfoLoading,
-          userInfoError,
-          userSettingsLoading,
-          userSettingsError
-        }}
-      >
-        <RegistrationContext.Provider
-          value={{
-            email,
-            password,
-            doublePassword,
-            setEmail,
-            setPassword,
-            setDoublePassword,
-            emailError,
-            setEmailError,
-            passwordError,
-            setPasswordError,
-            passwordsEqualsError,
-            setPasswordsEqualsError
-          }}
-        >
+    <AuthProvider>
+      <UserProvider>
+        <RegistrationProvider>
           <SidebarContext.Provider value={{ isMinWidth, setIsMinWidth }}>
             <Sidebar />
             <Header />
@@ -80,9 +35,9 @@ const MainPart = (): JSX.Element => {
               <ApplicationRoutes />
             </div>
           </SidebarContext.Provider>
-        </RegistrationContext.Provider>
-      </UserContext.Provider>
-    </AuthContext.Provider>
+        </RegistrationProvider>
+      </UserProvider>
+    </AuthProvider>
   )
 }
 

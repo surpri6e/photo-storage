@@ -3,6 +3,11 @@ import { validateEmail } from '@renderer/utils/validateEmail'
 import { ActionCodeSettings, UserCredential } from 'firebase/auth'
 import { UserInfoApi } from './userInfoApi'
 
+type cbSignature = (email: string, password: string) => Promise<UserCredential | undefined>
+type cbResetEmailSignature = (
+  email: string,
+  actionCodeSettings?: ActionCodeSettings | undefined
+) => Promise<boolean>
 export class RegistartionApi {
   public static clearContext = (context: IRegistrationContext): void => {
     context.setEmail('')
@@ -16,7 +21,7 @@ export class RegistartionApi {
 
   public static createNewAccount = async (
     context: IRegistrationContext,
-    cbfunction: (email: string, password: string) => Promise<UserCredential | undefined>
+    cb: cbSignature
   ): Promise<void> => {
     this.checkOnEmailError(context)
 
@@ -32,11 +37,11 @@ export class RegistartionApi {
     }
 
     if (
-      !(context.email.length < 5 || !validateEmail(context.email)) &&
-      !(context.password.length < 6) &&
+      !this.checkOnEmailError(context) &&
+      !this.checkOnPasswordError(context) &&
       !(context.password != context.doublePassword)
     ) {
-      const result = await cbfunction(context.email, context.password)
+      const result = await cb(context.email, context.password)
 
       if (result) {
         await UserInfoApi.createNewUser(context.email, result.user.uid)
@@ -47,16 +52,13 @@ export class RegistartionApi {
 
   public static logInAccount = async (
     context: IRegistrationContext,
-    cbfunction: (email: string, password: string) => Promise<UserCredential | undefined>
+    cb: cbSignature
   ): Promise<void> => {
     this.checkOnEmailError(context)
     this.checkOnPasswordError(context)
 
-    if (
-      !(context.email.length < 5 || !validateEmail(context.email)) &&
-      !(context.password.length < 6)
-    ) {
-      const result = await cbfunction(context.email, context.password)
+    if (!this.checkOnEmailError(context) && !this.checkOnPasswordError(context)) {
+      const result = await cb(context.email, context.password)
 
       if (result) {
         this.clearContext(context)
@@ -66,15 +68,12 @@ export class RegistartionApi {
 
   public static resetEmail = async (
     context: IRegistrationContext,
-    cbfunction: (
-      email: string,
-      actionCodeSettings?: ActionCodeSettings | undefined
-    ) => Promise<boolean>
+    cb: cbResetEmailSignature
   ): Promise<boolean> => {
     this.checkOnEmailError(context)
 
-    if (!(context.email.length < 5 || !validateEmail(context.email))) {
-      const result = await cbfunction(context.email)
+    if (!this.checkOnEmailError(context)) {
+      const result = await cb(context.email)
 
       if (result) {
         this.clearContext(context)
@@ -85,17 +84,21 @@ export class RegistartionApi {
     return false
   }
 
-  private static checkOnEmailError = (context: IRegistrationContext): void => {
+  private static checkOnEmailError = (context: IRegistrationContext): boolean => {
     if (context.email.length < 5 || !validateEmail(context.email)) {
       context.setEmailError(true)
       setTimeout(() => context.setEmailError(false), 1500)
     }
+
+    return context.email.length < 5 || !validateEmail(context.email)
   }
 
-  private static checkOnPasswordError = (context: IRegistrationContext): void => {
+  private static checkOnPasswordError = (context: IRegistrationContext): boolean => {
     if (context.password.length < 6) {
       context.setPasswordError(true)
       setTimeout(() => context.setPasswordError(false), 1500)
     }
+
+    return context.password.length < 6
   }
 }

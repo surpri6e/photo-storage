@@ -6,22 +6,22 @@ import PhotoCardSubmenu from './PhotoCardSubmenu/PhotoCardSubmenu'
 import starred from '../../images/starred.png'
 import notStarred from '../../images/notStarred.png'
 import { UserInfoApi } from '@renderer/api/userInfoApi'
+import { IUserInfoImage } from '@renderer/types/IUser'
 
-interface IPhotoCard {
-  imageUrl: string
-  title: string
-  date: string
-  isStarred: boolean
-  id: string
-}
-
-const PhotoCard: FC<IPhotoCard> = ({ imageUrl, title, date, isStarred, id }) => {
+const PhotoCard: FC<IUserInfoImage> = ({
+  urlImage,
+  title,
+  dateOfCreate,
+  isStarred,
+  id,
+  isInTrasher
+}) => {
   const { userSettings, userInfo } = useContext(UserContext)
 
   return (
     <div className="photo-card">
       <a
-        href={imageUrl}
+        href={urlImage}
         target="_blank"
         className={
           userSettings && userSettings.showTitlesOfImages
@@ -30,7 +30,7 @@ const PhotoCard: FC<IPhotoCard> = ({ imageUrl, title, date, isStarred, id }) => 
         }
         rel="noreferrer"
       >
-        <img src={imageUrl} alt={title} />
+        <img src={urlImage} alt={title} />
       </a>
 
       {userSettings && userSettings.showTitlesOfImages && (
@@ -38,7 +38,7 @@ const PhotoCard: FC<IPhotoCard> = ({ imageUrl, title, date, isStarred, id }) => 
       )}
 
       <div className="photo-card_menu">
-        <div className="photo-card_date">{date}</div>
+        <div className="photo-card_date">{dateOfCreate}</div>
         <div className="photo-card_menu_right">
           <div className="photo-card_starred">
             <img

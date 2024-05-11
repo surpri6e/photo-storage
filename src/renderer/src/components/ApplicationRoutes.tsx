@@ -11,18 +11,30 @@ import { Route, Routes } from 'react-router-dom'
 const ApplicationRoutes = (): JSX.Element => {
   const { user, loading, error } = useContext(AuthContext)
 
-  const { userInfoLoading, userInfoError, userSettingsLoading, userSettingsError } =
-    useContext(UserContext)
+  const {
+    userInfoLoading,
+    userInfoError,
+    userSettingsLoading,
+    userSettingsError,
+    userImagesLoading,
+    userImagesError,
+    userAlbumsLoading,
+    userAlbumsError
+  } = useContext(UserContext)
 
   return (
     <Routes>
-      {(loading || userInfoLoading || userSettingsLoading) && (
-        <Route element={<LoadingPage />} path="*" />
-      )}
-      {(error || userInfoError || userSettingsError) &&
+      {(loading ||
+        userInfoLoading ||
+        userSettingsLoading ||
+        userImagesLoading ||
+        userAlbumsLoading) && <Route element={<LoadingPage />} path="*" />}
+      {(error || userInfoError || userSettingsError || userImagesError || userAlbumsError) &&
         !loading &&
         !userInfoLoading &&
-        !userSettingsLoading && (
+        !userSettingsLoading &&
+        !userImagesLoading &&
+        !userAlbumsLoading && (
           <Route
             element={
               <ErrorPage
@@ -33,7 +45,11 @@ const ApplicationRoutes = (): JSX.Element => {
                       ? userInfoError.message
                       : userSettingsError
                         ? userSettingsError.message
-                        : 'проверьте подключение к интернету'
+                        : userImagesError
+                          ? userImagesError.message
+                          : userAlbumsError
+                            ? userAlbumsError.message
+                            : 'проверьте подключение к интернету'
                 }
               />
             }

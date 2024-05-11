@@ -1,4 +1,4 @@
-import { IUserInfoImage } from '@renderer/types/IUserInfo'
+import { IUserInfoImage } from '@renderer/types/IUser'
 import './PhotosList.scss'
 import { FC, useContext, useEffect, useState } from 'react'
 import PhotoCard from '../PhotoCard/PhotoCard'

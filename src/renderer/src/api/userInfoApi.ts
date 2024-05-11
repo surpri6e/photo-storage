@@ -1,19 +1,19 @@
 import { db } from '@renderer/main'
-import { IUserInfo } from '@renderer/types/IUserInfo'
-import { IUserSettings } from '@renderer/types/IUserSettings'
+import { IUserInfo, IUserInfoAlbums, IUserInfoImages } from '@renderer/types/IUser'
+import { IUserSettings } from '@renderer/types/IUser'
 import { dateFormatter } from '@renderer/utils/dateFormatter'
 import { validateEmail } from '@renderer/utils/validateEmail'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc, writeBatch } from 'firebase/firestore'
 import { getRandomKey } from 'rkey'
 
 export class UserInfoApi {
   public static createNewUser = async (email: string, uid: string): Promise<void> => {
+    const batch = writeBatch(db)
+
     const newUser: IUserInfo = {
       vipStatus: false,
       firstEmail: email,
       id: getRandomKey(10, 'all'),
-      images: [],
-      albums: [],
       dateOfCreate: dateFormatter(new Date()),
       urlAvatar: '',
       uid
@@ -27,8 +27,20 @@ export class UserInfoApi {
       verifyEmail: false
     }
 
-    await setDoc(doc(db, 'users', uid), newUser)
-    await setDoc(doc(db, 'settings', uid), newSettings)
+    const newImages: IUserInfoImages = {
+      images: []
+    }
+
+    const newAlbums: IUserInfoAlbums = {
+      albums: []
+    }
+
+    batch.set(doc(db, 'users', uid), newUser)
+    batch.set(doc(db, 'settings', uid), newSettings)
+    batch.set(doc(db, 'images', uid), newImages)
+    batch.set(doc(db, 'albums', uid), newAlbums)
+
+    await batch.commit()
   }
 
   public static updateUserEmail = async (
