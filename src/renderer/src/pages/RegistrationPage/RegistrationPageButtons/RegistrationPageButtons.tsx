@@ -1,7 +1,7 @@
 import './RegistrationPageButtons.scss'
 import { FC, useContext } from 'react'
 import RegistrationPagesButtonsSpan from '../RegistrationPagesButtonsSpan/RegistrationPagesButtonsSpan'
-import { RegistartionApi } from '@renderer/api/registrationApi'
+import RegistartionApi from '@renderer/api/registrationApi'
 import { RegistrationContext } from '@renderer/context/RegistrationContext'
 import { ActionCodeSettings, UserCredential } from 'firebase/auth'
 import { TTypeOfRegistration } from '@renderer/types/TTypeOfRegistration'
@@ -80,7 +80,7 @@ const RegistrationPageButtons: FC<IRegistrationPageButtons> = ({
           <button
             className="registration_button"
             onClick={async () => {
-              const result = await RegistartionApi.resetEmail(context, sendPasswordResetEmail)
+              const result = await RegistartionApi.resetPassword(context, sendPasswordResetEmail)
               if (result) {
                 setRegistrationType('registration')
               }

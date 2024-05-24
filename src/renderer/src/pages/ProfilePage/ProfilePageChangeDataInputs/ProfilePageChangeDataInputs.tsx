@@ -1,4 +1,4 @@
-import { UserInfoApi } from '@renderer/api/userInfoApi'
+import UserInfoApi from '@renderer/api/userInfoApi'
 import Input from '@renderer/components/Input'
 import { auth } from '@renderer/main'
 import { TChangeData } from '@renderer/types/TChangeData'
@@ -30,17 +30,25 @@ const ProfilePageChangeDataInputs: FC<IProfilePageChangeDataInputs> = ({
   const [isPasswordCanBeChanged, setIsPasswordCanBeChanged] = useState(false)
 
   useEffect(() => {
+    let firstTimeout: NodeJS.Timeout
+    let secondTimeout: NodeJS.Timeout
+
     if (errorEmail) {
       setIsEmailCanBeChanged(errorEmail)
-      setTimeout(() => {
+      firstTimeout = setTimeout(() => {
         setIsEmailCanBeChanged(false)
       }, 1000)
     }
     if (errorPassword) {
       setIsPasswordCanBeChanged(errorPassword)
-      setTimeout(() => {
+      secondTimeout = setTimeout(() => {
         setIsPasswordCanBeChanged(false)
       }, 1000)
+    }
+
+    return () => {
+      clearTimeout(firstTimeout)
+      clearTimeout(secondTimeout)
     }
   }, [errorEmail, errorPassword])
 
@@ -70,12 +78,12 @@ const ProfilePageChangeDataInputs: FC<IProfilePageChangeDataInputs> = ({
           <button
             className="profile_button profile_button--green"
             onClick={async () => {
-              const result = await UserInfoApi.updateUserEmail(
-                email,
-                setEmail,
-                setEmailError,
-                updateEmail
-              )
+              const result = await UserInfoApi.updateUserEmail({
+                value: email,
+                setValue: setEmail,
+                setValueError: setEmailError,
+                cbfunction: updateEmail
+              })
               if (result) setVariable('closed')
             }}
           >
@@ -108,12 +116,12 @@ const ProfilePageChangeDataInputs: FC<IProfilePageChangeDataInputs> = ({
           <button
             className="profile_button profile_button--green"
             onClick={async () => {
-              const result = await UserInfoApi.updateUserPassword(
-                password,
-                setPassword,
-                setPasswordError,
-                updatePassword
-              )
+              const result = await UserInfoApi.updateUserPassword({
+                value: password,
+                setValue: setPassword,
+                setValueError: setPasswordError,
+                cbfunction: updatePassword
+              })
               if (result) setVariable('closed')
             }}
           >

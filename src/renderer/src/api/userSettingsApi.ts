@@ -1,33 +1,28 @@
 import { db } from '@renderer/main'
-import { IUserInfo, IUserSettings, TUserSettingsSidebar } from '@renderer/types/IUser'
+import { IUserSettings, TUserSettingsSidebar } from '@renderer/types/IUser'
 import { doc, setDoc } from 'firebase/firestore'
 
-interface IUserInfoAndSettings {
-  userInfo: IUserInfo
-  userSettings: IUserSettings
-}
-
-export class UserSettingsApi {
-  public static updateImageSetting = async (settings: IUserInfoAndSettings): Promise<void> => {
-    await setDoc(doc(db, 'settings', settings.userInfo.uid), {
-      ...settings.userSettings,
-      showTitlesOfImages: !settings.userSettings.showTitlesOfImages
+export default class UserSettingsApi {
+  public static updateImageSetting = async (userSettings: IUserSettings): Promise<void> => {
+    await setDoc(doc(db, 'settings', userSettings.uid), {
+      ...userSettings,
+      showTitlesOfImages: !userSettings.showTitlesOfImages
     } as IUserSettings)
   }
 
   public static updateSidebarSetting = async (
-    settings: IUserInfoAndSettings,
+    userSettings: IUserSettings,
     newSidebarSetting: TUserSettingsSidebar
   ): Promise<void> => {
-    await setDoc(doc(db, 'settings', settings.userInfo.uid), {
-      ...settings.userSettings,
+    await setDoc(doc(db, 'settings', userSettings.uid), {
+      ...userSettings,
       sidebar: newSidebarSetting
     } as IUserSettings)
   }
 
-  public static verifyUserEmail = async (settings: IUserInfoAndSettings): Promise<void> => {
-    await setDoc(doc(db, 'settings', settings.userInfo.uid), {
-      ...settings.userSettings,
+  public static verifyUserEmail = async (userSettings: IUserSettings): Promise<void> => {
+    await setDoc(doc(db, 'settings', userSettings.uid), {
+      ...userSettings,
       maxStorageMemory: 100,
       verifyEmail: true
     } as IUserSettings)

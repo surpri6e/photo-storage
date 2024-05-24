@@ -3,11 +3,10 @@ export interface IUserInfo {
   vipStatus: boolean
   id: string
   dateOfCreate: string
-  uid: string
   urlAvatar: string
 }
 
-export interface IUserInfoImage {
+export interface IUserImage {
   urlImage: string
   title: string
   isStarred: boolean
@@ -16,18 +15,18 @@ export interface IUserInfoImage {
   id: string
 }
 
-export interface IUserInfoImages {
-  images: IUserInfoImage[]
+export interface IUserImages {
+  images: IUserImage[]
 }
 
-export interface IUserInfoAlbum {
-  images: IUserInfoImage[]
+export interface IUserAlbum {
+  images: IUserImage[]
   dateOfCreate: string
   title: string
 }
 
-export interface IUserInfoAlbums {
-  albums: IUserInfoAlbum[]
+export interface IUserAlbums {
+  albums: IUserAlbum[]
 }
 
 export interface IUserSettings {
@@ -36,6 +35,12 @@ export interface IUserSettings {
   showTitlesOfImages: boolean
   nowStorageMemory: number
   verifyEmail: boolean
+  uid: string
+}
+
+export interface IUserData {
+  userInfo: IUserInfo
+  userSettings: IUserSettings
 }
 
 export type TUserSettingsSidebar = 'open' | 'close' | 'all'

@@ -4,7 +4,7 @@ import { AuthContext } from '@renderer/context/AuthContext'
 import { UserContext } from '@renderer/context/UserContext'
 import { useSendEmailVerification } from 'react-firebase-hooks/auth'
 import { auth } from '@renderer/main'
-import { UserSettingsApi } from '@renderer/api/userSettingsApi'
+import UserSettingsApi from '@renderer/api/userSettingsApi'
 
 const SettingsPageButton = (): JSX.Element => {
   const { user } = useContext(AuthContext)
@@ -14,7 +14,7 @@ const SettingsPageButton = (): JSX.Element => {
 
   useEffect(() => {
     if (user && userInfo && userSettings && user.emailVerified && !userSettings.verifyEmail) {
-      UserSettingsApi.verifyUserEmail({ userInfo, userSettings })
+      UserSettingsApi.verifyUserEmail(userSettings)
     }
   }, [user])
 

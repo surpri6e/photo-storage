@@ -5,15 +5,15 @@ import { useContext } from 'react'
 import PhotosList from '@renderer/components/PhotosList/PhotosList'
 
 const PhotosPage = (): JSX.Element => {
-  const { userInfo, userSettings } = useContext(UserContext)
+  const { userImages, userSettings } = useContext(UserContext)
 
   return (
     <div className="pwp">
       <div className="pwp_title">Ваши фотографии:</div>
-      {userInfo && userSettings && userSettings.verifyEmail && (
-        <PhotosList photos={userInfo.images} withCreator={true} />
+      {userImages && userSettings && userSettings.verifyEmail && (
+        <PhotosList photos={userImages.images} withCreator={true} />
       )}
-      {userInfo && userSettings && !userSettings.verifyEmail && (
+      {userImages && userSettings && !userSettings.verifyEmail && (
         <div className="pwp_message">
           <span>Подвердите почту в настройках. После этого вы сможете загружать фотографии.</span>
         </div>

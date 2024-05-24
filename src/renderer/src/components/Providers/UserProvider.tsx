@@ -1,9 +1,10 @@
+import UserInfoApi from '@renderer/api/userInfoApi'
 import { AuthContext } from '@renderer/context/AuthContext'
 import { UserContext } from '@renderer/context/UserContext'
 import { db } from '@renderer/main'
-import { IUserInfo, IUserSettings, IUserInfoAlbums, IUserInfoImages } from '@renderer/types/IUser'
+import { IUserInfo, IUserSettings, IUserAlbums, IUserImages } from '@renderer/types/IUser'
 import { DocumentReference, doc } from 'firebase/firestore'
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
 
 interface IUserProvider {
@@ -21,13 +22,22 @@ const UserProvider: FC<IUserProvider> = ({ children }) => {
     doc(db, 'settings', user?.uid ? user.uid : ' ') as DocumentReference<IUserSettings>
   )
 
-  const [userImages, userImagesLoading, userImagesError] = useDocumentData<IUserInfoImages>(
-    doc(db, 'images', user?.uid ? user.uid : ' ') as DocumentReference<IUserInfoImages>
+  const [userImages, userImagesLoading, userImagesError] = useDocumentData<IUserImages>(
+    doc(db, 'images', user?.uid ? user.uid : ' ') as DocumentReference<IUserImages>
   )
 
-  const [userAlbums, userAlbumsLoading, userAlbumsError] = useDocumentData<IUserInfoAlbums>(
-    doc(db, 'albums', user?.uid ? user.uid : ' ') as DocumentReference<IUserInfoAlbums>
+  const [userAlbums, userAlbumsLoading, userAlbumsError] = useDocumentData<IUserAlbums>(
+    doc(db, 'albums', user?.uid ? user.uid : ' ') as DocumentReference<IUserAlbums>
   )
+
+  useEffect(() => {
+    if (
+      !(userInfoLoading && userSettingsLoading && userImagesLoading && userAlbumsLoading) &&
+      !(userInfo && userSettings && userImages && userAlbums)
+    ) {
+      UserInfoApi.createNewUser(user!.email!, user!.uid)
+    }
+  }, [userInfoLoading, userSettingsLoading, userImagesLoading, userAlbumsLoading])
 
   return (
     <UserContext.Provider

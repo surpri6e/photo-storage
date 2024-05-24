@@ -1,11 +1,11 @@
 import { FirestoreError } from 'firebase/firestore'
-import { IUserInfo, IUserSettings, IUserInfoImages, IUserInfoAlbums } from '../IUser'
+import { IUserInfo, IUserSettings, IUserImages, IUserAlbums } from '../IUser'
 
 export interface IUserContext {
   userInfo: IUserInfo | undefined
   userSettings: IUserSettings | undefined
-  userImages: IUserInfoImages | undefined
-  userAlbums: IUserInfoAlbums | undefined
+  userImages: IUserImages | undefined
+  userAlbums: IUserAlbums | undefined
 
   userInfoLoading: boolean
   userSettingsLoading: boolean

@@ -11,23 +11,47 @@ export const useRegistrationInfo = (
   const [isEmailCanBeReset, setIsEmailCanBeReset] = useState(false)
 
   useEffect(() => {
+    let errorCreateTimeout: NodeJS.Timeout
+    let errorCreateInTimeout: NodeJS.Timeout
+
+    let errorSignInTimeout: NodeJS.Timeout
+    let errorSignInInTimeout: NodeJS.Timeout
+
+    let errorResetTimeout: NodeJS.Timeout
+    let errorResetInTimeout: NodeJS.Timeout
+
     if (errorCreate) {
-      setIsAccoutExist(errorCreate)
-      setTimeout(() => {
-        setIsAccoutExist(false)
-      }, 1500)
+      errorCreateTimeout = setTimeout(() => {
+        setIsAccoutExist(errorCreate)
+        errorCreateInTimeout = setTimeout(() => {
+          setIsAccoutExist(false)
+        }, 1500)
+      }, 1000)
     }
     if (errorSignIn) {
-      setIsUncorrectEmailOrPassword(errorSignIn)
-      setTimeout(() => {
-        setIsUncorrectEmailOrPassword(false)
-      }, 1500)
+      errorSignInTimeout = setTimeout(() => {
+        setIsUncorrectEmailOrPassword(errorSignIn)
+        errorSignInInTimeout = setTimeout(() => {
+          setIsUncorrectEmailOrPassword(false)
+        }, 1500)
+      }, 1000)
     }
     if (errorReset) {
-      setIsEmailCanBeReset(true)
-      setTimeout(() => {
-        setIsEmailCanBeReset(false)
-      }, 1500)
+      errorResetTimeout = setTimeout(() => {
+        setIsEmailCanBeReset(true)
+        errorResetInTimeout = setTimeout(() => {
+          setIsEmailCanBeReset(false)
+        }, 1500)
+      }, 1000)
+    }
+
+    return () => {
+      clearTimeout(errorCreateTimeout)
+      clearTimeout(errorCreateInTimeout)
+      clearTimeout(errorSignInTimeout)
+      clearTimeout(errorSignInInTimeout)
+      clearTimeout(errorResetTimeout)
+      clearTimeout(errorResetInTimeout)
     }
   }, [errorCreate, errorSignIn, errorReset])
 

@@ -1,27 +1,27 @@
-import { IUserInfoImage } from '@renderer/types/IUser'
+import { IUserImage } from '@renderer/types/IUser'
 import './PhotosList.scss'
 import { FC, useContext, useEffect, useState } from 'react'
 import PhotoCard from '../PhotoCard/PhotoCard'
 import { UserContext } from '@renderer/context/UserContext'
 import { useUploadFile } from 'react-firebase-hooks/storage'
-import { StorageApi } from '@renderer/api/storageApi'
+import StorageApi from '@renderer/api/storageApi'
 
 import plus from '../../images/plus.png'
 
 interface IPhotosList {
-  photos: IUserInfoImage[]
+  photos: IUserImage[]
   withCreator: boolean
 }
 
 const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
   const [photo, setPhoto] = useState<File | undefined>()
-  const { userInfo, userSettings } = useContext(UserContext)
+  const user = useContext(UserContext)
 
   const [uploadFile] = useUploadFile()
 
   useEffect(() => {
-    if (photo && userInfo && userSettings) {
-      StorageApi.uploadPhoto(userInfo, userSettings, uploadFile, photo)
+    if (photo && user.userInfo && user.userSettings) {
+      StorageApi.uploadPhoto(user, uploadFile, photo)
     }
   }, [photo])
 

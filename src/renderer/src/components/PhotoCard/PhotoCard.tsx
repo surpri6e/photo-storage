@@ -5,18 +5,12 @@ import PhotoCardSubmenu from './PhotoCardSubmenu/PhotoCardSubmenu'
 
 import starred from '../../images/starred.png'
 import notStarred from '../../images/notStarred.png'
-import { UserInfoApi } from '@renderer/api/userInfoApi'
-import { IUserInfoImage } from '@renderer/types/IUser'
+import { IUserImage } from '@renderer/types/IUser'
+import UserImagesApi from '@renderer/api/userImagesApi'
 
-const PhotoCard: FC<IUserInfoImage> = ({
-  urlImage,
-  title,
-  dateOfCreate,
-  isStarred,
-  id,
-  isInTrasher
-}) => {
-  const { userSettings, userInfo } = useContext(UserContext)
+const PhotoCard: FC<IUserImage> = ({ urlImage, title, dateOfCreate, isStarred, id }) => {
+  const user = useContext(UserContext)
+  const { userSettings, userInfo } = user
 
   return (
     <div className="photo-card">
@@ -46,7 +40,7 @@ const PhotoCard: FC<IUserInfoImage> = ({
               alt="Лайк"
               onClick={() => {
                 if (userInfo) {
-                  UserInfoApi.changeLikeForPhoto(userInfo, id)
+                  UserImagesApi.changeLikeForPhoto(user, id)
                 }
               }}
             />
