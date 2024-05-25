@@ -34,16 +34,16 @@ const ProfilePageChangeDataInputs: FC<IProfilePageChangeDataInputs> = ({
     let secondTimeout: NodeJS.Timeout
 
     if (errorEmail) {
-      setIsEmailCanBeChanged(errorEmail)
-      firstTimeout = setTimeout(() => {
+      firstTimeout = setTimeout(() => setIsEmailCanBeChanged(errorEmail), 800)
+      setTimeout(() => {
         setIsEmailCanBeChanged(false)
-      }, 1000)
+      }, 1500)
     }
     if (errorPassword) {
-      setIsPasswordCanBeChanged(errorPassword)
-      secondTimeout = setTimeout(() => {
+      secondTimeout = setTimeout(() => setIsPasswordCanBeChanged(errorPassword), 800)
+      setTimeout(() => {
         setIsPasswordCanBeChanged(false)
-      }, 1000)
+      }, 1500)
     }
 
     return () => {

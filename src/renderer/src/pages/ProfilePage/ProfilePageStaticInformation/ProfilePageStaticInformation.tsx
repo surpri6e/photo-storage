@@ -31,7 +31,7 @@ const ProfilePageStaticInformation = (): JSX.Element => {
         >
           {userInfo?.id}
         </span>
-        {isClicked && <HelpWindow message="Айди скопировано" />}
+        {isClicked && <HelpWindow message="Айди скопировано" isHelpful />}
       </div>
       <div className="profile_block">
         Первая почта: <span className="profile_email">{userInfo?.firstEmail}</span>

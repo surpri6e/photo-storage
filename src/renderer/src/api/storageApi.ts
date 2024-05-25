@@ -19,9 +19,10 @@ export default class StorageApi {
   public static uploadAvatar = async (
     user: IUserContext,
     uploadFile: cbUploadFileSignature,
-    photo: File
+    photo: File,
+    setError: React.Dispatch<React.SetStateAction<boolean>>
   ): Promise<void> => {
-    const isChecked = this.checkOnRules(photo)
+    const isChecked = this.checkOnRules(photo, setError)
     const { userInfo } = user
 
     try {
@@ -74,11 +75,16 @@ export default class StorageApi {
     }
   }
 
-  private static checkOnRules = (photo: File): boolean => {
+  private static checkOnRules = (
+    photo: File,
+    setError: React.Dispatch<React.SetStateAction<boolean>>
+  ): boolean => {
     if (
       (photo && photo.size > maxSizeOfImage) ||
       (photo && photo.type !== 'image/png' && photo.type !== 'image/jpeg')
     ) {
+      setError(true)
+      setTimeout(() => setError(false), 1500)
       return false
     }
 

@@ -42,9 +42,10 @@ const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
       {photos.length > 0 &&
         photos.map((image) => (
           <PhotoCard
-            imageUrl={image.urlImage}
+            urlImage={image.urlImage}
             title={image.title.length > 97 ? image.title.slice(0, 97) + '...' : image.title}
-            date={image.dateOfCreate}
+            dateOfCreate={image.dateOfCreate}
+            isInTrasher={image.isInTrasher}
             isStarred={image.isStarred}
             id={image.id}
             key={image.urlImage}
