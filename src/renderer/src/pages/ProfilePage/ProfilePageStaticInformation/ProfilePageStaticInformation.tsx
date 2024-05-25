@@ -1,9 +1,11 @@
 import { UserContext } from '@renderer/context/UserContext'
 import './ProfilePageStaticInformation.scss'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
 
 const ProfilePageStaticInformation = (): JSX.Element => {
   const { userInfo } = useContext(UserContext)
+  const [isClicked, setIsClicked] = useState(false)
 
   return (
     <>
@@ -17,7 +19,19 @@ const ProfilePageStaticInformation = (): JSX.Element => {
         Дата создания: <span>{userInfo?.dateOfCreate}</span>
       </div>
       <div className="profile_block">
-        Ваш уникальный айди: <span className="profile_id">{userInfo?.id}</span>
+        Айди:{' '}
+        <span
+          className="profile_id"
+          onClick={() =>
+            navigator.clipboard.writeText(userInfo!.id).then(() => {
+              setIsClicked(true)
+              setTimeout(() => setIsClicked(false), 1000)
+            })
+          }
+        >
+          {userInfo?.id}
+        </span>
+        {isClicked && <HelpWindow message="Айди скопировано" />}
       </div>
       <div className="profile_block">
         Первая почта: <span className="profile_email">{userInfo?.firstEmail}</span>

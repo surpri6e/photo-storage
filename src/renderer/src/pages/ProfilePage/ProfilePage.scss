@@ -10,9 +10,7 @@
     text-decoration: underline;
   }
 
-  & > *:not(:last-child) {
-    margin-right: 15px;
-  }
+  justify-content: space-between;
 }
 
 .profile_button {
@@ -54,4 +52,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  position: relative;
 }

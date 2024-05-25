@@ -1,59 +1,20 @@
 import { AuthError } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 
-export const useRegistrationInfo = (
-  errorCreate: boolean,
-  errorSignIn: boolean,
-  errorReset: Error | AuthError | undefined
-): [boolean, boolean, boolean] => {
-  const [isAccoutExist, setIsAccoutExist] = useState(false)
-  const [isUncorrectEmailOrPassword, setIsUncorrectEmailOrPassword] = useState(false)
-  const [isEmailCanBeReset, setIsEmailCanBeReset] = useState(false)
+export const useRegistrationInfo = (error: boolean | Error | AuthError | undefined): boolean => {
+  const [newError, setNewError] = useState(false)
 
   useEffect(() => {
-    let errorCreateTimeout: NodeJS.Timeout
-    let errorCreateInTimeout: NodeJS.Timeout
-
-    let errorSignInTimeout: NodeJS.Timeout
-    let errorSignInInTimeout: NodeJS.Timeout
-
-    let errorResetTimeout: NodeJS.Timeout
-    let errorResetInTimeout: NodeJS.Timeout
-
-    if (errorCreate) {
-      errorCreateTimeout = setTimeout(() => {
-        setIsAccoutExist(errorCreate)
-        errorCreateInTimeout = setTimeout(() => {
-          setIsAccoutExist(false)
-        }, 1500)
+    if (error) {
+      setTimeout(() => {
+        setNewError(true)
       }, 1000)
-    }
-    if (errorSignIn) {
-      errorSignInTimeout = setTimeout(() => {
-        setIsUncorrectEmailOrPassword(errorSignIn)
-        errorSignInInTimeout = setTimeout(() => {
-          setIsUncorrectEmailOrPassword(false)
-        }, 1500)
-      }, 1000)
-    }
-    if (errorReset) {
-      errorResetTimeout = setTimeout(() => {
-        setIsEmailCanBeReset(true)
-        errorResetInTimeout = setTimeout(() => {
-          setIsEmailCanBeReset(false)
-        }, 1500)
-      }, 1000)
-    }
 
-    return () => {
-      clearTimeout(errorCreateTimeout)
-      clearTimeout(errorCreateInTimeout)
-      clearTimeout(errorSignInTimeout)
-      clearTimeout(errorSignInInTimeout)
-      clearTimeout(errorResetTimeout)
-      clearTimeout(errorResetInTimeout)
+      setTimeout(() => {
+        setNewError(false)
+      }, 2500)
     }
-  }, [errorCreate, errorSignIn, errorReset])
+  }, [error])
 
-  return [isAccoutExist, isUncorrectEmailOrPassword, isEmailCanBeReset]
+  return newError
 }

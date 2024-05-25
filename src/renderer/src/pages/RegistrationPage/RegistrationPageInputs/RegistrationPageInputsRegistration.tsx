@@ -7,13 +7,14 @@ import {
   passwordErrorMessage,
   registrationErrorMessage
 } from '@renderer/utils/constants'
+import { useRegistrationInfo } from '@renderer/hooks/useRegistrationInfo'
 
 interface IRegistrationPageInputsRegistration {
-  isAccoutExist: boolean
+  errorCreate: boolean
 }
 
 const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration> = ({
-  isAccoutExist
+  errorCreate
 }) => {
   const {
     email,
@@ -27,11 +28,13 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
     passwordsEqualsError
   } = useContext(RegistrationContext)
 
+  const isAccoutExist = useRegistrationInfo(errorCreate)
+
   return (
     <>
       <div className="registration_block">
         {emailError && <HelpWindow message={emailErrorMessage} />}
-        {isAccoutExist && <HelpWindow message={registrationErrorMessage} />}
+        {isAccoutExist && !emailError && <HelpWindow message={registrationErrorMessage} />}
         <Input
           value={email}
           setValue={setEmail}
@@ -48,7 +51,9 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
         {passwordsEqualsError && !passwordError && (
           <HelpWindow message="Пароли должны быть одинаковыми" />
         )}
-        {isAccoutExist && <HelpWindow message={registrationErrorMessage} />}
+        {isAccoutExist && !passwordError && !(passwordsEqualsError && !passwordError) && (
+          <HelpWindow message={registrationErrorMessage} />
+        )}
         <Input
           value={password}
           setValue={setPassword}

@@ -7,28 +7,22 @@ import RegistrationPageInputsForgotten from './RegistrationPageInputsForgotten'
 
 interface IRegistrationPageInputs {
   registrationType: TTypeOfRegistration
-  isAccoutExist: boolean
-  isUncorrectEmailOrPassword: boolean
-  isEmailCanBeReset: boolean
+  errorCreate: boolean
+  errorSignIn: boolean
 }
 
 const RegistrationPageInputs: FC<IRegistrationPageInputs> = ({
   registrationType,
-  isAccoutExist,
-  isUncorrectEmailOrPassword,
-  isEmailCanBeReset
+  errorCreate,
+  errorSignIn
 }) => {
   return (
     <div className="registration_inputs">
       {registrationType === 'registration' && (
-        <RegistrationPageInputsRegistration isAccoutExist={isAccoutExist} />
+        <RegistrationPageInputsRegistration errorCreate={errorCreate} />
       )}
-      {registrationType === 'logIn' && (
-        <RegistrationPageInputsLogIn isUncorrectEmailOrPassword={isUncorrectEmailOrPassword} />
-      )}
-      {registrationType === 'forgotten' && (
-        <RegistrationPageInputsForgotten isEmailCanBeReset={isEmailCanBeReset} />
-      )}
+      {registrationType === 'logIn' && <RegistrationPageInputsLogIn errorSignIn={errorSignIn} />}
+      {registrationType === 'forgotten' && <RegistrationPageInputsForgotten />}
     </div>
   )
 }
