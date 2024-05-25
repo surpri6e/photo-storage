@@ -15,27 +15,28 @@ const UserProvider: FC<IUserProvider> = ({ children }) => {
   const { user } = useContext(AuthContext)
 
   const [userInfo, userInfoLoading, userInfoError] = useDocumentData<IUserInfo>(
-    doc(db, 'users', user?.uid ? user.uid : ' ') as DocumentReference<IUserInfo>
+    doc(db, 'users', user ? user.uid : ' ') as DocumentReference<IUserInfo>
   )
 
   const [userSettings, userSettingsLoading, userSettingsError] = useDocumentData<IUserSettings>(
-    doc(db, 'settings', user?.uid ? user.uid : ' ') as DocumentReference<IUserSettings>
+    doc(db, 'settings', user ? user.uid : ' ') as DocumentReference<IUserSettings>
   )
 
   const [userImages, userImagesLoading, userImagesError] = useDocumentData<IUserImages>(
-    doc(db, 'images', user?.uid ? user.uid : ' ') as DocumentReference<IUserImages>
+    doc(db, 'images', user ? user.uid : ' ') as DocumentReference<IUserImages>
   )
 
   const [userAlbums, userAlbumsLoading, userAlbumsError] = useDocumentData<IUserAlbums>(
-    doc(db, 'albums', user?.uid ? user.uid : ' ') as DocumentReference<IUserAlbums>
+    doc(db, 'albums', user ? user.uid : ' ') as DocumentReference<IUserAlbums>
   )
 
   useEffect(() => {
     if (
+      user &&
       !(userInfoLoading && userSettingsLoading && userImagesLoading && userAlbumsLoading) &&
       !(userInfo && userSettings && userImages && userAlbums)
     ) {
-      UserInfoApi.createNewUser(user!.email!, user!.uid)
+      UserInfoApi.createNewUser(user.email!, user.uid)
     }
   }, [userInfoLoading, userSettingsLoading, userImagesLoading, userAlbumsLoading])
 

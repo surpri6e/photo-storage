@@ -21,9 +21,12 @@ const StarredPage = (): JSX.Element => {
           <span>Подвердите почту в настройках. После этого вы сможете загружать фотографии.</span>
         </div>
       )}
-      {userImages && userImages.images.filter((image) => image.isStarred).length === 0 && (
-        <div className="pwp_message">У вас нет любимых фотографий</div>
-      )}
+      {userImages &&
+        userSettings &&
+        userSettings.verifyEmail &&
+        userImages.images.filter((image) => image.isStarred).length === 0 && (
+          <div className="pwp_message">У вас нет любимых фотографий</div>
+        )}
     </div>
   )
 }

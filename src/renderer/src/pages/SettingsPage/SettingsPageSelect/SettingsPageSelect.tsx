@@ -1,6 +1,6 @@
 import { settingsSidebar } from '@renderer/utils/settingsSidebar'
 import './SettingsPageSelect.scss'
-import { TUserSettingsSidebar } from '@renderer/types/IUserSettings'
+import { TUserSettingsSidebar } from '@renderer/types/IUser'
 import { FC } from 'react'
 
 export interface ISettingsPageSelect {

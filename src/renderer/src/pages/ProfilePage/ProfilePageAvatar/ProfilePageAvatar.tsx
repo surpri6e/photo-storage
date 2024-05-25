@@ -3,18 +3,18 @@ import './ProfilePageAvatar.scss'
 import { UserContext } from '@renderer/context/UserContext'
 import defaultAvatar from '../../../images/defaultAvatar.png'
 import { useUploadFile } from 'react-firebase-hooks/storage'
-import { StorageApi } from '@renderer/api/storageApi'
+import StorageApi from '@renderer/api/storageApi'
 
 const ProfilePageAvatar = (): JSX.Element => {
-  const { userInfo } = useContext(UserContext)
+  const user = useContext(UserContext)
 
   const [avatar, setAvatar] = useState<File | undefined>()
 
   const [uploadFile] = useUploadFile()
 
   useEffect(() => {
-    if (avatar && userInfo) {
-      StorageApi.uploadAvatar(userInfo, uploadFile, avatar)
+    if (avatar && user.userInfo) {
+      StorageApi.uploadAvatar(user, uploadFile, avatar)
     }
   }, [avatar])
 
@@ -22,7 +22,7 @@ const ProfilePageAvatar = (): JSX.Element => {
     <div className="profile_header">
       <img
         className="profile_avatar"
-        src={userInfo?.urlAvatar.length === 0 ? defaultAvatar : userInfo?.urlAvatar}
+        src={user.userInfo?.urlAvatar.length === 0 ? defaultAvatar : user.userInfo?.urlAvatar}
         alt="Аватарка"
       />
       <label htmlFor="avatar-upload" className="custom-avatar-upload">
