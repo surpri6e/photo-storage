@@ -83,3 +83,13 @@
     width: 20px;
   }
 }
+
+.photo-card_delete {
+  cursor: pointer;
+  background-color: $red;
+  width: 100%;
+  text-align: center;
+  height: 25px;
+
+  color: $white;
+}

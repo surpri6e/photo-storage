@@ -1,6 +1,6 @@
 import { formatBytesToBytes } from 'bytes-transform'
 import UserInfoApi from './userInfoApi'
-import { StorageReference, UploadMetadata, UploadResult, ref } from 'firebase/storage'
+import { StorageReference, UploadMetadata, UploadResult, deleteObject, ref } from 'firebase/storage'
 import { storage } from '@renderer/main'
 import { getRandomKey } from 'rkey'
 import { createStorageLink, createStorageLinkWithFolder } from '@renderer/utils/createStorageLink'
@@ -43,9 +43,10 @@ export default class StorageApi {
   public static uploadPhoto = async (
     user: IUserContext,
     uploadFile: cbUploadFileSignature,
-    photo: File
+    photo: File,
+    setError: React.Dispatch<React.SetStateAction<boolean>>
   ): Promise<void> => {
-    const isChecked = this.checkOnRules(photo)
+    const isChecked = this.checkOnRules(photo, setError)
     const { userSettings, userInfo } = user
 
     try {
@@ -53,8 +54,7 @@ export default class StorageApi {
 
       if (
         isChecked &&
-        formatBytesToBytes(userSettings!.maxStorageMemory, 'MB') -
-          formatBytesToBytes(userSettings!.nowStorageMemory, 'MB') >=
+        formatBytesToBytes(userSettings!.maxStorageMemory, 'MB') - userSettings!.nowStorageMemory >=
           photo.size
       ) {
         const result = await uploadFile(ref(storage, `${userInfo!.id}/${randomId}.png`), photo, {
@@ -70,6 +70,16 @@ export default class StorageApi {
           )
         }
       }
+    } catch (error: unknown) {
+      throwError(error)
+    }
+  }
+
+  public static deletePhotoFromStorage = async (user: IUserContext, id: string): Promise<void> => {
+    try {
+      deleteObject(ref(storage, `${user.userInfo?.id}/${id}.png`)).then(async () => {
+        await UserImagesApi.deletePhoto(user, id)
+      })
     } catch (error: unknown) {
       throwError(error)
     }

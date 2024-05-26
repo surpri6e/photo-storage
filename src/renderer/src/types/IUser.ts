@@ -13,6 +13,7 @@ export interface IUserImage {
   isInTrasher: boolean
   dateOfCreate: string
   id: string
+  size: number
 }
 
 export interface IUserImages {

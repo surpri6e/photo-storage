@@ -7,6 +7,7 @@ import { useUploadFile } from 'react-firebase-hooks/storage'
 import StorageApi from '@renderer/api/storageApi'
 
 import plus from '../../images/plus.png'
+import HelpWindow from '../HelpWindow/HelpWindow'
 
 interface IPhotosList {
   photos: IUserImage[]
@@ -15,20 +16,27 @@ interface IPhotosList {
 
 const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
   const [photo, setPhoto] = useState<File | undefined>()
+  const [photoError, setPhotoError] = useState(false)
+
   const user = useContext(UserContext)
 
   const [uploadFile] = useUploadFile()
 
   useEffect(() => {
     if (photo && user.userInfo && user.userSettings) {
-      StorageApi.uploadPhoto(user, uploadFile, photo)
+      StorageApi.uploadPhoto(user, uploadFile, photo, setPhotoError)
     }
   }, [photo])
 
   return (
     <div className="photos-list">
       {withCreator && (
-        <div className="photos-list_creator">
+        <div
+          className={
+            photoError ? 'photos-list_creator photos-list_creator--error ' : 'photos-list_creator'
+          }
+        >
+          {photoError && <HelpWindow message="Файл слишком большой или не является картинкой" />}
           <label htmlFor="photo-upload" className="custom-photo-upload">
             <img src={plus} alt="Добавить фотографию" />
           </label>
@@ -49,6 +57,7 @@ const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
             isStarred={image.isStarred}
             id={image.id}
             key={image.urlImage}
+            size={image.size}
           />
         ))}
     </div>

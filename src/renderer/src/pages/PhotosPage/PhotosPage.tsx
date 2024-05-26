@@ -11,7 +11,10 @@ const PhotosPage = (): JSX.Element => {
     <div className="pwp">
       <div className="pwp_title">Ваши фотографии:</div>
       {userImages && userSettings && userSettings.verifyEmail && (
-        <PhotosList photos={userImages.images} withCreator={true} />
+        <PhotosList
+          photos={userImages.images.filter((image) => !image.isInTrasher)}
+          withCreator={true}
+        />
       )}
       {userImages && userSettings && !userSettings.verifyEmail && (
         <div className="pwp_message">

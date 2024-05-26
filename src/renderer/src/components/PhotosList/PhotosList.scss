@@ -25,6 +25,10 @@
   input {
     display: none;
   }
+
+  &--error {
+    border: 1px solid $red;
+  }
 }
 
 .custom-photo-upload {

@@ -18,7 +18,9 @@ const StarredPage = (): JSX.Element => {
       )}
       {userImages && userSettings && !userSettings.verifyEmail && (
         <div className="pwp_message">
-          <span>Подвердите почту в настройках. После этого вы сможете загружать фотографии.</span>
+          <span>
+            Подвердите почту в настройках. После этого вы сможете смотреть ваши любимые фотографии.
+          </span>
         </div>
       )}
       {userImages &&

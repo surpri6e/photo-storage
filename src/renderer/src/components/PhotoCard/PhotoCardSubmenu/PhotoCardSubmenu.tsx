@@ -1,9 +1,13 @@
-import { useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import './PhotoCardSubmenu.scss'
 import PhotoCardPanel from '../PhotoCardPanel/PhotoCardPanel'
 import { useClickOutside } from '@renderer/hooks/useClickOutside'
 
-const PhotoCardSubmenu = (): JSX.Element => {
+interface IPhotoCardSubmenu {
+  id: string
+}
+
+const PhotoCardSubmenu: FC<IPhotoCardSubmenu> = ({ id }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const ref = useRef<HTMLDivElement>(null)
@@ -18,7 +22,7 @@ const PhotoCardSubmenu = (): JSX.Element => {
           <span></span>
         </div>
       )}
-      {isOpen && <PhotoCardPanel customRef={ref} />}
+      {isOpen && <PhotoCardPanel customRef={ref} id={id} />}
     </>
   )
 }
