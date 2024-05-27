@@ -31,3 +31,9 @@
 .registration_input--password {
   font-size: 18px;
 }
+
+.photo-card_input {
+  @include standartInputSizes;
+  width: 170px;
+  background-color: $grey;
+}

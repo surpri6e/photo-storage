@@ -87,9 +87,52 @@
 .photo-card_delete {
   cursor: pointer;
   background-color: $red;
-  width: 100%;
+  width: 45%;
   text-align: center;
   height: 25px;
 
   color: $white;
+
+  border-radius: 5px;
+}
+
+.photo-card_heal {
+  cursor: pointer;
+  background-color: $green;
+  width: 45%;
+  text-align: center;
+  height: 25px;
+
+  color: $white;
+
+  border-radius: 5px;
+}
+
+.photo-card_change {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  &_buttons {
+    display: flex;
+
+    & > * {
+      padding: 5px;
+      border-radius: 5px;
+
+      color: white;
+    }
+
+    &--green {
+      background-color: $green;
+    }
+
+    &--red {
+      background-color: $red;
+    }
+
+    & > *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
 }

@@ -117,4 +117,34 @@ export default class UserImagesApi {
       throwError(error)
     }
   }
+
+  public static changeNameForPhoto = async (
+    user: IUserContext,
+    id: string,
+    newName: string
+  ): Promise<void> => {
+    const { userImages, userSettings } = user
+
+    let index = 0
+    const image = userImages!.images.find((image, ind) => {
+      if (image.id === id) {
+        index = ind
+        return true
+      }
+
+      return false
+    })
+
+    try {
+      if (image) {
+        userImages!.images[index].title = newName
+
+        await setDoc(doc(db, 'images', userSettings!.uid), {
+          images: userImages!.images
+        } as IUserImages)
+      }
+    } catch (error: unknown) {
+      throwError(error)
+    }
+  }
 }

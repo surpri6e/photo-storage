@@ -8,6 +8,13 @@
   }
 }
 
+.settings_button--disabled {
+  cursor: auto;
+  &:hover {
+    background-color: $orange;
+  }
+}
+
 .settings_button--green {
   background-color: $green;
   cursor: auto;

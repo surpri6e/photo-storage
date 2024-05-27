@@ -20,7 +20,9 @@ const SettingsPage = (): JSX.Element => {
         <SettingsPageButton />
         {!userSettings?.verifyEmail && (
           <div className="settings_block">
-            <p>После подтверждения почты перезапустите приложение!</p>
+            <p>
+              Проверьте папку &quot;спам&quot;. После подтверждения почты перезапустите приложение!
+            </p>
           </div>
         )}
         <div className="settings_block">

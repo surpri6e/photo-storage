@@ -1,4 +1,4 @@
-import { TUserSettingsSidebar } from './IUserSettings'
+import { TUserSettingsSidebar } from './IUser'
 
 export interface ISettingsSidebar {
   value: TUserSettingsSidebar

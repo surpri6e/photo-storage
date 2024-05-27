@@ -5,9 +5,10 @@ import { useClickOutside } from '@renderer/hooks/useClickOutside'
 
 interface IPhotoCardSubmenu {
   id: string
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const PhotoCardSubmenu: FC<IPhotoCardSubmenu> = ({ id }) => {
+const PhotoCardSubmenu: FC<IPhotoCardSubmenu> = ({ id, setIsShow }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const ref = useRef<HTMLDivElement>(null)
@@ -22,7 +23,7 @@ const PhotoCardSubmenu: FC<IPhotoCardSubmenu> = ({ id }) => {
           <span></span>
         </div>
       )}
-      {isOpen && <PhotoCardPanel customRef={ref} id={id} />}
+      {isOpen && <PhotoCardPanel customRef={ref} id={id} setIsShow={setIsShow} />}
     </>
   )
 }

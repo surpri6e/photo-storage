@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './SettingsPageButton.scss'
 import { AuthContext } from '@renderer/context/AuthContext'
 import { UserContext } from '@renderer/context/UserContext'
@@ -9,6 +9,8 @@ import UserSettingsApi from '@renderer/api/userSettingsApi'
 const SettingsPageButton = (): JSX.Element => {
   const { user } = useContext(AuthContext)
   const { userInfo, userSettings } = useContext(UserContext)
+
+  const [isClicked, setIsClicked] = useState(false)
 
   const [sendEmailVerification] = useSendEmailVerification(auth)
 
@@ -24,10 +26,15 @@ const SettingsPageButton = (): JSX.Element => {
       className={
         user?.emailVerified
           ? 'settings_button settings_button--green'
-          : 'settings_button settings_button--orange'
+          : isClicked
+            ? 'settings_button settings_button--orange settings_button--disabled'
+            : 'settings_button settings_button--orange'
       }
-      disabled={user?.emailVerified}
-      onClick={() => sendEmailVerification()}
+      disabled={user?.emailVerified || isClicked}
+      onClick={() => {
+        sendEmailVerification()
+        setIsClicked(true)
+      }}
     >
       {user?.emailVerified ? 'Почта подтверждена' : 'Выслать письмо с подтверждением почты'}
     </button>

@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react'
+import { FC, useContext, useState } from 'react'
 import './PhotoCard.scss'
 import { UserContext } from '@renderer/context/UserContext'
 import PhotoCardSubmenu from './PhotoCardSubmenu/PhotoCardSubmenu'
@@ -8,6 +8,7 @@ import notStarred from '../../images/notStarred.png'
 import { IUserImage } from '@renderer/types/IUser'
 import UserImagesApi from '@renderer/api/userImagesApi'
 import StorageApi from '@renderer/api/storageApi'
+import Input from '../Input'
 
 const PhotoCard: FC<IUserImage> = ({
   urlImage,
@@ -19,6 +20,9 @@ const PhotoCard: FC<IUserImage> = ({
 }) => {
   const user = useContext(UserContext)
   const { userSettings, userInfo } = user
+
+  const [name, setName] = useState('')
+  const [isShow, setIsShow] = useState(false)
 
   return (
     <div className="photo-card">
@@ -35,9 +39,43 @@ const PhotoCard: FC<IUserImage> = ({
         <img src={urlImage} alt={title} />
       </a>
 
-      {userSettings && userSettings.showTitlesOfImages && !isInTrasher && (
-        <p className="photo-card_title">{title}</p>
-      )}
+      {userSettings &&
+        userSettings.showTitlesOfImages &&
+        !isInTrasher &&
+        (isShow ? (
+          <div className="photo-card_change">
+            <Input
+              value={name}
+              setValue={setName}
+              placeholder="Введите название"
+              className="input photo-card_input"
+              type="text"
+            />
+            <div className="photo-card_change_buttons">
+              <button
+                className="photo-card_change_buttons--green"
+                onClick={async () => {
+                  await UserImagesApi.changeNameForPhoto(user, id, name)
+                  setIsShow(false)
+                  setName('')
+                }}
+              >
+                Сохранить
+              </button>
+              <button
+                className="photo-card_change_buttons--red"
+                onClick={() => {
+                  setIsShow(false)
+                  setName('')
+                }}
+              >
+                Назад
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="photo-card_title">{title}</p>
+        ))}
 
       <div className="photo-card_menu">
         {!isInTrasher && (
@@ -55,17 +93,25 @@ const PhotoCard: FC<IUserImage> = ({
                   }}
                 />
               </div>
-              <PhotoCardSubmenu id={id} />
+              <PhotoCardSubmenu id={id} setIsShow={setIsShow} />
             </div>
           </>
         )}
         {isInTrasher && (
-          <div
-            className="photo-card_delete"
-            onClick={async () => StorageApi.deletePhotoFromStorage(user, id)}
-          >
-            Удалить полностью
-          </div>
+          <>
+            <div
+              className="photo-card_delete"
+              onClick={async () => StorageApi.deletePhotoFromStorage(user, id)}
+            >
+              Удалить полностью
+            </div>
+            <div
+              className="photo-card_heal"
+              onClick={async () => UserImagesApi.changeTrashForPhoto(user, id)}
+            >
+              Восстановить
+            </div>
+          </>
         )}
       </div>
     </div>
