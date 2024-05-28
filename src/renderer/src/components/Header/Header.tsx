@@ -6,10 +6,12 @@ import HeaderRight from './HeaderRight/HeaderRight'
 
 const Header = (): JSX.Element => {
   const [search, setSearch] = useState('')
+
   return (
     <div className="header">
       <HeaderLogo />
       <Input
+        type="text"
         value={search}
         setValue={setSearch}
         placeholder="Что найдем?"

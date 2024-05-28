@@ -4,17 +4,17 @@ import { UserContext } from '@renderer/context/UserContext'
 import { db } from '@renderer/main'
 import { IUserInfo, IUserSettings, IUserAlbums, IUserImages } from '@renderer/types/IUser'
 import { DocumentReference, doc } from 'firebase/firestore'
-import React, { FC, useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
-import Loader from '../Loader/Loader'
 import LoadingPage from '@renderer/pages/LoadingPage/LoadingPage'
 import ErrorPage from '@renderer/pages/ErrorPage/ErrorPage'
+import { Route, Routes } from 'react-router-dom'
+import { publicRoutes } from '@renderer/routes'
+import RegistrationPage from '@renderer/pages/RegistrationPage/RegistrationPage'
+import RegistrationProvider from './RegistrationProvider'
+import SidebarProvider from './SidebarProvider'
 
-interface IUserProvider {
-  children: React.ReactNode
-}
-
-const UserProvider: FC<IUserProvider> = ({ children }) => {
+const UserProvider = (): JSX.Element => {
   const { user, loading, error } = useContext(AuthContext)
 
   const [userInfo, userInfoLoading, userInfoError] = useDocumentData<IUserInfo>(
@@ -68,29 +68,36 @@ const UserProvider: FC<IUserProvider> = ({ children }) => {
     )
   }
 
+  if (user && userInfo && userSettings && userImages && userAlbums) {
+    return (
+      <UserContext.Provider
+        value={{
+          userInfo,
+          userSettings,
+          userImages,
+          userAlbums
+        }}
+      >
+        <RegistrationProvider>
+          <SidebarProvider />
+        </RegistrationProvider>
+      </UserContext.Provider>
+    )
+  }
+
   return (
-    <UserContext.Provider
-      value={{
-        userInfo,
-        userSettings,
-        userImages,
-        userAlbums,
-
-        userInfoLoading,
-        userInfoError,
-
-        userSettingsLoading,
-        userSettingsError,
-
-        userImagesLoading,
-        userImagesError,
-
-        userAlbumsLoading,
-        userAlbumsError
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+    <RegistrationProvider>
+      <Routes>
+        {!user && (
+          <>
+            {publicRoutes.map((route) => (
+              <Route element={<route.element />} path={route.path} key={route.path} />
+            ))}
+            <Route path="*" element={<RegistrationPage />} />
+          </>
+        )}
+      </Routes>
+    </RegistrationProvider>
   )
 }
 
