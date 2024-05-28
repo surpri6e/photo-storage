@@ -17,6 +17,8 @@
   padding-top: $headerHeight;
   padding-bottom: 15px;
 
+  border-right: 1px solid darken($grey, 20);
+
   @include defaultTransition;
 }
 

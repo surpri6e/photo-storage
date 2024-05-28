@@ -8,7 +8,7 @@ interface IErrorPage {
 const ErrorPage: FC<IErrorPage> = ({ errorMessage }) => {
   return (
     <div className="error">
-      <div className="error_message">Произошел сбой, ошибка - {errorMessage}.</div>
+      <p className="error_message">Произошел сбой, ошибка - {errorMessage}.</p>
     </div>
   )
 }

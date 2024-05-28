@@ -23,6 +23,8 @@ body {
 
   overflow-x: hidden;
   position: fixed;
+
+  font-size: 14px;
 }
 
 ._Container {
@@ -32,19 +34,6 @@ body {
 
   margin: 0 auto;
   padding: 0 1.5rem;
-}
-
-._Ibg {
-  position: relative;
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    object-fit: cover;
-  }
 }
 
 #root {
