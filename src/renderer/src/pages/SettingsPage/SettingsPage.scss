@@ -2,7 +2,6 @@
 @import '../../styles/vars.scss';
 
 .settings_block {
-  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,6 +28,4 @@
   background-color: $doubleGrey;
 
   border-radius: 5px;
-
-  font-size: 16px;
 }

@@ -10,15 +10,16 @@ const PhotosPage = (): JSX.Element => {
   return (
     <div className="pwp">
       <div className="pwp_title">Ваши фотографии:</div>
-      {userImages && userSettings && userSettings.verifyEmail && (
+      {userSettings.verifyEmail && (
         <PhotosList
           photos={userImages.images.filter((image) => !image.isInTrasher)}
           withCreator={true}
         />
       )}
-      {userImages && userSettings && !userSettings.verifyEmail && (
+
+      {!userSettings.verifyEmail && (
         <div className="pwp_message">
-          <span>Подвердите почту в настройках. После этого вы сможете загружать фотографии.</span>
+          Подвердите почту в настройках. После этого вы сможете загружать фотографии.
         </div>
       )}
     </div>

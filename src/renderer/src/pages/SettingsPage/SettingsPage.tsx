@@ -13,18 +13,20 @@ const SettingsPage = (): JSX.Element => {
   return (
     <div className="pas">
       <div className="pas_body">
-        <div className="pas_title">Настройки</div>
+        <h2 className="pas_title">Настройки</h2>
         <SettingsPageImageSetting />
         <SettingsPageSidebarSetting />
         <SettingsPageStorageSetting />
         <SettingsPageButton />
-        {!userSettings?.verifyEmail && (
+
+        {!userSettings.verifyEmail && (
           <div className="settings_block">
             <p>
               Проверьте папку &quot;спам&quot;. После подтверждения почты перезапустите приложение!
             </p>
           </div>
         )}
+
         <div className="settings_block">
           <p>Служба поддержки и покупка вип статуса: </p>
           <a href="https://vk.com/surpri6e" target="_blank" rel="noreferrer">

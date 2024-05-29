@@ -10,26 +10,24 @@ const TrasherPage = (): JSX.Element => {
   return (
     <div className="pwp">
       <div className="pwp_title">Ваши удаленные фотографии:</div>
-      {userImages && userSettings && userSettings.verifyEmail && (
-        <PhotosList
-          photos={userImages.images.filter((image) => image.isInTrasher)}
-          withCreator={false}
-        />
-      )}
-      {userImages && userSettings && !userSettings.verifyEmail && (
-        <div className="pwp_message">
-          <span>
-            Подвердите почту в настройках. После этого вы сможете смотреть ваши удаленные
-            фотографии.
-          </span>
-        </div>
-      )}
-      {userImages &&
-        userSettings &&
-        userSettings.verifyEmail &&
+      {userSettings.verifyEmail &&
+        userImages.images.filter((image) => image.isInTrasher).length !== 0 && (
+          <PhotosList
+            photos={userImages.images.filter((image) => image.isInTrasher)}
+            withCreator={false}
+          />
+        )}
+
+      {userSettings.verifyEmail &&
         userImages.images.filter((image) => image.isInTrasher).length === 0 && (
           <div className="pwp_message">У вас нет удаленных фотографий</div>
         )}
+
+      {!userSettings.verifyEmail && (
+        <div className="pwp_message">
+          Подвердите почту в настройках. После этого вы сможете смотреть ваши удаленные фотографии.
+        </div>
+      )}
     </div>
   )
 }

@@ -27,7 +27,7 @@ export default class StorageApi {
 
     try {
       if (isChecked) {
-        const result = await uploadFile(ref(storage, `${userInfo!.id}.png`), photo, {
+        const result = await uploadFile(ref(storage, `${userInfo.id}.png`), photo, {
           contentType: 'image/png'
         })
 

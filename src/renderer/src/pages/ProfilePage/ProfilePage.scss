@@ -1,12 +1,19 @@
 @import '../../styles/vars.scss';
 @import '../../styles/mixins.scss';
 
+.profile_block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+}
+
 .profile_buttons {
   display: flex;
   align-items: center;
 
   p {
-    font-size: 16px;
     text-decoration: underline;
 
     margin-right: 15px;
@@ -16,12 +23,14 @@
 }
 
 .profile_button {
-  padding: 10px;
-  border-radius: 5px;
-  background-color: black;
-  color: white;
+  padding: 5px 10px;
 
+  @include flexCenter;
   @include defaultTransition;
+
+  border-radius: 5px;
+
+  color: $white;
 }
 
 .profile_button--wrong {
@@ -41,19 +50,10 @@
 }
 
 .profile_button--orange {
-  background-color: darken($orange, 20);
+  background-color: $orange;
+  color: $black;
 
   &:hover {
-    background-color: darken(darken($orange, 20), 5);
+    background-color: darken($orange, 15);
   }
-}
-
-.profile_block {
-  font-size: 16px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  position: relative;
 }

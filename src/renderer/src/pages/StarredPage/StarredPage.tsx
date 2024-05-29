@@ -10,25 +10,24 @@ const StarredPage = (): JSX.Element => {
   return (
     <div className="pwp">
       <div className="pwp_title">Ваши любимые фотографии:</div>
-      {userImages && userSettings && userSettings.verifyEmail && (
-        <PhotosList
-          photos={userImages.images.filter((image) => image.isStarred)}
-          withCreator={false}
-        />
-      )}
-      {userImages && userSettings && !userSettings.verifyEmail && (
-        <div className="pwp_message">
-          <span>
-            Подвердите почту в настройках. После этого вы сможете смотреть ваши любимые фотографии.
-          </span>
-        </div>
-      )}
-      {userImages &&
-        userSettings &&
-        userSettings.verifyEmail &&
+      {userSettings.verifyEmail &&
+        userImages.images.filter((image) => image.isStarred).length !== 0 && (
+          <PhotosList
+            photos={userImages.images.filter((image) => image.isStarred)}
+            withCreator={false}
+          />
+        )}
+
+      {userSettings.verifyEmail &&
         userImages.images.filter((image) => image.isStarred).length === 0 && (
           <div className="pwp_message">У вас нет любимых фотографий</div>
         )}
+
+      {!userSettings.verifyEmail && (
+        <div className="pwp_message">
+          Подвердите почту в настройках. После этого вы сможете смотреть ваши любимые фотографии.
+        </div>
+      )}
     </div>
   )
 }

@@ -8,14 +8,14 @@ import UserSettingsApi from '@renderer/api/userSettingsApi'
 
 const SettingsPageButton = (): JSX.Element => {
   const { user } = useContext(AuthContext)
-  const { userInfo, userSettings } = useContext(UserContext)
+  const { userSettings } = useContext(UserContext)
 
   const [isClicked, setIsClicked] = useState(false)
 
   const [sendEmailVerification] = useSendEmailVerification(auth)
 
   useEffect(() => {
-    if (user && userInfo && userSettings && user.emailVerified && !userSettings.verifyEmail) {
+    if (user?.emailVerified && !userSettings.verifyEmail) {
       UserSettingsApi.verifyUserEmail(userSettings)
     }
   }, [user])

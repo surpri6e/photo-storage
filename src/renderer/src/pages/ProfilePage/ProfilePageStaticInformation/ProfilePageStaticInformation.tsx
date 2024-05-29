@@ -11,30 +11,33 @@ const ProfilePageStaticInformation = (): JSX.Element => {
     <>
       <div className="profile_block">
         Вип статус:{' '}
-        <span className={userInfo?.vipStatus ? 'vip-status--yes' : 'vip-status--no'}>
-          {userInfo?.vipStatus ? 'есть' : 'нет'}
+        <span className={userInfo.vipStatus ? 'vip-status--yes' : 'vip-status--no'}>
+          {userInfo.vipStatus ? 'есть' : 'нет'}
         </span>
       </div>
+
       <div className="profile_block">
-        Дата создания: <span>{userInfo?.dateOfCreate}</span>
+        Дата создания: <span>{userInfo.dateOfCreate}</span>
       </div>
+
       <div className="profile_block">
         Айди:{' '}
         <span
           className="profile_id"
           onClick={() =>
-            navigator.clipboard.writeText(userInfo!.id).then(() => {
+            navigator.clipboard.writeText(userInfo.id).then(() => {
               setIsClicked(true)
               setTimeout(() => setIsClicked(false), 1000)
             })
           }
         >
-          {userInfo?.id}
+          {userInfo.id}
         </span>
         {isClicked && <HelpWindow message="Айди скопировано" isHelpful />}
       </div>
+
       <div className="profile_block">
-        Первая почта: <span className="profile_email">{userInfo?.firstEmail}</span>
+        Первая почта: <span className="profile_email">{userInfo.firstEmail}</span>
       </div>
     </>
   )

@@ -9,7 +9,7 @@ const SettingsPageStorageSetting = (): JSX.Element => {
   const { userSettings } = useContext(UserContext)
 
   const [procent, setProcent] = useState(
-    userSettings && userSettings.maxStorageMemory != 0
+    userSettings.maxStorageMemory != 0
       ? (formatBytes(userSettings.nowStorageMemory, { from: 'B', to: 'MB', fixTo: 1 }).amount /
           userSettings.maxStorageMemory) *
           100
@@ -18,7 +18,7 @@ const SettingsPageStorageSetting = (): JSX.Element => {
 
   useEffect(() => {
     setProcent(
-      userSettings && userSettings.maxStorageMemory != 0
+      userSettings.maxStorageMemory != 0
         ? (formatBytes(userSettings.nowStorageMemory, { from: 'B', to: 'MB', fixTo: 1 }).amount /
             userSettings.maxStorageMemory) *
             100
@@ -31,8 +31,8 @@ const SettingsPageStorageSetting = (): JSX.Element => {
       <img src={storageMemory} alt="Занятая память" />
       <div className="settings_sidebar_right">
         <p>
-          {formatBytes(userSettings!.nowStorageMemory, { from: 'B', to: 'MB', fixTo: 1 }).amount} МБ
-          / <span>{userSettings?.maxStorageMemory}</span> МБ
+          {formatBytes(userSettings.nowStorageMemory, { from: 'B', to: 'MB', fixTo: 1 }).amount} МБ
+          / <span>{userSettings.maxStorageMemory}</span> МБ
         </p>
         <div
           className="settings_sidebar_rectangle"

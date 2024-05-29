@@ -5,15 +5,13 @@ import { TUserSettingsSidebar } from '@renderer/types/IUser'
 import UserSettingsApi from '@renderer/api/userSettingsApi'
 
 const SettingsPageSidebarSetting = (): JSX.Element => {
-  const { userInfo, userSettings } = useContext(UserContext)
+  const { userSettings } = useContext(UserContext)
   const [sidebarSetting, setSidebarSetting] = useState<TUserSettingsSidebar>(
     userSettings ? userSettings.sidebar : 'all'
   )
 
   useEffect(() => {
-    if (userInfo && userSettings) {
-      UserSettingsApi.updateSidebarSetting(userSettings, sidebarSetting)
-    }
+    UserSettingsApi.updateSidebarSetting(userSettings, sidebarSetting)
   }, [sidebarSetting])
 
   return (

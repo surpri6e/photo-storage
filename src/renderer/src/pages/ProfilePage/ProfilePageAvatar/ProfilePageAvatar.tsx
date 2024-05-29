@@ -24,17 +24,23 @@ const ProfilePageAvatar = (): JSX.Element => {
     <div className="profile_header">
       <img
         className={avatarError ? 'profile_avatar profile_avatar--error' : 'profile_avatar'}
-        src={user.userInfo?.urlAvatar.length === 0 ? defaultAvatar : user.userInfo?.urlAvatar}
+        src={user.userInfo.urlAvatar.length === 0 ? defaultAvatar : user.userInfo.urlAvatar}
         alt="Аватарка"
       />
-      <label htmlFor="avatar-upload" className="custom-avatar-upload">
+
+      <label
+        htmlFor="avatar-upload"
+        className="custom-avatar-upload profile_button profile_button--green"
+      >
         Поменять
       </label>
+
       <input
         id="avatar-upload"
         type="file"
         onChange={(e) => setAvatar(e.target.files ? e.target.files[0] : undefined)}
       />
+
       {avatarError && (
         <HelpWindow message="Файл слишком большой или не является картинкой" inProfile />
       )}

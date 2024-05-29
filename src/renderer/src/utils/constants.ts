@@ -6,7 +6,6 @@ export const sidebarDelay = 200
 
 export const registrationErrorMessage = 'Данный аккаунт уже существует'
 export const logInErrorMessage = 'Неверный логин или пароль'
-
 export const emailErrorMessage = 'Неправильная почта'
 export const passwordErrorMessage = 'Короткий пароль'
 

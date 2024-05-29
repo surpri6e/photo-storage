@@ -10,17 +10,20 @@
 }
 
 .profile_id {
-  font-weight: 600;
-  cursor: pointer;
-  background-color: $grey;
-  padding: 5px 20px;
-  border-radius: 5px;
+  padding: 5px 10px;
 
+  cursor: pointer;
+
+  @include flexCenter;
   @include defaultTransition;
 
   &:hover {
-    background-color: darken($grey, 10);
+    background-color: darken($doubleGrey, 30);
   }
+
+  background-color: $doubleGrey;
+
+  border-radius: 5px;
 }
 
 .profile_email {

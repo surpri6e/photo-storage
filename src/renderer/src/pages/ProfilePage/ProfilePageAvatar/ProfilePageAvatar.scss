@@ -27,16 +27,10 @@
 
 .custom-avatar-upload {
   cursor: pointer;
-  background-color: $black;
-  color: $white;
 
   width: 75px;
   height: 20px;
   border-radius: 5px;
-
-  @include flexCenter;
-
-  font-family: 'Raleway', sans-serif;
 
   position: absolute;
   left: 0;

@@ -7,7 +7,6 @@ import { UserContext } from '@renderer/context/UserContext'
 
 const Sidebar = (): JSX.Element => {
   const { isMinWidth, setIsMinWidth } = useContext(SidebarContext)
-
   const { userSettings } = useContext(UserContext)
 
   useEffect(() => {
@@ -16,9 +15,9 @@ const Sidebar = (): JSX.Element => {
 
   return (
     <div
-      className={`sidebar ${userSettings?.sidebar === 'open' ? 'sidebar--max--opened' : userSettings?.sidebar === 'close' ? 'sidebar--min--closed' : isMinWidth ? 'sidebar--min' : 'sidebar--max'}`}
+      className={`sidebar ${userSettings.sidebar === 'open' ? 'sidebar--max--opened' : userSettings.sidebar === 'close' ? 'sidebar--min--closed' : isMinWidth ? 'sidebar--min' : 'sidebar--max'}`}
     >
-      <SidebarList isMinWidth={isMinWidth} setIsMinWidth={setIsMinWidth} />
+      <SidebarList />
       <SidebarVersion />
     </div>
   )
