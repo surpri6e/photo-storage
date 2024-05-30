@@ -28,7 +28,7 @@
     height: 32px;
     border-radius: 50%;
 
-    @include defaultTransition;
+    transition: all 100ms ease-in;
 
     object-fit: cover;
 

@@ -20,23 +20,30 @@ export default class StorageApi {
     user: IUserContext,
     uploadFile: cbUploadFileSignature,
     photo: File,
-    setError: React.Dispatch<React.SetStateAction<boolean>>
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setLocalError: React.Dispatch<React.SetStateAction<boolean>>,
+    setServerError: React.Dispatch<React.SetStateAction<boolean>>
   ): Promise<void> => {
-    const isChecked = this.checkOnRules(photo, setError)
-    const { userInfo } = user
+    const isChecked = this.checkOnRules(photo, setLocalError)
 
     try {
       if (isChecked) {
-        const result = await uploadFile(ref(storage, `${userInfo.id}.png`), photo, {
+        setLoading(true)
+
+        const result = await uploadFile(ref(storage, `${user.userInfo.id}.png`), photo, {
           contentType: 'image/png'
         })
 
         if (result) {
-          await UserInfoApi.changeUserAvatar(user, createStorageLink(userInfo!.id))
+          await UserInfoApi.changeUserAvatar(user, createStorageLink(user.userInfo.id))
         }
       }
     } catch (error: unknown) {
+      setServerError(true)
+      setTimeout(() => setServerError(false), 1500)
       throwError(error)
+    } finally {
+      setLoading(false)
     }
   }
 

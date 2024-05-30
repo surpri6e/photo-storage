@@ -1,32 +1,30 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import './ProfilePageAvatar.scss'
 import { UserContext } from '@renderer/context/UserContext'
 import defaultAvatar from '../../../images/defaultAvatar.png'
-import { useUploadFile } from 'react-firebase-hooks/storage'
-import StorageApi from '@renderer/api/storageApi'
 import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
+import { useUploadAvatar } from '@renderer/hooks/useUploadAvatar'
+import Loader from '@renderer/components/Loader/Loader'
 
 const ProfilePageAvatar = (): JSX.Element => {
-  const user = useContext(UserContext)
+  const { userInfo } = useContext(UserContext)
 
   const [avatar, setAvatar] = useState<File | undefined>()
-  const [avatarError, setAvatarError] = useState(false)
 
-  const [uploadFile] = useUploadFile()
-
-  useEffect(() => {
-    if (avatar && user.userInfo) {
-      StorageApi.uploadAvatar(user, uploadFile, avatar, setAvatarError)
-    }
-  }, [avatar])
+  const [loading, errorLocal, errorServer] = useUploadAvatar(avatar)
 
   return (
     <div className="profile_header">
-      <img
-        className={avatarError ? 'profile_avatar profile_avatar--error' : 'profile_avatar'}
-        src={user.userInfo.urlAvatar.length === 0 ? defaultAvatar : user.userInfo.urlAvatar}
-        alt="Аватарка"
-      />
+      {loading && <Loader />}
+      {!loading && (
+        <img
+          className={
+            errorLocal || errorServer ? 'profile_avatar profile_avatar--error' : 'profile_avatar'
+          }
+          src={userInfo.urlAvatar.length === 0 ? defaultAvatar : userInfo.urlAvatar}
+          alt="Аватарка"
+        />
+      )}
 
       <label
         htmlFor="avatar-upload"
@@ -41,8 +39,12 @@ const ProfilePageAvatar = (): JSX.Element => {
         onChange={(e) => setAvatar(e.target.files ? e.target.files[0] : undefined)}
       />
 
-      {avatarError && (
+      {errorLocal && (
         <HelpWindow message="Файл слишком большой или не является картинкой" inProfile />
+      )}
+
+      {errorServer && !errorLocal && (
+        <HelpWindow message="При загрузке произошла ошибка" inProfile />
       )}
     </div>
   )

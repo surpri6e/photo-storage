@@ -108,8 +108,8 @@ export default class UserInfoApi {
 
   public static changeUserAvatar = async (user: IUserContext, urlAvatar: string): Promise<void> => {
     try {
-      await setDoc(doc(db, 'users', user.userSettings!.uid), {
-        ...user.userInfo!,
+      await setDoc(doc(db, 'users', user.userSettings.uid), {
+        ...user.userInfo,
         urlAvatar
       } as IUserInfo)
     } catch (error: unknown) {

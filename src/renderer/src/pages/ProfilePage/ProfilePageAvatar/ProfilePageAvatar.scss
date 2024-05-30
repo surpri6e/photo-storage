@@ -12,7 +12,7 @@
   border-radius: 50%;
   cursor: pointer;
 
-  @include defaultTransition;
+  transition: all 100ms ease-in;
 
   object-fit: cover;
 
