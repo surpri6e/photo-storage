@@ -18,7 +18,7 @@ const Header = (): JSX.Element => {
           placeholder="Что найдем?"
           className="input header_input"
         />
-        <button>123123</button>
+        <button className="header_button">Найти</button>
       </div>
       <HeaderRight />
     </div>

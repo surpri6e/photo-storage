@@ -1,14 +1,21 @@
 // Variables
 
 $white: #fff;
+
+//! Light mode
 $black: #000;
+$grey: #d9d9d9;
+$doubleGrey: rgba(#989898, 0.18);
+
+//! Dark mode
+// $greyDarkMode: #232323;
+$greyDarkMode: #232323;
+$doubleGreyDarkMode: #0d1117;
+$blackDarkMode: #fff;
 
 $green: #3b4d3a;
 $red: lighten(#921818, 0.64);
 $orange: #c1a37f;
-
-$grey: #d9d9d9;
-$doubleGrey: rgba(#989898, 0.18);
 
 $container: 1400px;
 
@@ -18,9 +25,3 @@ $sidebarWidthMax: 160px;
 $sidebarDelay: 200ms;
 
 $headerHeight: 50px;
-
-@media (prefers-color-scheme: dark) {
-  $grey: black;
-  $doubleGrey: black;
-  $black: #fff;
-}

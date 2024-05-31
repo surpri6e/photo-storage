@@ -37,6 +37,7 @@ export interface IUserSettings {
   nowStorageMemory: number
   verifyEmail: boolean
   uid: string
+  isDarkTheme: boolean
 }
 
 export interface IUserData {

@@ -35,7 +35,8 @@ export default class UserInfoApi {
         showTitlesOfImages: true,
         sidebar: 'all',
         verifyEmail: false,
-        uid
+        uid,
+        isDarkTheme: false
       }
 
       const newImages: IUserImages = {

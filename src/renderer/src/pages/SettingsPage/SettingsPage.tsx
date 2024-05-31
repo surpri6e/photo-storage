@@ -6,6 +6,7 @@ import SettingsPageStorageSetting from './SettingsPageStorageSetting/SettingsPag
 import SettingsPageButton from './SettingsPageButton/SettingsPageButton'
 import { useContext } from 'react'
 import { UserContext } from '@renderer/context/UserContext'
+import SettingsPageThemeSetting from './SettingsPageThemeSetting'
 
 const SettingsPage = (): JSX.Element => {
   const { userSettings } = useContext(UserContext)
@@ -16,6 +17,7 @@ const SettingsPage = (): JSX.Element => {
         <h2 className="pas_title">Настройки</h2>
         <SettingsPageImageSetting />
         <SettingsPageSidebarSetting />
+        <SettingsPageThemeSetting />
         <SettingsPageStorageSetting />
         <SettingsPageButton />
 

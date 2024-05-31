@@ -2,20 +2,20 @@ import UserSettingsApi from '@renderer/api/userSettingsApi'
 import { UserContext } from '@renderer/context/UserContext'
 import { useContext } from 'react'
 
-const SettingsPageImageSetting = (): JSX.Element => {
+const SettingsPageThemeSetting = (): JSX.Element => {
   const { userSettings } = useContext(UserContext)
 
   return (
     <div className="settings_block">
-      <p>Показывать название фотографий: </p>
+      <p>Темная тема: </p>
       <button
         className="settings_button"
-        onClick={async () => await UserSettingsApi.updateImageSetting(userSettings)}
+        onClick={async () => await UserSettingsApi.updateThemeSetting(userSettings)}
       >
-        {userSettings.showTitlesOfImages ? 'Да' : 'Нет'}
+        {userSettings.isDarkTheme ? 'Да' : 'Нет'}
       </button>
     </div>
   )
 }
 
-export default SettingsPageImageSetting
+export default SettingsPageThemeSetting

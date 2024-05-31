@@ -10,6 +10,13 @@ export default class UserSettingsApi {
     } as IUserSettings)
   }
 
+  public static updateThemeSetting = async (userSettings: IUserSettings): Promise<void> => {
+    await setDoc(doc(db, 'settings', userSettings.uid), {
+      ...userSettings,
+      isDarkTheme: !userSettings.isDarkTheme
+    } as IUserSettings)
+  }
+
   public static updateSidebarSetting = async (
     userSettings: IUserSettings,
     newSidebarSetting: TUserSettingsSidebar

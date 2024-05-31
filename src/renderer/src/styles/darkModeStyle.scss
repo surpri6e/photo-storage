@@ -1,0 +1,51 @@
+html[data-theme='dark'] {
+  color: $blackDarkMode;
+
+  body {
+    background-color: lighten($greyDarkMode, 5);
+  }
+
+  .header {
+    background-color: $greyDarkMode;
+    border-bottom: 1px solid $white;
+
+    .header_logo {
+      color: $white;
+    }
+  }
+
+  .sidebar {
+    background-color: $greyDarkMode;
+    border-right: 1px solid $white;
+    .sidebar_card {
+      img {
+        filter: brightness(10);
+      }
+    }
+  }
+
+  .settings_button,
+  #settings_select {
+    color: $white;
+  }
+
+  .settings_sidebar_rectangle {
+    border: 1px solid $white;
+  }
+
+  .settings_block {
+    a {
+      color: $orange;
+    }
+  }
+
+  .loader {
+    border: 5px solid $white;
+    border-bottom-color: transparent;
+  }
+
+  .photo-card,
+  .photos-list_creator {
+    background-color: lighten($greyDarkMode, 15);
+  }
+}

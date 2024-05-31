@@ -18,6 +18,8 @@
 .settings_button {
   padding: 5px 10px;
 
+  color: $black;
+
   @include flexCenter;
   @include defaultTransition;
 

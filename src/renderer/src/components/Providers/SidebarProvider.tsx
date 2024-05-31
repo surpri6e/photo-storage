@@ -1,6 +1,6 @@
 import { SidebarContext } from '@renderer/context/SidebarContext'
 import { UserContext } from '@renderer/context/UserContext'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import Header from '../Header/Header'
 import { Route, Routes } from 'react-router-dom'
@@ -10,6 +10,10 @@ import PhotosPage from '@renderer/pages/PhotosPage/PhotosPage'
 const SidebarProvider = (): JSX.Element => {
   const [isMinWidth, setIsMinWidth] = useState(true)
   const { userSettings } = useContext(UserContext)
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', userSettings.isDarkTheme ? 'dark' : 'light')
+  }, [userSettings.isDarkTheme])
 
   return (
     <SidebarContext.Provider value={{ isMinWidth, setIsMinWidth }}>

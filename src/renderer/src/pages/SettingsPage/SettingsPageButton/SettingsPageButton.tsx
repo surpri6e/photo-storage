@@ -31,8 +31,8 @@ const SettingsPageButton = (): JSX.Element => {
             : 'settings_button settings_button--orange'
       }
       disabled={user?.emailVerified || isClicked}
-      onClick={() => {
-        sendEmailVerification()
+      onClick={async () => {
+        await sendEmailVerification()
         setIsClicked(true)
       }}
     >
