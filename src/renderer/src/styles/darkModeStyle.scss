@@ -24,8 +24,25 @@ html[data-theme='dark'] {
     }
   }
 
-  .settings_button,
+  .header_settings {
+    img {
+      filter: brightness(10);
+    }
+  }
+
+  .profile_id,
+  .settings_button:last-child,
   #settings_select {
+    color: $white;
+
+    &:hover {
+      background-color: darken(lighten($greyDarkMode, 20), 10);
+    }
+
+    background-color: lighten($greyDarkMode, 20);
+  }
+
+  .sidebar_button {
     color: $white;
   }
 
@@ -46,6 +63,18 @@ html[data-theme='dark'] {
 
   .photo-card,
   .photos-list_creator {
-    background-color: lighten($greyDarkMode, 15);
+    background-color: lighten($greyDarkMode, 10);
+  }
+
+  .photo-card_panel {
+    background-color: $greyDarkMode;
+
+    p:not(:last-child):hover {
+      background-color: darken($greyDarkMode, 15);
+    }
+  }
+
+  .photo-card_submenu > span {
+    background-color: $white;
   }
 }

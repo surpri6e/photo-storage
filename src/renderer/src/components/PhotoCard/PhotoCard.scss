@@ -3,6 +3,7 @@
 
 .photo-card {
   width: calc(33.33% - 20px);
+  min-width: 350px;
   height: 380px;
 
   border-radius: 5px;
@@ -14,6 +15,12 @@
 
   padding: 10px;
   position: relative;
+}
+
+@media screen and (max-width: 1200px) {
+  .photo-card {
+    min-width: calc(50% - 20px);
+  }
 }
 
 .photo-card_image {
