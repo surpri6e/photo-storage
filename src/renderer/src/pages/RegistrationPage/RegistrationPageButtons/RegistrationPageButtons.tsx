@@ -37,16 +37,18 @@ const RegistrationPageButtons: FC<IRegistrationPageButtons> = ({
 
   return (
     <div className="registration_buttons">
-      <div className="registration_forgotten" onClick={() => setRegistrationType('forgotten')}>
-        Забыли пароль?
-      </div>
+      {registrationType !== 'forgotten' && (
+        <div className="registration_forgotten" onClick={() => setRegistrationType('forgotten')}>
+          Забыли пароль?
+        </div>
+      )}
 
       {registrationType === 'registration' && (
         <>
           <button
             className="registration_button"
-            onClick={() =>
-              RegistartionApi.createNewAccount(context, createUserWithEmailAndPassword)
+            onClick={async () =>
+              await RegistartionApi.createNewAccount(context, createUserWithEmailAndPassword)
             }
           >
             Зарегистрироваться
@@ -59,11 +61,14 @@ const RegistrationPageButtons: FC<IRegistrationPageButtons> = ({
           </div>
         </>
       )}
+
       {registrationType === 'logIn' && (
         <>
           <button
             className="registration_button"
-            onClick={() => RegistartionApi.logInAccount(context, signInWithEmailAndPassword)}
+            onClick={async () =>
+              await RegistartionApi.logInAccount(context, signInWithEmailAndPassword)
+            }
           >
             Войти
           </button>
@@ -75,12 +80,14 @@ const RegistrationPageButtons: FC<IRegistrationPageButtons> = ({
           </div>
         </>
       )}
+
       {registrationType === 'forgotten' && (
         <>
           <button
             className="registration_button"
             onClick={async () => {
               const result = await RegistartionApi.resetPassword(context, sendPasswordResetEmail)
+
               if (result) {
                 setRegistrationType('registration')
               }

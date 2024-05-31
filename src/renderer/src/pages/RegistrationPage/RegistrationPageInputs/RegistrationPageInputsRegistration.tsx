@@ -35,7 +35,9 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
       <div className="registration_block">
         {emailError && <HelpWindow message={emailErrorMessage} />}
         {isAccoutExist && !emailError && <HelpWindow message={registrationErrorMessage} />}
+
         <Input
+          type="text"
           value={email}
           setValue={setEmail}
           placeholder="User@gmail.com"
@@ -46,6 +48,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
           }
         />
       </div>
+
       <div className="registration_block">
         {passwordError && <HelpWindow message={passwordErrorMessage} />}
         {passwordsEqualsError && !passwordError && (
@@ -54,6 +57,7 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
         {isAccoutExist && !passwordError && !(passwordsEqualsError && !passwordError) && (
           <HelpWindow message={registrationErrorMessage} />
         )}
+
         <Input
           value={password}
           setValue={setPassword}
@@ -66,10 +70,12 @@ const RegistrationPageInputsRegistration: FC<IRegistrationPageInputsRegistration
           }
         />
       </div>
+
       <div className="registration_block">
         {passwordsEqualsError && !passwordError && (
           <HelpWindow message="Пароли должны быть одинаковыми" />
         )}
+
         <Input
           value={doublePassword}
           setValue={setDoublePassword}

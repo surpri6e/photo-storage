@@ -6,6 +6,7 @@ import { passwordErrorMessage } from '@renderer/utils/constants'
 import Input from '@renderer/components/Input'
 import { auth } from '@renderer/main'
 import UserInfoApi from '@renderer/api/userInfoApi'
+import { errorDoubleTimeout } from '@renderer/utils/errorsTimeout'
 
 interface IProfilePageChangeDataInputsPassword {
   password: string
@@ -23,13 +24,8 @@ const ProfilePageChangeDataInputsPassword: FC<
 
   useEffect(() => {
     if (errorPassword) {
-      setTimeout(() => setIsPasswordCanBeChanged(true), 800)
-      setTimeout(() => {
-        setIsPasswordCanBeChanged(false)
-      }, 1200)
+      errorDoubleTimeout(setIsPasswordCanBeChanged, 800)
     }
-
-    return () => setIsPasswordCanBeChanged(false)
   }, [errorPassword])
 
   return (
@@ -62,6 +58,7 @@ const ProfilePageChangeDataInputsPassword: FC<
             setValueError: setPasswordError,
             cbfunction: updatePassword
           })
+
           if (result) setVariable('closed')
         }}
       >

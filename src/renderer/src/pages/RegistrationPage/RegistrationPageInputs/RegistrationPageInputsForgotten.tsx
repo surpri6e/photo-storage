@@ -11,6 +11,7 @@ const RegistrationPageInputsForgotten = (): JSX.Element => {
     <div className="registration_block">
       {emailError && <HelpWindow message={emailErrorMessage} />}
       <Input
+        type="text"
         value={email}
         setValue={setEmail}
         placeholder="User@gmail.com"

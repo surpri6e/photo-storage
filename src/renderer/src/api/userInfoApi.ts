@@ -3,6 +3,7 @@ import { IUserInfo, IUserAlbums, IUserImages } from '@renderer/types/IUser'
 import { IUserSettings } from '@renderer/types/IUser'
 import { IUserContext } from '@renderer/types/contexts/IUserContext'
 import { dateFormatter } from '@renderer/utils/dateFormatter'
+import { errorTimeout } from '@renderer/utils/errorsTimeout'
 import { throwError } from '@renderer/utils/throwError'
 import { validateEmail } from '@renderer/utils/validateEmail'
 import { doc, setDoc, writeBatch } from 'firebase/firestore'
@@ -10,9 +11,9 @@ import { getRandomKey } from 'rkey'
 
 interface IUpdaterUserData {
   value: string
+  cbfunction: (value: string) => Promise<boolean>
   setValue: React.Dispatch<React.SetStateAction<string>>
   setValueError: React.Dispatch<React.SetStateAction<boolean>>
-  cbfunction: (value: string) => Promise<boolean>
 }
 
 export default class UserInfoApi {
@@ -25,7 +26,7 @@ export default class UserInfoApi {
         firstEmail: email,
         id: getRandomKey(10, 'all'),
         dateOfCreate: dateFormatter(new Date()),
-        urlAvatar: ''
+        urlAvatar: ['', 0]
       }
 
       const newSettings: IUserSettings = {
@@ -61,18 +62,19 @@ export default class UserInfoApi {
   }
 
   public static updateUserEmail = async (updaterData: IUpdaterUserData): Promise<boolean> => {
-    if (updaterData.value.length < 5 || !validateEmail(updaterData.value)) {
-      updaterData.setValueError(true)
-      setTimeout(() => updaterData.setValueError(false), 1000)
+    const { cbfunction, setValue, setValueError, value } = updaterData
+
+    if (value.length < 5 || !validateEmail(value)) {
+      errorTimeout(setValueError, 1000)
     }
 
     try {
-      if (!(updaterData.value.length < 5 || !validateEmail(updaterData.value))) {
-        const result = await updaterData.cbfunction(updaterData.value)
+      if (!(value.length < 5 || !validateEmail(value))) {
+        const result = await cbfunction(value)
 
         if (result) {
-          updaterData.setValue('')
-          updaterData.setValueError(false)
+          setValue('')
+          setValueError(false)
           return true
         }
       }
@@ -84,18 +86,19 @@ export default class UserInfoApi {
   }
 
   public static updateUserPassword = async (updaterData: IUpdaterUserData): Promise<boolean> => {
-    if (updaterData.value.length < 6) {
-      updaterData.setValueError(true)
-      setTimeout(() => updaterData.setValueError(false), 1000)
+    const { cbfunction, setValue, setValueError, value } = updaterData
+
+    if (value.length < 6) {
+      errorTimeout(setValueError, 1000)
     }
 
     try {
-      if (!(updaterData.value.length < 6)) {
-        const result = await updaterData.cbfunction(updaterData.value)
+      if (!(value.length < 6)) {
+        const result = await cbfunction(value)
 
         if (result) {
-          updaterData.setValue('')
-          updaterData.setValueError(false)
+          setValue('')
+          setValueError(false)
           return true
         }
       }
@@ -110,7 +113,7 @@ export default class UserInfoApi {
     try {
       await setDoc(doc(db, 'users', user.userSettings.uid), {
         ...user.userInfo,
-        urlAvatar
+        urlAvatar: [urlAvatar, user.userInfo.urlAvatar[1] + 1]
       } as IUserInfo)
     } catch (error: unknown) {
       throwError(error)

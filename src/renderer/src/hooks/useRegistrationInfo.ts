@@ -1,3 +1,4 @@
+import { errorDoubleTimeout } from '@renderer/utils/errorsTimeout'
 import { AuthError } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 
@@ -6,13 +7,7 @@ export const useRegistrationInfo = (error: boolean | Error | AuthError | undefin
 
   useEffect(() => {
     if (error) {
-      setTimeout(() => {
-        setNewError(true)
-      }, 1000)
-
-      setTimeout(() => {
-        setNewError(false)
-      }, 2500)
+      errorDoubleTimeout(setNewError, 800)
     }
   }, [error])
 

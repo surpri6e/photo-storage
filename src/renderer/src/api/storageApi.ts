@@ -8,6 +8,7 @@ import { throwError } from '@renderer/utils/throwError'
 import UserImagesApi from './userImagesApi'
 import { maxSizeOfImage } from '@renderer/utils/constants'
 import { IUserContext } from '@renderer/types/contexts/IUserContext'
+import { errorTimeout } from '@renderer/utils/errorsTimeout'
 
 export type cbUploadFileSignature = (
   storageRef: StorageReference,
@@ -30,17 +31,29 @@ export default class StorageApi {
       if (isChecked) {
         setLoading(true)
 
-        const result = await uploadFile(ref(storage, `${user.userInfo.id}.png`), photo, {
-          contentType: 'image/png'
-        })
+        const result = await uploadFile(
+          ref(storage, `${user.userInfo.id}_${user.userInfo.urlAvatar[1]}.png`),
+          photo,
+          {
+            contentType: 'image/png'
+          }
+        )
+
+        if (user.userInfo.urlAvatar[1] >= 1) {
+          await deleteObject(
+            ref(storage, `${user.userInfo.id}_${user.userInfo.urlAvatar[1] - 1}.png`)
+          )
+        }
 
         if (result) {
-          await UserInfoApi.changeUserAvatar(user, createStorageLink(user.userInfo.id))
+          await UserInfoApi.changeUserAvatar(
+            user,
+            createStorageLink(user.userInfo.id, user.userInfo.urlAvatar[1])
+          )
         }
       }
     } catch (error: unknown) {
-      setServerError(true)
-      setTimeout(() => setServerError(false), 1500)
+      errorTimeout(setServerError, 1500)
       throwError(error)
     } finally {
       setLoading(false)
@@ -100,8 +113,7 @@ export default class StorageApi {
       (photo && photo.size > maxSizeOfImage) ||
       (photo && photo.type !== 'image/png' && photo.type !== 'image/jpeg')
     ) {
-      setError(true)
-      setTimeout(() => setError(false), 1500)
+      errorTimeout(setError, 1500)
       return false
     }
 

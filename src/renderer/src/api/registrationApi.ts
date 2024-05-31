@@ -3,6 +3,7 @@ import { validateEmail } from '@renderer/utils/validateEmail'
 import { ActionCodeSettings, UserCredential } from 'firebase/auth'
 import UserInfoApi from './userInfoApi'
 import { throwError } from '@renderer/utils/throwError'
+import { errorTimeout } from '@renderer/utils/errorsTimeout'
 
 type cbDefaultSignature = (email: string, password: string) => Promise<UserCredential | undefined>
 type cbResetPasswordSignature = (
@@ -11,16 +12,6 @@ type cbResetPasswordSignature = (
 ) => Promise<boolean>
 
 export default class RegistartionApi {
-  public static clearContext = (context: IRegistrationContext): void => {
-    context.setEmail('')
-    context.setPassword('')
-    context.setDoublePassword('')
-
-    context.setEmailError(false)
-    context.setPasswordError(false)
-    context.setPasswordsEqualsError(false)
-  }
-
   public static createNewAccount = async (
     context: IRegistrationContext,
     cb: cbDefaultSignature
@@ -28,14 +19,12 @@ export default class RegistartionApi {
     this.checkOnEmailError(context)
 
     if (context.password.length < 6) {
-      context.setPasswordError(true)
-      setTimeout(() => context.setPasswordError(false), 1500)
+      errorTimeout(context.setPasswordError, 1000)
       return
     }
 
     if (context.password != context.doublePassword) {
-      context.setPasswordsEqualsError(true)
-      setTimeout(() => context.setPasswordsEqualsError(false), 1500)
+      errorTimeout(context.setPasswordsEqualsError, 1000)
     }
 
     try {
@@ -98,10 +87,19 @@ export default class RegistartionApi {
     return false
   }
 
+  public static clearContext = (context: IRegistrationContext): void => {
+    context.setEmail('')
+    context.setPassword('')
+    context.setDoublePassword('')
+
+    context.setEmailError(false)
+    context.setPasswordError(false)
+    context.setPasswordsEqualsError(false)
+  }
+
   private static checkOnEmailError = (context: IRegistrationContext): boolean => {
     if (context.email.length < 5 || !validateEmail(context.email)) {
-      context.setEmailError(true)
-      setTimeout(() => context.setEmailError(false), 1500)
+      errorTimeout(context.setEmailError, 1000)
     }
 
     return context.email.length < 5 || !validateEmail(context.email)
@@ -109,8 +107,7 @@ export default class RegistartionApi {
 
   private static checkOnPasswordError = (context: IRegistrationContext): boolean => {
     if (context.password.length < 6) {
-      context.setPasswordError(true)
-      setTimeout(() => context.setPasswordError(false), 1500)
+      errorTimeout(context.setPasswordError, 1000)
     }
 
     return context.password.length < 6

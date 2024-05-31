@@ -18,3 +18,9 @@ $sidebarWidthMax: 160px;
 $sidebarDelay: 200ms;
 
 $headerHeight: 50px;
+
+@media (prefers-color-scheme: dark) {
+  $grey: black;
+  $doubleGrey: black;
+  $black: #fff;
+}

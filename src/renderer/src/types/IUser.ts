@@ -3,7 +3,7 @@ export interface IUserInfo {
   vipStatus: boolean
   id: string
   dateOfCreate: string
-  urlAvatar: string
+  urlAvatar: [string, number]
 }
 
 export interface IUserImage {

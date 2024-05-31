@@ -10,13 +10,16 @@ const Header = (): JSX.Element => {
   return (
     <div className="header">
       <HeaderLogo />
-      <Input
-        type="text"
-        value={search}
-        setValue={setSearch}
-        placeholder="Что найдем?"
-        className="input header_input"
-      />
+      <div className="header_center">
+        <Input
+          type="text"
+          value={search}
+          setValue={setSearch}
+          placeholder="Что найдем?"
+          className="input header_input"
+        />
+        <button>123123</button>
+      </div>
       <HeaderRight />
     </div>
   )

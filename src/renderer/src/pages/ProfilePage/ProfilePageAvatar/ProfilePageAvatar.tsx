@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react'
 import './ProfilePageAvatar.scss'
 import { UserContext } from '@renderer/context/UserContext'
-import defaultAvatar from '../../../images/defaultAvatar.png'
 import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
 import { useUploadAvatar } from '@renderer/hooks/useUploadAvatar'
 import Loader from '@renderer/components/Loader/Loader'
+import ProfilePageAvatarImage from './ProfilePageAvatarImage'
 
 const ProfilePageAvatar = (): JSX.Element => {
   const { userInfo } = useContext(UserContext)
@@ -17,12 +17,10 @@ const ProfilePageAvatar = (): JSX.Element => {
     <div className="profile_header">
       {loading && <Loader />}
       {!loading && (
-        <img
-          className={
-            errorLocal || errorServer ? 'profile_avatar profile_avatar--error' : 'profile_avatar'
-          }
-          src={userInfo.urlAvatar.length === 0 ? defaultAvatar : userInfo.urlAvatar}
-          alt="Аватарка"
+        <ProfilePageAvatarImage
+          errorLocal={errorLocal}
+          errorServer={errorServer}
+          urlAvatar={userInfo.urlAvatar[0]}
         />
       )}
 

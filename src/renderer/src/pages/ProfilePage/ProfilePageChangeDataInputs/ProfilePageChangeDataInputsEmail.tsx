@@ -6,6 +6,7 @@ import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
 import { emailErrorMessage } from '@renderer/utils/constants'
 import Input from '@renderer/components/Input'
 import UserInfoApi from '@renderer/api/userInfoApi'
+import { errorDoubleTimeout } from '@renderer/utils/errorsTimeout'
 
 interface IProfilePageChangeDataInputsEmail {
   email: string
@@ -23,10 +24,7 @@ const ProfilePageChangeDataInputsEmail: FC<
 
   useEffect(() => {
     if (errorEmail) {
-      setTimeout(() => setIsEmailCanBeChanged(true), 800)
-      setTimeout(() => {
-        setIsEmailCanBeChanged(false)
-      }, 1200)
+      errorDoubleTimeout(setIsEmailCanBeChanged, 800)
     }
   }, [errorEmail])
 
@@ -56,10 +54,11 @@ const ProfilePageChangeDataInputsEmail: FC<
         onClick={async () => {
           const result = await UserInfoApi.updateUserEmail({
             value: email,
+            cbfunction: updateEmail,
             setValue: setEmail,
-            setValueError: setEmailError,
-            cbfunction: updateEmail
+            setValueError: setEmailError
           })
+
           if (result) setVariable('closed')
         }}
       >

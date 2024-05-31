@@ -24,7 +24,9 @@ const RegistrationPageInputsLogIn: FC<IRegistrationPageInputsLogIn> = ({ errorSi
       <div className="registration_block">
         {emailError && <HelpWindow message={emailErrorMessage} />}
         {isUncorrectEmailOrPassword && !emailError && <HelpWindow message={logInErrorMessage} />}
+
         <Input
+          type="text"
           value={email}
           setValue={setEmail}
           placeholder="User@gmail.com"
@@ -35,9 +37,11 @@ const RegistrationPageInputsLogIn: FC<IRegistrationPageInputsLogIn> = ({ errorSi
           }
         />
       </div>
+
       <div className="registration_block">
         {passwordError && <HelpWindow message={passwordErrorMessage} />}
         {isUncorrectEmailOrPassword && !passwordError && <HelpWindow message={logInErrorMessage} />}
+
         <Input
           value={password}
           setValue={setPassword}
