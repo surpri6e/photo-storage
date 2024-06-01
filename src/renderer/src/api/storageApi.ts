@@ -98,23 +98,25 @@ export default class StorageApi {
 
     try {
       setLoading(true)
-      const randomId = getRandomKey(10, 'all')
+
+      const copyUserPhotos = user.userImages.images
 
       for (let i = 0; i < photos.length; i++) {
-        /**
-         * const result = await uploadFile(ref(storage, `${userInfo!.id}/${randomId}.png`), photo, {
-        contentType: 'image/png'
-      })
-      if (result) {
-        await UserImagesApi.addNewphoto(
-          user,
-          photo.size,
-          randomId,
-          createStorageLinkWithFolder(userInfo!.id, randomId)
-        )
-      }
-         */
-        console.log(123123)
+        const randomId = getRandomKey(10, 'all')
+
+        const result = await uploadFile(ref(storage, `${userInfo.id}/${randomId}.png`), photos[i], {
+          contentType: 'image/png'
+        })
+
+        if (result) {
+          await UserImagesApi.addNewPhoto(
+            user,
+            photos[i].size,
+            randomId,
+            createStorageLinkWithFolder(userInfo.id, randomId),
+            copyUserPhotos
+          )
+        }
       }
     } catch (error: unknown) {
       errorTimeout(setServerError, 1500)

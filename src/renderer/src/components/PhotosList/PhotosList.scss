@@ -33,6 +33,12 @@
   }
 }
 
+.photo-list_loader {
+  width: 100%;
+  height: 100%;
+  @include flexCenter;
+}
+
 .custom-photo-upload {
   display: block;
   width: 100%;

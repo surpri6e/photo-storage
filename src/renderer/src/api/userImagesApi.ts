@@ -1,40 +1,42 @@
 import { db } from '@renderer/main'
-import { IUserImages, IUserSettings } from '@renderer/types/IUser'
+import { IUserImage, IUserImages, IUserSettings } from '@renderer/types/IUser'
 import { IUserContext } from '@renderer/types/contexts/IUserContext'
 import { dateFormatter } from '@renderer/utils/dateFormatter'
 import { throwError } from '@renderer/utils/throwError'
 import { doc, setDoc, writeBatch } from 'firebase/firestore'
 
 export default class UserImagesApi {
-  public static addNewphoto = async (
+  public static addNewPhoto = async (
     user: IUserContext,
     size: number,
     id: string,
-    urlPhoto: string
+    urlPhoto: string,
+    copyUserPhotos: IUserImage[]
   ): Promise<void> => {
-    const { userSettings, userImages } = user
+    const { userSettings } = user
 
     try {
       const batch = writeBatch(db)
 
-      batch.set(doc(db, 'images', userSettings!.uid), {
-        images: [
-          ...userImages!.images,
-          {
-            dateOfCreate: dateFormatter(new Date()),
-            isInTrasher: false,
-            isStarred: false,
-            title: id,
-            urlImage: urlPhoto,
-            id,
-            size
-          }
-        ]
+      const newImage: IUserImage = {
+        dateOfCreate: dateFormatter(new Date()),
+        isInTrasher: false,
+        isStarred: false,
+        title: id,
+        urlImage: urlPhoto,
+        id,
+        size
+      }
+
+      batch.set(doc(db, 'images', userSettings.uid), {
+        images: [...copyUserPhotos, newImage]
       } as IUserImages)
 
-      batch.set(doc(db, 'settings', userSettings!.uid), {
-        ...userSettings!,
-        nowStorageMemory: userSettings!.nowStorageMemory + size
+      copyUserPhotos.push(newImage)
+
+      batch.set(doc(db, 'settings', userSettings.uid), {
+        ...userSettings,
+        nowStorageMemory: userSettings.nowStorageMemory + size
       } as IUserSettings)
 
       await batch.commit()
@@ -42,6 +44,8 @@ export default class UserImagesApi {
       throwError(error)
     }
   }
+
+  // ===================================
 
   public static changeLikeForPhoto = async (user: IUserContext, id: string): Promise<void> => {
     const { userImages, userSettings } = user
@@ -68,6 +72,8 @@ export default class UserImagesApi {
       throwError(error)
     }
   }
+
+  // ===========================================
 
   public static changeTrashForPhoto = async (user: IUserContext, id: string): Promise<void> => {
     const { userImages, userSettings } = user

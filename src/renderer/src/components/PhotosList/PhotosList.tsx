@@ -41,7 +41,11 @@ const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
               <img src={plus} alt="Добавить фотографию" />
             </label>
           )}
-          {loading && <Loader />}
+          {loading && (
+            <div className="photo-list_loader">
+              <Loader />
+            </div>
+          )}
 
           <input
             id="photo-upload"
