@@ -9,6 +9,7 @@ import UserImagesApi from './userImagesApi'
 import { maxSizeOfImage } from '@renderer/utils/constants'
 import { IUserContext } from '@renderer/types/contexts/IUserContext'
 import { errorTimeout } from '@renderer/utils/errorsTimeout'
+import { TFilesUploadErrors } from '@renderer/types/TFilesUploadErrors'
 
 export type cbUploadFileSignature = (
   storageRef: StorageReference,
@@ -60,40 +61,70 @@ export default class StorageApi {
     }
   }
 
-  public static uploadPhoto = async (
+  // ====================================
+
+  public static uploadPhotos = async (
     user: IUserContext,
     uploadFile: cbUploadFileSignature,
-    photo: File,
-    setError: React.Dispatch<React.SetStateAction<boolean>>
+    photos: FileList,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setLocalError: React.Dispatch<React.SetStateAction<TFilesUploadErrors>>,
+    setServerError: React.Dispatch<React.SetStateAction<boolean>>
   ): Promise<void> => {
-    const isChecked = this.checkOnRules(photo, setError)
     const { userSettings, userInfo } = user
+    let globalSizeOfPhotos = 0
+
+    for (let i = 0; i < photos.length; i++) {
+      if (
+        (photos[i] && photos[i].size > maxSizeOfImage) ||
+        (photos[i] && photos[i].type !== 'image/png' && photos[i].type !== 'image/jpeg')
+      ) {
+        setLocalError('file')
+        setTimeout(() => setLocalError('none'), 1500)
+        return
+      }
+
+      globalSizeOfPhotos += photos[i].size
+    }
+
+    if (
+      formatBytesToBytes(userSettings.maxStorageMemory, 'MB') - userSettings.nowStorageMemory <=
+      globalSizeOfPhotos
+    ) {
+      setLocalError('size')
+      setTimeout(() => setLocalError('none'), 1500)
+      return
+    }
 
     try {
+      setLoading(true)
       const randomId = getRandomKey(10, 'all')
 
-      if (
-        isChecked &&
-        formatBytesToBytes(userSettings!.maxStorageMemory, 'MB') - userSettings!.nowStorageMemory >=
-          photo.size
-      ) {
-        const result = await uploadFile(ref(storage, `${userInfo!.id}/${randomId}.png`), photo, {
-          contentType: 'image/png'
-        })
-
-        if (result) {
-          await UserImagesApi.addNewphoto(
-            user,
-            photo.size,
-            randomId,
-            createStorageLinkWithFolder(userInfo!.id, randomId)
-          )
-        }
+      for (let i = 0; i < photos.length; i++) {
+        /**
+         * const result = await uploadFile(ref(storage, `${userInfo!.id}/${randomId}.png`), photo, {
+        contentType: 'image/png'
+      })
+      if (result) {
+        await UserImagesApi.addNewphoto(
+          user,
+          photo.size,
+          randomId,
+          createStorageLinkWithFolder(userInfo!.id, randomId)
+        )
+      }
+         */
+        console.log(123123)
       }
     } catch (error: unknown) {
+      errorTimeout(setServerError, 1500)
       throwError(error)
+    } finally {
+      setLoading(false)
     }
   }
+
+  // =================================
 
   public static deletePhotoFromStorage = async (user: IUserContext, id: string): Promise<void> => {
     try {
@@ -104,6 +135,8 @@ export default class StorageApi {
       throwError(error)
     }
   }
+
+  // ================================
 
   private static checkOnRules = (
     photo: File,

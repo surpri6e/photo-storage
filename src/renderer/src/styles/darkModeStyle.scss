@@ -30,6 +30,12 @@ html[data-theme='dark'] {
     }
   }
 
+  .custom-photo-upload {
+    img {
+      filter: invert(10);
+    }
+  }
+
   .profile_id,
   .settings_button:last-child,
   #settings_select {

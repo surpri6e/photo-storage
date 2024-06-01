@@ -1,11 +1,14 @@
 import StorageApi from '@renderer/api/storageApi'
 import { UserContext } from '@renderer/context/UserContext'
+import { TFilesUploadErrors } from '@renderer/types/TFilesUploadErrors'
 import { useContext, useEffect, useState } from 'react'
 import { useUploadFile } from 'react-firebase-hooks/storage'
 
-export const useUploadAvatar = (avatar: File | undefined): [boolean, boolean, boolean] => {
+export const useUploadPhotos = (
+  photos: FileList | null | undefined
+): [boolean, TFilesUploadErrors, boolean] => {
   const [loading, setLoading] = useState(false)
-  const [localError, setLocalError] = useState(false)
+  const [localError, setLocalError] = useState<TFilesUploadErrors>('none')
   const [serverError, setServerError] = useState(false)
 
   const user = useContext(UserContext)
@@ -13,10 +16,10 @@ export const useUploadAvatar = (avatar: File | undefined): [boolean, boolean, bo
   const [uploadFile] = useUploadFile()
 
   useEffect(() => {
-    if (avatar) {
-      StorageApi.uploadAvatar(user, uploadFile, avatar, setLoading, setLocalError, setServerError)
+    if (photos) {
+      StorageApi.uploadPhotos(user, uploadFile, photos, setLoading, setLocalError, setServerError)
     }
-  }, [avatar])
+  }, [photos])
 
   return [loading, localError, serverError]
 }

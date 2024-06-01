@@ -1,13 +1,11 @@
 import { IUserImage } from '@renderer/types/IUser'
 import './PhotosList.scss'
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import PhotoCard from '../PhotoCard/PhotoCard'
-import { UserContext } from '@renderer/context/UserContext'
-import { useUploadFile } from 'react-firebase-hooks/storage'
-import StorageApi from '@renderer/api/storageApi'
-
 import plus from '../../images/plus.png'
 import HelpWindow from '../HelpWindow/HelpWindow'
+import { useUploadPhotos } from '@renderer/hooks/useUploadPhotos'
+import Loader from '../Loader/Loader'
 
 interface IPhotosList {
   photos: IUserImage[]
@@ -15,38 +13,46 @@ interface IPhotosList {
 }
 
 const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
-  const [photo, setPhoto] = useState<File | undefined>()
-  const [photoError, setPhotoError] = useState(false)
-
-  const user = useContext(UserContext)
-
-  const [uploadFile] = useUploadFile()
-
-  useEffect(() => {
-    if (photo && user.userInfo && user.userSettings) {
-      StorageApi.uploadPhoto(user, uploadFile, photo, setPhotoError)
-    }
-  }, [photo])
+  const [files, setFiles] = useState<FileList | null | undefined>()
+  const [loading, localError, serverError] = useUploadPhotos(files)
 
   return (
     <div className="photos-list">
       {withCreator && (
         <div
           className={
-            photoError ? 'photos-list_creator photos-list_creator--error ' : 'photos-list_creator'
+            localError !== 'none' || serverError
+              ? 'photos-list_creator photos-list_creator--error '
+              : 'photos-list_creator'
           }
         >
-          {photoError && <HelpWindow message="Файл слишком большой или не является картинкой" />}
-          <label htmlFor="photo-upload" className="custom-photo-upload">
-            <img src={plus} alt="Добавить фотографию" />
-          </label>
+          {localError === 'file' && (
+            <HelpWindow message="Файлы слишком большие или не являются картинками" />
+          )}
+
+          {localError === 'size' && <HelpWindow message="Недостаточно места на диске" />}
+
+          {serverError && localError === 'none' && (
+            <HelpWindow message="При загрузке произошла ошибка" />
+          )}
+
+          {!loading && (
+            <label htmlFor="photo-upload" className="custom-photo-upload">
+              <img src={plus} alt="Добавить фотографию" />
+            </label>
+          )}
+          {loading && <Loader />}
+
           <input
             id="photo-upload"
             type="file"
-            onChange={(e) => setPhoto(e.target.files ? e.target.files[0] : undefined)}
+            onChange={(e) => setFiles(e.target.files)}
+            multiple
+            accept="image/*"
           />
         </div>
       )}
+
       {photos.length > 0 &&
         photos.map((image) => (
           <PhotoCard
