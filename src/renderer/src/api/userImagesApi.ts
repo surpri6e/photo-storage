@@ -11,7 +11,8 @@ export default class UserImagesApi {
     size: number,
     id: string,
     urlPhoto: string,
-    copyUserPhotos: IUserImage[]
+    copyUserPhotos: IUserImage[],
+    copyStorageMemory: number
   ): Promise<void> => {
     const { userSettings } = user
 
@@ -36,7 +37,7 @@ export default class UserImagesApi {
 
       batch.set(doc(db, 'settings', userSettings.uid), {
         ...userSettings,
-        nowStorageMemory: userSettings.nowStorageMemory + size
+        nowStorageMemory: copyStorageMemory
       } as IUserSettings)
 
       await batch.commit()

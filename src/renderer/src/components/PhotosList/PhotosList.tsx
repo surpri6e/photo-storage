@@ -6,6 +6,7 @@ import plus from '../../images/plus.png'
 import HelpWindow from '../HelpWindow/HelpWindow'
 import { useUploadPhotos } from '@renderer/hooks/useUploadPhotos'
 import Loader from '../Loader/Loader'
+import ModalWindow from '../ModalWindow/ModalWindow'
 
 interface IPhotosList {
   photos: IUserImage[]
@@ -42,9 +43,15 @@ const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
             </label>
           )}
           {loading && (
-            <div className="photo-list_loader">
-              <Loader />
-            </div>
+            <>
+              <ModalWindow>
+                <Loader />
+              </ModalWindow>
+
+              <div className="photo-list_loader">
+                <Loader />
+              </div>
+            </>
           )}
 
           <input

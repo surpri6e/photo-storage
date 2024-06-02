@@ -5,6 +5,7 @@ import HelpWindow from '@renderer/components/HelpWindow/HelpWindow'
 import { useUploadAvatar } from '@renderer/hooks/useUploadAvatar'
 import Loader from '@renderer/components/Loader/Loader'
 import ProfilePageAvatarImage from './ProfilePageAvatarImage'
+import ModalWindow from '@renderer/components/ModalWindow/ModalWindow'
 
 const ProfilePageAvatar = (): JSX.Element => {
   const { userInfo } = useContext(UserContext)
@@ -15,7 +16,14 @@ const ProfilePageAvatar = (): JSX.Element => {
 
   return (
     <div className="profile_header">
-      {loading && <Loader />}
+      {loading && (
+        <>
+          <Loader />
+          <ModalWindow>
+            <Loader />
+          </ModalWindow>
+        </>
+      )}
       {!loading && (
         <ProfilePageAvatarImage
           errorLocal={errorLocal}

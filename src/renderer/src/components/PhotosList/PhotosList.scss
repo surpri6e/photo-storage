@@ -10,7 +10,7 @@
 
 .photos-list_creator {
   width: calc(33.33% - 20px);
-  min-width: 350px;
+  min-width: 400px;
 
   height: 380px;
 
@@ -54,7 +54,7 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1366px) {
   .photos-list_creator {
     min-width: calc(50% - 20px);
   }

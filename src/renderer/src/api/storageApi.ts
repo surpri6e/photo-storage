@@ -100,6 +100,7 @@ export default class StorageApi {
       setLoading(true)
 
       const copyUserPhotos = user.userImages.images
+      let copyStorageMemory = user.userSettings.nowStorageMemory
 
       for (let i = 0; i < photos.length; i++) {
         const randomId = getRandomKey(10, 'all')
@@ -114,9 +115,12 @@ export default class StorageApi {
             photos[i].size,
             randomId,
             createStorageLinkWithFolder(userInfo.id, randomId),
-            copyUserPhotos
+            copyUserPhotos,
+            copyStorageMemory
           )
         }
+
+        copyStorageMemory += photos[i].size
       }
     } catch (error: unknown) {
       errorTimeout(setServerError, 1500)

@@ -9,6 +9,7 @@ import { IUserImage } from '@renderer/types/IUser'
 import UserImagesApi from '@renderer/api/userImagesApi'
 import StorageApi from '@renderer/api/storageApi'
 import Input from '../Input'
+import ModalWindow from '../ModalWindow/ModalWindow'
 
 const PhotoCard: FC<IUserImage> = ({
   urlImage,
@@ -24,20 +25,29 @@ const PhotoCard: FC<IUserImage> = ({
   const [name, setName] = useState('')
   const [isShow, setIsShow] = useState(false)
 
+  const [a, s] = useState(false)
+
   return (
     <div className="photo-card">
       <a
-        href={urlImage}
-        target="_blank"
+        // href={urlImage}
+        // target="_blank"
         className={
           userSettings && userSettings.showTitlesOfImages && !isInTrasher
             ? 'photo-card_image'
             : 'photo-card_image photo-card_image--without-title'
         }
         rel="noreferrer"
+        onClick={() => s(true)}
       >
         <img src={urlImage} alt={title} />
       </a>
+
+      {a && (
+        <ModalWindow>
+          <img src={urlImage} alt={title} />
+        </ModalWindow>
+      )}
 
       {userSettings &&
         userSettings.showTitlesOfImages &&

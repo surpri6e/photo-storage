@@ -3,7 +3,7 @@
 
 .photo-card {
   width: calc(33.33% - 20px);
-  min-width: 350px;
+  min-width: 400px;
   height: 380px;
 
   border-radius: 5px;
@@ -17,7 +17,7 @@
   position: relative;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1366px) {
   .photo-card {
     min-width: calc(50% - 20px);
   }
