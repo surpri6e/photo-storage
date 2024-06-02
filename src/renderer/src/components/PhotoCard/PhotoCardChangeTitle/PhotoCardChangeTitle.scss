@@ -1,0 +1,46 @@
+@import '../../../styles/vars.scss';
+@import '../../../styles/mixins.scss';
+
+.photo-card_change {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  &_buttons {
+    display: flex;
+
+    & > * {
+      padding: 5px;
+      border-radius: 5px;
+
+      @include defaultTransition;
+
+      color: white;
+    }
+
+    &--green {
+      background-color: $green;
+
+      &:hover {
+        background-color: darken($green, 5);
+      }
+    }
+
+    &--red {
+      background-color: $red;
+
+      &:hover {
+        background-color: darken($red, 5);
+      }
+    }
+
+    & > *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
+
+.photo-card_title {
+  margin-top: 10px;
+  font-weight: 700;
+}

@@ -52,7 +52,7 @@ export default class UserImagesApi {
     const { userImages, userSettings } = user
 
     let index = 0
-    const image = userImages!.images.find((image, ind) => {
+    const image = userImages.images.find((image, ind) => {
       if (image.id === id) {
         index = ind
         return true
@@ -63,10 +63,10 @@ export default class UserImagesApi {
 
     try {
       if (image) {
-        userImages!.images[index].isStarred = !userImages!.images[index].isStarred
+        userImages.images[index].isStarred = !userImages.images[index].isStarred
 
-        await setDoc(doc(db, 'images', userSettings!.uid), {
-          images: userImages!.images
+        await setDoc(doc(db, 'images', userSettings.uid), {
+          images: userImages.images
         } as IUserImages)
       }
     } catch (error: unknown) {
@@ -80,7 +80,7 @@ export default class UserImagesApi {
     const { userImages, userSettings } = user
 
     let index = 0
-    const image = userImages!.images.find((image, ind) => {
+    const image = userImages.images.find((image, ind) => {
       if (image.id === id) {
         index = ind
         return true
@@ -91,11 +91,11 @@ export default class UserImagesApi {
 
     try {
       if (image) {
-        userImages!.images[index].isInTrasher = !userImages!.images[index].isInTrasher
-        userImages!.images[index].isStarred = false
+        userImages.images[index].isInTrasher = !userImages.images[index].isInTrasher
+        userImages.images[index].isStarred = false
 
-        await setDoc(doc(db, 'images', userSettings!.uid), {
-          images: userImages!.images
+        await setDoc(doc(db, 'images', userSettings.uid), {
+          images: userImages.images
         } as IUserImages)
       }
     } catch (error: unknown) {
@@ -103,20 +103,22 @@ export default class UserImagesApi {
     }
   }
 
+  // =========================
+
   public static deletePhoto = async (user: IUserContext, id: string): Promise<void> => {
     const { userImages, userSettings } = user
 
     try {
       const batch = writeBatch(db)
 
-      batch.set(doc(db, 'images', userSettings!.uid), {
-        images: userImages!.images.filter((image) => !(image.id === id))
+      batch.set(doc(db, 'images', userSettings.uid), {
+        images: userImages.images.filter((image) => !(image.id === id))
       } as IUserImages)
 
-      batch.set(doc(db, 'settings', userSettings!.uid), {
-        ...userSettings!,
+      batch.set(doc(db, 'settings', userSettings.uid), {
+        ...userSettings,
         nowStorageMemory:
-          userSettings!.nowStorageMemory - userImages!.images.find((image) => image.id === id)!.size
+          userSettings.nowStorageMemory - userImages.images.find((image) => image.id === id)!.size
       } as IUserSettings)
 
       await batch.commit()
@@ -124,6 +126,8 @@ export default class UserImagesApi {
       throwError(error)
     }
   }
+
+  // ======================
 
   public static changeNameForPhoto = async (
     user: IUserContext,
@@ -133,7 +137,7 @@ export default class UserImagesApi {
     const { userImages, userSettings } = user
 
     let index = 0
-    const image = userImages!.images.find((image, ind) => {
+    const image = userImages.images.find((image, ind) => {
       if (image.id === id) {
         index = ind
         return true
@@ -144,10 +148,10 @@ export default class UserImagesApi {
 
     try {
       if (image) {
-        userImages!.images[index].title = newName
+        userImages.images[index].title = newName
 
-        await setDoc(doc(db, 'images', userSettings!.uid), {
-          images: userImages!.images
+        await setDoc(doc(db, 'images', userSettings.uid), {
+          images: userImages.images
         } as IUserImages)
       }
     } catch (error: unknown) {

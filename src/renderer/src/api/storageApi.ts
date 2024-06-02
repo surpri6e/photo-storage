@@ -134,7 +134,7 @@ export default class StorageApi {
 
   public static deletePhotoFromStorage = async (user: IUserContext, id: string): Promise<void> => {
     try {
-      deleteObject(ref(storage, `${user.userInfo?.id}/${id}.png`)).then(async () => {
+      deleteObject(ref(storage, `${user.userInfo.id}/${id}.png`)).then(async () => {
         await UserImagesApi.deletePhoto(user, id)
       })
     } catch (error: unknown) {

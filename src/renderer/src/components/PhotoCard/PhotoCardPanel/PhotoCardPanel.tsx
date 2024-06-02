@@ -11,13 +11,14 @@ interface IPhotoCardPanel {
 
 const PhotoCardPanel: FC<IPhotoCardPanel> = ({ customRef, id, setIsShow }) => {
   const user = useContext(UserContext)
+
   return (
     <div ref={customRef} className="photo-card_panel">
       <p onClick={() => setIsShow(true)}>Изменить</p>
       <p>Скачать</p>
       <p
         className="photo-card_panel--delete"
-        onClick={async () => UserImagesApi.changeTrashForPhoto(user, id)}
+        onClick={async () => await UserImagesApi.changeTrashForPhoto(user, id)}
       >
         Удалить
       </p>

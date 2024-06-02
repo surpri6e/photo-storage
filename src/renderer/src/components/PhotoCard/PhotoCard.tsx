@@ -1,15 +1,10 @@
 import { FC, useContext, useState } from 'react'
 import './PhotoCard.scss'
 import { UserContext } from '@renderer/context/UserContext'
-import PhotoCardSubmenu from './PhotoCardSubmenu/PhotoCardSubmenu'
-
-import starred from '../../images/starred.png'
-import notStarred from '../../images/notStarred.png'
 import { IUserImage } from '@renderer/types/IUser'
-import UserImagesApi from '@renderer/api/userImagesApi'
-import StorageApi from '@renderer/api/storageApi'
-import Input from '../Input'
-import ModalWindow from '../ModalWindow/ModalWindow'
+import PhotoCardMenu from './PhotoCardMenu/PhotoCardMenu'
+import PhotoCardChangeTitle from './PhotoCardChangeTitle/PhotoCardChangeTitle'
+import WatchingPhotos from '../WatchingPhotos/WatchingPhotos'
 
 const PhotoCard: FC<IUserImage> = ({
   urlImage,
@@ -20,110 +15,44 @@ const PhotoCard: FC<IUserImage> = ({
   isInTrasher
 }) => {
   const user = useContext(UserContext)
-  const { userSettings, userInfo } = user
+  const { userSettings } = user
 
-  const [name, setName] = useState('')
   const [isShow, setIsShow] = useState(false)
 
-  const [a, s] = useState(false)
+  const [isWatchMode, setIsWatchMode] = useState(false)
 
   return (
     <div className="photo-card">
       <a
-        // href={urlImage}
-        // target="_blank"
         className={
-          userSettings && userSettings.showTitlesOfImages && !isInTrasher
+          userSettings.showTitlesOfImages && !isInTrasher
             ? 'photo-card_image'
             : 'photo-card_image photo-card_image--without-title'
         }
         rel="noreferrer"
-        onClick={() => s(true)}
+        onClick={() => setIsWatchMode(true)}
       >
         <img src={urlImage} alt={title} />
       </a>
 
-      {a && (
-        <ModalWindow>
-          <img src={urlImage} alt={title} />
-        </ModalWindow>
+      {isWatchMode && (
+        <WatchingPhotos currentPhoto={0} photos={[]} setIsWatchMode={setIsWatchMode} />
       )}
 
-      {userSettings &&
-        userSettings.showTitlesOfImages &&
-        !isInTrasher &&
-        (isShow ? (
-          <div className="photo-card_change">
-            <Input
-              value={name}
-              setValue={setName}
-              placeholder="Введите название"
-              className="input photo-card_input"
-              type="text"
-            />
-            <div className="photo-card_change_buttons">
-              <button
-                className="photo-card_change_buttons--green"
-                onClick={async () => {
-                  await UserImagesApi.changeNameForPhoto(user, id, name)
-                  setIsShow(false)
-                  setName('')
-                }}
-              >
-                Сохранить
-              </button>
-              <button
-                className="photo-card_change_buttons--red"
-                onClick={() => {
-                  setIsShow(false)
-                  setName('')
-                }}
-              >
-                Назад
-              </button>
-            </div>
-          </div>
-        ) : (
-          <p className="photo-card_title">{title}</p>
-        ))}
-
-      <div className="photo-card_menu">
-        {!isInTrasher && (
-          <>
-            <div className="photo-card_date">{dateOfCreate}</div>
-            <div className="photo-card_menu_right">
-              <div className="photo-card_starred">
-                <img
-                  src={isStarred ? starred : notStarred}
-                  alt="Лайк"
-                  onClick={() => {
-                    if (userInfo) {
-                      UserImagesApi.changeLikeForPhoto(user, id)
-                    }
-                  }}
-                />
-              </div>
-              <PhotoCardSubmenu id={id} setIsShow={setIsShow} />
-            </div>
-          </>
-        )}
-        {isInTrasher && (
-          <>
-            <div
-              className="photo-card_delete"
-              onClick={async () => StorageApi.deletePhotoFromStorage(user, id)}
-            >
-              Удалить полностью
-            </div>
-            <div
-              className="photo-card_heal"
-              onClick={async () => UserImagesApi.changeTrashForPhoto(user, id)}
-            >
-              Восстановить
-            </div>
-          </>
-        )}
-      </div>
+      <PhotoCardMenu
+        dateOfCreate={dateOfCreate}
+        id={id}
+        isInTrasher={isInTrasher}
+        isStarred={isStarred}
+        setIsShow={setIsShow}
+      />
+      <PhotoCardChangeTitle
+        id={id}
+        isInTrasher={isInTrasher}
+        isShow={isShow}
+        setIsShow={setIsShow}
+        title={title}
+      />
     </div>
   )
 }
