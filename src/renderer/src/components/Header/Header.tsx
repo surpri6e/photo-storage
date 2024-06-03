@@ -3,9 +3,11 @@ import './Header.scss'
 import Input from '../Input'
 import HeaderLogo from './HeaderLogo/HeaderLogo'
 import HeaderRight from './HeaderRight/HeaderRight'
+import { useNavigate } from 'react-router-dom'
 
 const Header = (): JSX.Element => {
   const [search, setSearch] = useState('')
+  const navigate = useNavigate()
 
   return (
     <div className="header">
@@ -18,7 +20,15 @@ const Header = (): JSX.Element => {
           placeholder="Что найдем?"
           className="input header_input"
         />
-        <button className="header_button">Найти</button>
+        <button
+          className="header_button"
+          onClick={() => {
+            navigate(`search/${search}`)
+            setSearch('')
+          }}
+        >
+          Найти
+        </button>
       </div>
       <HeaderRight />
     </div>

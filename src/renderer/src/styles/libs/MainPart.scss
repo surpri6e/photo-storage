@@ -5,6 +5,8 @@
   height: 100%;
   padding-top: $headerHeight;
 
+  overflow-y: hidden;
+
   @include defaultTransition;
 }
 

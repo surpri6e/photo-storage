@@ -14,7 +14,6 @@
     @include defaultTransition;
 
     border: 1px solid black;
-
     color: black;
 
     border-radius: 50%;
@@ -27,8 +26,8 @@
 
   &_next {
     position: absolute;
-    right: 42%;
-    bottom: 2%;
+    right: 1%;
+    top: 50%;
 
     padding: 16px;
 
@@ -40,8 +39,8 @@
 
   &_prev {
     position: absolute;
-    left: 42%;
-    bottom: 2%;
+    left: 1%;
+    top: 50%;
 
     transform: rotate(180deg);
 
@@ -56,10 +55,10 @@
   &--disabled {
     cursor: auto;
 
-    background-color: darken($grey, 15);
+    background-color: darken($grey, 45);
 
     &:hover {
-      background-color: darken($grey, 15);
+      background-color: darken($grey, 45);
     }
   }
 }
@@ -71,8 +70,8 @@
   }
 
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 1%;
+  right: 1%;
 
   padding: 16px;
 

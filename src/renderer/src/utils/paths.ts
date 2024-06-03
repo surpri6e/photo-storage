@@ -6,6 +6,6 @@ export const starredPath = '/sttared'
 export const trasherPath = '/trasher'
 export const profilePath = '/profile'
 export const settingsPath = '/settings'
+export const searchPath = '/search/:keywords'
 
-// Photo page - /photo/:key
 // Album page - /album/:key
