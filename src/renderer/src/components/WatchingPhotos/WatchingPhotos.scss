@@ -1,0 +1,92 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/vars.scss';
+
+.watching-photos {
+  @include flexCenter;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+
+  position: relative;
+
+  button {
+    @include flexCenter;
+    @include defaultTransition;
+
+    border: 1px solid black;
+
+    color: black;
+
+    border-radius: 50%;
+
+    img {
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  &_next {
+    position: absolute;
+    right: 42%;
+    bottom: 2%;
+
+    padding: 16px;
+
+    background-color: $grey;
+    &:hover {
+      background-color: darken($grey, 15);
+    }
+  }
+
+  &_prev {
+    position: absolute;
+    left: 42%;
+    bottom: 2%;
+
+    transform: rotate(180deg);
+
+    padding: 16px;
+
+    background-color: $grey;
+    &:hover {
+      background-color: darken($grey, 15);
+    }
+  }
+
+  &--disabled {
+    cursor: auto;
+
+    background-color: darken($grey, 15);
+
+    &:hover {
+      background-color: darken($grey, 15);
+    }
+  }
+}
+
+.watching-photos_close {
+  background-color: $grey;
+  &:hover {
+    background-color: darken($grey, 15);
+  }
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  padding: 16px;
+
+  img {
+    height: 32px;
+    width: 32px;
+
+    transform: rotate(45deg);
+  }
+}
+
+.watching_photos_image {
+  width: 100%;
+  height: auto;
+  max-height: 90%;
+  object-fit: contain;
+}

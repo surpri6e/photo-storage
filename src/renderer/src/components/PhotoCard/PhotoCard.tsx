@@ -6,19 +6,23 @@ import PhotoCardMenu from './PhotoCardMenu/PhotoCardMenu'
 import PhotoCardChangeTitle from './PhotoCardChangeTitle/PhotoCardChangeTitle'
 import WatchingPhotos from '../WatchingPhotos/WatchingPhotos'
 
-const PhotoCard: FC<IUserImage> = ({
+interface IPhotoCard {
+  index: number
+}
+
+const PhotoCard: FC<IUserImage & IPhotoCard> = ({
   urlImage,
   title,
   dateOfCreate,
   isStarred,
   id,
-  isInTrasher
+  isInTrasher,
+  index
 }) => {
   const user = useContext(UserContext)
   const { userSettings } = user
 
   const [isShow, setIsShow] = useState(false)
-
   const [isWatchMode, setIsWatchMode] = useState(false)
 
   return (
@@ -35,9 +39,7 @@ const PhotoCard: FC<IUserImage> = ({
         <img src={urlImage} alt={title} />
       </a>
 
-      {isWatchMode && (
-        <WatchingPhotos currentPhoto={0} photos={[]} setIsWatchMode={setIsWatchMode} />
-      )}
+      {isWatchMode && <WatchingPhotos currentPhoto={index} setIsWatchMode={setIsWatchMode} />}
 
       <PhotoCardMenu
         dateOfCreate={dateOfCreate}

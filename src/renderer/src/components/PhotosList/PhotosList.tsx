@@ -7,6 +7,7 @@ import HelpWindow from '../HelpWindow/HelpWindow'
 import { useUploadPhotos } from '@renderer/hooks/useUploadPhotos'
 import Loader from '../Loader/Loader'
 import ModalWindow from '../ModalWindow/ModalWindow'
+import { PhotosContext } from '@renderer/context/PhotosContext'
 
 interface IPhotosList {
   photos: IUserImage[]
@@ -42,6 +43,7 @@ const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
               <img src={plus} alt="Добавить фотографию" />
             </label>
           )}
+
           {loading && (
             <>
               <ModalWindow>
@@ -64,19 +66,22 @@ const PhotosList: FC<IPhotosList> = ({ photos, withCreator }) => {
         </div>
       )}
 
-      {photos.length > 0 &&
-        photos.map((image) => (
-          <PhotoCard
-            urlImage={image.urlImage}
-            title={image.title.length > 97 ? image.title.slice(0, 97) + '...' : image.title}
-            dateOfCreate={image.dateOfCreate}
-            isInTrasher={image.isInTrasher}
-            isStarred={image.isStarred}
-            id={image.id}
-            key={image.urlImage}
-            size={image.size}
-          />
-        ))}
+      <PhotosContext.Provider value={{ photos }}>
+        {photos.length > 0 &&
+          photos.map((image, index) => (
+            <PhotoCard
+              urlImage={image.urlImage}
+              title={image.title.length > 97 ? image.title.slice(0, 97) + '...' : image.title}
+              dateOfCreate={image.dateOfCreate}
+              isInTrasher={image.isInTrasher}
+              isStarred={image.isStarred}
+              id={image.id}
+              key={image.urlImage}
+              size={image.size}
+              index={index}
+            />
+          ))}
+      </PhotosContext.Provider>
     </div>
   )
 }
